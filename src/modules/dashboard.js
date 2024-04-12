@@ -10,7 +10,7 @@ module.exports = (client) => {
 
   app.listen(process.env.DASHBOARD_PORT, () =>
     console.log(
-      `🟢 [ALIVE] Dashboard được mở ở cổng ${process.env.DASHBOARD_PORT}`
+      `🟢 [DASHBOARD] Dashboard được mở ở cổng ${process.env.DASHBOARD_PORT}`
     )
   );
 };
