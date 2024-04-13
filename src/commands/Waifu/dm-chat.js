@@ -15,7 +15,7 @@ module.exports = {
 
     if (!message.author.dmChannel) {
       message.author.createDM();
-      message.author.send("Chào anh nhé :heart:");
+      message.reply(`Bạn có thể qua <@${client.user.id}> để chat tiếp.`);
     }
   },
 };
