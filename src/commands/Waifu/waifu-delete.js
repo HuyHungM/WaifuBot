@@ -11,6 +11,7 @@ module.exports = {
     const waifuData = await findWaifu({ ownerID: message.author.id });
     if (!waifuData) return message.reply("Waifu của bạn chưa tồn tại");
 
+    await message.author.createDM();
     await message.author.dmChannel?.messages?.fetch().then((messages) => {
       messages
         .filter((message) => message.author.id === client.user.id)
@@ -18,7 +19,7 @@ module.exports = {
           await msg.delete();
         });
     });
-    await message.author.dmChannel?.delete();
+    await message.author.deleteDM();
 
     const deleteWaifuData = await deleteWaifu({
       ownerID: message.author.id,

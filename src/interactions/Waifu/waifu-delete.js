@@ -15,6 +15,7 @@ module.exports = {
         ephemeral: true,
       });
 
+    await interaction.user.createDM();
     await interaction.user.dmChannel?.messages?.fetch().then((messages) => {
       messages
         .filter((message) => message.author.id === client.user.id)
@@ -22,7 +23,7 @@ module.exports = {
           await msg.delete();
         });
     });
-    await interaction.user.dmChannel?.delete();
+    await interaction.user.deleteDM();
 
     const deleteWaifuData = await deleteWaifu({
       ownerID: interaction.user.id,
