@@ -37,10 +37,9 @@ module.exports = {
           process.env.PREFIX
         }chat hoặc <@${client.user.id}>`
       );
-      if (!message.author.dmChannel) {
-        message.author.createDM();
-        message.author.send("Chào anh nhé :heart:");
-      }
+
+      message.author.createDM();
+      message.author.send("Chào anh nhé :heart:");
     } catch (error) {
       message.reply("Đã xảy ra lỗi khi khởi tạo waifu cho bạn.");
     }

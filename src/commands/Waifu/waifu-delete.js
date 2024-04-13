@@ -1,6 +1,5 @@
 const { deleteMessageState } = require("../../api/messageAPI");
 const { findWaifu, deleteWaifu } = require("../../api/waifuAPI");
-const AIConfig = require("../../config/AIConfig");
 
 module.exports = {
   name: "waifu-delete",
@@ -12,14 +11,14 @@ module.exports = {
     const waifuData = await findWaifu({ ownerID: message.author.id });
     if (!waifuData) return message.reply("Waifu của bạn chưa tồn tại");
 
-    await message.author.dmChannel.messages.fetch().then((messages) => {
+    await message.author.dmChannel?.messages?.fetch().then((messages) => {
       messages
         .filter((message) => message.author.id === client.user.id)
         .forEach(async (msg) => {
           await msg.delete();
         });
     });
-    await message.author.dmChannel.delete();
+    await message.author.dmChannel?.delete();
 
     const deleteWaifuData = await deleteWaifu({
       ownerID: message.author.id,

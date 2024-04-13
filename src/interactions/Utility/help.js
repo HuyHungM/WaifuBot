@@ -9,17 +9,23 @@ const packageJson = require("../../../package.json");
 
 module.exports = {
   name: "help",
-  category: "Utility",
-  aliases: [],
   description: "Hướng dẫn sài lệnh!",
-  usage: `help [tên lệnh]`,
-  run: async (client, message, args) => {
-    if (!args[0]) return getAll(client, message);
-    return getCMD(client, message, args[0]);
+  type: ApplicationCommandType.ChatInput,
+  options: [
+    {
+      name: "command",
+      description: "tên lệnh",
+      required: false,
+      type: ApplicationCommandOptionType.String,
+    },
+  ],
+  run: async (client, interaction) => {
+    if (!interaction.options.get("command")) return getAll(client, interaction);
+    return getCMD(client, interaction);
   },
 };
 
-function getAll(client, message) {
+function getAll(client, interaction) {
   const commands = (category) => {
     return client.commands
       .filter((cmd) => cmd.category === category)
@@ -60,26 +66,29 @@ function getAll(client, message) {
     config.getEmbedConfig().color
   );
 
-  return message.channel.send({ embeds: [embed] });
+  return interaction.reply({ embeds: [embed] });
 }
 
-function getCMD(client, message, input) {
-  let embedData = { footer: {} };
+function getCMD(client, interaction) {
+  let embedData = {
+    footer: {},
+  };
+  const command = interaction.options.get("command");
 
   const cmd = client.commands.get(
-    input.toLowerCase() ||
-      client.commands.get(client.aliases.get(input.toLowerCase()))
+    command.value.toLowerCase() ||
+      client.commands.get(client.aliases.get(command.value.toLowerCase()))
   );
   let info = `${
     config.emotes.error
-  } Không tìm thấy lệnh **${input.toLowerCase()}**`;
+  } Không tìm thấy lệnh **${command.value.toLowerCase()}**`;
 
   if (!cmd) {
     embedData.description = info;
     const embed = new EmbedBuilder(embedData).setColor(
       config.getEmbedConfig().errorColor
     );
-    return message.channel.send({ embeds: [embed] });
+    return interaction.reply({ embeds: [embed], ephemeral: true });
   }
 
   if (cmd.name) info = `**Tên lệnh**: \`${cmd.name}\``;
@@ -98,5 +107,5 @@ function getCMD(client, message, input) {
   const embed = new EmbedBuilder(embedData).setColor(
     config.getEmbedConfig().color
   );
-  return message.channel.send({ embeds: [embed] });
+  return interaction.reply({ embeds: [embed] });
 }

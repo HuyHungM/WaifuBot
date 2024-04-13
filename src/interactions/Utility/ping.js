@@ -1,19 +1,18 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
 const config = require("../../config/config.js");
 
 module.exports = {
   name: "ping",
-  aliases: [],
-  category: "Utility",
   description: "Ping của bot",
-  usage: "ping",
-  run: (client, message, args) => {
+  type: ApplicationCommandType.ChatInput,
+  options: [],
+  run: (client, interaction) => {
     let circles = {
       green: "🟢",
       yellow: "🟡",
       red: "🔴",
     };
-    const latency = Date.now() - message.createdTimestamp;
+    const latency = Date.now() - interaction.createdTimestamp;
     const ws = client.ws.ping;
     const vcLatency = "N/A";
 
@@ -55,6 +54,6 @@ module.exports = {
       config.getEmbedConfig().color
     );
 
-    message.channel.send({ embeds: [embed] });
+    interaction.reply({ embeds: [embed] });
   },
 };

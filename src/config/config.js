@@ -3,7 +3,7 @@ module.exports = {
   getEmbedConfig: function () {
     return {
       color: "#80FF92",
-      errorColor: "RED",
+      errorColor: "#FF8DA1",
       footer: `Made by ${this.ownerName} with ♥`,
     };
   },

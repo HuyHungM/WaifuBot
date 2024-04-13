@@ -1,12 +1,17 @@
 require("dotenv").config();
-const { Client, GatewayIntentBits, Collection } = require("discord.js");
+const {
+  Client,
+  GatewayIntentBits,
+  Collection,
+  IntentsBitField,
+} = require("discord.js");
 const { readdirSync } = require("fs");
 
 const client = new Client({
   intents: [
     GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.DirectMessageTyping,
-    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.DirectMessageReactions,
     GatewayIntentBits.GuildEmojisAndStickers,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.GuildVoiceStates,
@@ -21,6 +26,7 @@ const client = new Client({
 
 client.commands = new Collection();
 client.aliases = new Collection();
+client.interactions = new Collection();
 client.categories = readdirSync("./src/commands/");
 
 readdirSync("./src/handlers")

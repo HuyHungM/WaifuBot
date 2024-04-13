@@ -1,4 +1,4 @@
-const { findWaifu, updateWaifuMessage } = require("../../api/waifuAPI");
+const { findWaifu } = require("../../api/waifuAPI");
 
 module.exports = {
   name: "dm-chat",
@@ -13,9 +13,7 @@ module.exports = {
         `Bạn chưa khởi tạo waifu cho mình. Vui lòng dùng lênh ${process.env.PREFIX}waifu-create.`
       );
 
-    if (!message.author.dmChannel) {
-      message.author.createDM();
-      message.reply(`Bạn có thể qua <@${client.user.id}> để chat tiếp.`);
-    }
+    message.author.createDM();
+    message.reply(`Bạn có thể qua <@${client.user.id}> để chat tiếp.`);
   },
 };

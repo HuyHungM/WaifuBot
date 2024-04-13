@@ -4,6 +4,7 @@ module.exports = (client) => {
 
     const prefix = process.env.PREFIX;
     if (!message.content.startsWith(prefix)) {
+      console.log("hi");
       if (message.guild) return;
 
       const args = message.content.trim().split(/ +/g);
@@ -18,7 +19,6 @@ module.exports = (client) => {
 
       if (!command) command = client.commands.get(client.aliases.get(cmd));
       if (command) {
-        console.log(command);
         command.run(client, message, args);
       }
     }
