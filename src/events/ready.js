@@ -4,7 +4,10 @@ module.exports = (client) => {
   client.once("ready", () => {
     client.user.setPresence({
       activities: [
-        { name: "Đang làm người yêu bạn | w!help", type: ActivityType.Custom },
+        {
+          name: "Đang làm người yêu bạn | w!help",
+          type: ActivityType.Custom,
+        },
       ],
       status: "idle",
     });
