@@ -10,7 +10,6 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
-    "@discordjs/builders": "^1.7.0",
     "@discordjs/voice": "^0.16.1",
     "axios": "^1.6.8",
     "bufferutil": "^4.0.8",

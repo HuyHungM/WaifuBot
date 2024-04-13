@@ -50,10 +50,8 @@ module.exports = {
         }chat hoặc <@${client.user.id}>`,
         ephemeral: true,
       });
-      if (!interaction.user.dmChannel) {
-        interaction.user.createDM();
-        interaction.user.send("Chào anh nhé :heart:");
-      }
+      interaction.user.createDM();
+      interaction.user.send("Chào anh nhé :heart:");
     } catch (error) {
       interaction.reply({
         content: "Đã xảy ra lỗi khi khởi tạo waifu cho bạn.",
