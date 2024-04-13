@@ -1,5 +1,5 @@
 module.exports = {
-  getStarterMessage: (message) => {
+  getStarterMessage: (message, args) => {
     return [
       {
         role: "system",
