@@ -1,3 +1,7 @@
+const {
+  findMessageState,
+  updateMessageState,
+} = require("../../api/messageAPI");
 const { findWaifu, updateWaifuMessage } = require("../../api/waifuAPI");
 
 module.exports = {
@@ -17,6 +21,15 @@ module.exports = {
       return message.reply("Nhắn gì đó đi chứ, giận đó nha!");
     if (args.join(" ").length > 256)
       return message.reply("Giới hạn kí tự 256.");
+
+    const messageState = await findMessageState({ ownerID: message.author.id });
+
+    if (!messageState.isReplied) return;
+
+    await updateMessageState({
+      state: false,
+      ownerID: message.author.id,
+    });
 
     message.channel.sendTyping();
 
@@ -39,9 +52,18 @@ module.exports = {
           ownerID: message.author.id,
           messages: waifuData.messages,
         });
+
+        await updateMessageState({
+          state: true,
+          ownerID: message.author.id,
+        });
       })
-      .catch((error) => {
+      .catch(async (error) => {
         message.channel.send("Đã xảy ra lỗi ", error);
+        await updateMessageState({
+          state: true,
+          ownerID: message.author.id,
+        });
       });
   },
 };

@@ -1,3 +1,4 @@
+const { createMessageState } = require("../../api/messageAPI");
 const { createWaifu, findWaifu } = require("../../api/waifuAPI");
 const AIConfig = require("../../config/AIConfig");
 
@@ -23,6 +24,11 @@ module.exports = {
         ownerID: message.author.id,
         model: "gpt-3.5-turbo",
         messages: AIConfig.getStarterMessage(message, args),
+      });
+
+      await createMessageState({
+        isReplied: true,
+        ownerID: message.author.id,
       });
       message.reply(
         `Đã khởi tạo thành công waifu của bạn với tên \`${args.join(

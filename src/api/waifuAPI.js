@@ -10,9 +10,9 @@ const createWaifu = async ({ name, ownerID, model, messages }) => {
 
   try {
     await newWaifu.save();
-    return { status: 200, message: "Đã khởi tạo waifu thành công" };
+    return newWaifu;
   } catch (error) {
-    return { status: 404, message: "Đã xảy ra lỗi" };
+    return null;
   }
 };
 

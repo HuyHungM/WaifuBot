@@ -1,4 +1,5 @@
-const { createWaifu, findWaifu, deleteWaifu } = require("../../api/waifuAPI");
+const { deleteMessageState } = require("../../api/messageAPI");
+const { findWaifu, deleteWaifu } = require("../../api/waifuAPI");
 const AIConfig = require("../../config/AIConfig");
 
 module.exports = {
@@ -20,11 +21,16 @@ module.exports = {
     });
     await message.author.dmChannel.delete();
 
-    const deleteData = await deleteWaifu({
+    const deleteWaifuData = await deleteWaifu({
       ownerID: message.author.id,
     });
 
-    if (deleteData == 1) message.reply(`Đã xoá thành công waifu của bạn.`);
+    const deleteDelayStateData = await deleteMessageState({
+      ownerID: message.author.id,
+    });
+
+    if (deleteWaifuData == 1 && deleteDelayStateData == 1)
+      message.reply(`Đã xoá thành công waifu của bạn.`);
     else message.reply("Đã xảy ra lỗi khi xoá waifu cho bạn.");
   },
 };
