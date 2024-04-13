@@ -239,6 +239,10 @@ module.exports = {
         role: "assistant",
         content: "Em cũng chỉ cần mỗi anh thôi. ❤️😊",
       },
+      {
+        role: "assistant",
+        content: "Chào anh yêu ❤️",
+      },
     ];
   },
 };
