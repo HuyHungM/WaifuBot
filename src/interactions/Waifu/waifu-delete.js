@@ -8,28 +8,28 @@ module.exports = {
   type: ApplicationCommandType.ChatInput,
   options: [],
   run: async (client, interaction) => {
-    const waifuData = await findWaifu({ ownerID: interaction.member.id });
+    const waifuData = await findWaifu({ ownerID: interaction.user.id });
     if (!waifuData)
       return interaction.reply({
         content: "Waifu của bạn chưa tồn tại",
         ephemeral: true,
       });
 
-    await interaction.member.dmChannel?.messages?.fetch().then((messages) => {
+    await interaction.user.dmChannel?.messages?.fetch().then((messages) => {
       messages
         .filter((message) => message.author.id === client.user.id)
         .forEach(async (msg) => {
           await msg.delete();
         });
     });
-    await interaction.member.dmChannel?.delete();
+    await interaction.user.dmChannel?.delete();
 
     const deleteWaifuData = await deleteWaifu({
-      ownerID: interaction.member.id,
+      ownerID: interaction.user.id,
     });
 
     const deleteDelayStateData = await deleteMessageState({
-      ownerID: interaction.member.id,
+      ownerID: interaction.user.id,
     });
 
     if (deleteWaifuData == 1 && deleteDelayStateData == 1)

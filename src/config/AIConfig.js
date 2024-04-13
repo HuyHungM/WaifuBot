@@ -6,11 +6,11 @@ module.exports = {
         content: `Bạn tên là ${
           Array.isArray(args) ? args.join(" ") : args
         }, là bạn gái (người yêu) của ${
-          message.author ? message.author.username : message.member.username
+          message.author ? message.author.username : message.user.username
         } (your name is ${
           Array.isArray(args) ? args.join(" ") : args
         }, you are the girlfriend (lover) of ${
-          message.author ? message.author.username : message.member.username
+          message.author ? message.author.username : message.user.username
         })`,
       },
       {
@@ -18,7 +18,7 @@ module.exports = {
         content: `Bạn tên là ${
           Array.isArray(args) ? args.join(" ") : args
         }, là bạn gái (người yêu) của ${
-          message.author ? message.author.username : message.member.username
+          message.author ? message.author.username : message.user.username
         }. Bạn hãy gọi tôi là anh yêu. Và xưng em khi tôi gọi. Tôi và bạn đang đóng giả làm người yêu của nhau. Khi nhắn tin nhớ thêm :heart: hoặc :3 để thêm phần ngọt ngào và lãng mạn nhé :3`,
       },
       {

@@ -30,7 +30,7 @@ module.exports = {
     try {
       await createWaifu({
         name: interaction.options.get("name").value,
-        ownerID: interaction.member.id,
+        ownerID: interaction.user.id,
         model: "gpt-3.5-turbo",
         messages: AIConfig.getStarterMessage(
           interaction,
@@ -40,7 +40,7 @@ module.exports = {
 
       await createMessageState({
         isReplied: true,
-        ownerID: interaction.member.id,
+        ownerID: interaction.user.id,
       });
       interaction.reply({
         content: `Đã khởi tạo thành công waifu của bạn với tên \`${
@@ -50,9 +50,9 @@ module.exports = {
         }chat hoặc <@${client.user.id}>`,
         ephemeral: true,
       });
-      if (!interaction.member.dmChannel) {
-        interaction.member.createDM();
-        interaction.member.send("Chào anh nhé :heart:");
+      if (!interaction.user.dmChannel) {
+        interaction.user.createDM();
+        interaction.user.send("Chào anh nhé :heart:");
       }
     } catch (error) {
       interaction.reply({

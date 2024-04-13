@@ -21,7 +21,7 @@ module.exports = {
     },
   ],
   run: async (client, interaction) => {
-    let waifuData = await findWaifu({ ownerID: interaction.member.id });
+    let waifuData = await findWaifu({ ownerID: interaction.user.id });
     if (!waifuData)
       return interaction.reply({
         content:
@@ -38,14 +38,14 @@ module.exports = {
       });
 
     const messageState = await findMessageState({
-      ownerID: interaction.member.id,
+      ownerID: interaction.user.id,
     });
 
     if (!messageState?.isReplied) return;
 
     await updateMessageState({
       state: false,
-      ownerID: interaction.member.id,
+      ownerID: interaction.user.id,
     });
 
     waifuData.messages.push({ role: "user", content: message.value });
@@ -66,20 +66,20 @@ module.exports = {
       });
 
       await updateWaifuMessage({
-        ownerID: interaction.member.id,
+        ownerID: interaction.user.id,
         messages: waifuData.messages,
       });
 
       await updateMessageState({
         state: true,
-        ownerID: interaction.member.id,
+        ownerID: interaction.user.id,
       });
     } catch (error) {
       console.error(error);
       interaction.reply({ content: "Đã xảy ra lỗi", ephemeral: true });
       await updateMessageState({
         state: true,
-        ownerID: interaction.member.id,
+        ownerID: interaction.user.id,
       });
     }
   },
