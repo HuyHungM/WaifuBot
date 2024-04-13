@@ -1,9 +1,8 @@
-require("dotenv").config();
-const { WaifuAI } = require("../model/WaifuAI");
+const { WaifuAI } = require("../models/WaifuAI");
 
 module.exports = (client) => {
   const waifuai = new WaifuAI({
-    apiKey: process.env.AI_API,
+    apiKey: process.env.AI_API_KEY,
     baseURL: process.env.BASE_AI_URL,
   });
 

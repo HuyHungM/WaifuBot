@@ -1,15 +1,14 @@
-const { QuickDB } = require("quick.db");
-const db = new QuickDB();
+const { findWaifu, updateWaifuMessage } = require("../../api/waifuAPI");
 
 module.exports = {
   name: "chat",
-  aliases: ["c", "ib"],
+  aliases: ["c"],
   category: "Waifu",
-  description: "AI chat bot",
+  description: "Nhắn tin với bot",
   usage: "chat <nội dung tin nhắn>",
   run: async (client, message, args) => {
-    const waifu = await db.get(`waifu.${message.author.id}`);
-    if (!waifu)
+    let waifuData = await findWaifu({ ownerID: message.author.id });
+    if (!waifuData)
       return message.reply(
         "Bạn chưa khởi tạo waifu cho mình. Vui lòng dùng lênh waifu-create."
       );
@@ -21,22 +20,25 @@ module.exports = {
 
     message.channel.sendTyping();
 
-    waifu.messages.push({ role: "user", content: args.join(" ") });
+    waifuData.messages.push({ role: "user", content: args.join(" ") });
     await client.waifuai
       .create({
-        messages: waifu.messages,
-        model: waifu.model,
+        messages: waifuData.messages,
+        model: waifuData.model,
         max_tokens: 1000,
       })
       .then(async (res) => {
-        message.channel.send(res.choices[0].message.content);
+        message.reply(res.choices[0].message.content);
 
-        waifu.messages.push({
+        waifuData.messages.push({
           role: "assistant",
           content: res.choices[0].message.content,
         });
 
-        await db.set(`waifu.${message.author.id}`, waifu);
+        await updateWaifuMessage({
+          ownerID: message.author.id,
+          messages: waifuData.messages,
+        });
       })
       .catch((error) => {
         message.channel.send("Đã xảy ra lỗi ", error);

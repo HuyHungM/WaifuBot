@@ -1,0 +1,30 @@
+const { createWaifu, findWaifu, deleteWaifu } = require("../../api/waifuAPI");
+const AIConfig = require("../../config/AIConfig");
+
+module.exports = {
+  name: "waifu-delete",
+  aliases: ["w-delete"],
+  category: "Waifu",
+  description: "Xoá waifu cho bạn",
+  usage: "waifu-delete",
+  run: async (client, message, args) => {
+    const waifuData = await findWaifu({ ownerID: message.author.id });
+    if (!waifuData) return message.reply("Waifu của bạn chưa tồn tại");
+
+    await message.author.dmChannel.messages.fetch().then((messages) => {
+      messages
+        .filter((message) => message.author.id === client.user.id)
+        .forEach(async (msg) => {
+          await msg.delete();
+        });
+    });
+    await message.author.dmChannel.delete();
+
+    const deleteData = await deleteWaifu({
+      ownerID: message.author.id,
+    });
+
+    if (deleteData == 1) message.reply(`Đã xoá thành công waifu của bạn.`);
+    else message.reply("Đã xảy ra lỗi khi xoá waifu cho bạn.");
+  },
+};
