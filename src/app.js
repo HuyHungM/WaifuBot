@@ -29,4 +29,6 @@ readdirSync("./src/handlers")
     require(`./handlers/${handler}`)(client);
   });
 
+module.exports = { client };
+
 client.login(process.env.TOKEN);

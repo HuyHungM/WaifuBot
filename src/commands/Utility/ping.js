@@ -5,7 +5,7 @@ module.exports = {
   name: "ping",
   aliases: [""],
   category: "Utility",
-  description: "",
+  description: "Ping của bot",
   usage: "ping",
   run: (client, message, args) => {
     let circles = {
@@ -51,7 +51,9 @@ module.exports = {
       timestamp: new Date(),
     };
 
-    const embed = new EmbedBuilder(embedData).setColor(config.embed.color);
+    const embed = new EmbedBuilder(embedData).setColor(
+      config.getEmbedConfig().color
+    );
 
     message.channel.send({ embeds: [embed] });
   },
