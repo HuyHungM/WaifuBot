@@ -5,7 +5,6 @@ module.exports = (client) => {
     if (message.author.bot) return;
 
     if (message.channel.type === ChannelType.DM) {
-      console.log("hi");
       const args = message.content.trim().split(/ +/g);
 
       let command = client.commands.get("chat");
