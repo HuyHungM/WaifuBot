@@ -77,7 +77,7 @@ module.exports = {
           (song, i) =>
             `\`${i + 1}.\` **${song.name}** - \`${
               song.uploader.name
-            }\`\n**Views:** \`${song.views.toLocaleString("vi-VN")}\``
+            }\`\n___Views:___ \`${song.views.toLocaleString("vi-VN")}\``
         )
         .join("\n\n");
 

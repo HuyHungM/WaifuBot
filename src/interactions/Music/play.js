@@ -83,9 +83,12 @@ module.exports = {
 
       // Create Embed
       const embedDescription = searchResult
+        .sort((a, b) => a.views < b.views)
         .map(
           (song, i) =>
-            `\`${i + 1}.\` **${song.name}** - \`${song.uploader.name}\``
+            `\`${i + 1}.\` **${song.name}** - \`${
+              song.uploader.name
+            }\`\n**Views:** \`${song.views.toLocaleString("vi-VN")}\``
         )
         .join("\n\n");
 
