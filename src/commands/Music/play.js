@@ -74,7 +74,9 @@ module.exports = {
       const embedDescription = searchResult
         .map(
           (song, i) =>
-            `\`${i + 1}.\` **${song.name}** - \`${song.uploader.name}\``
+            `\`${i + 1}.\` **${song.name}** - \`${
+              song.uploader.name
+            }\` - \`${song.views.toLocaleString("vi-VN")}\``
         )
         .join("\n\n");
 
