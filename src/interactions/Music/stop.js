@@ -12,7 +12,7 @@ module.exports = {
 
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
-    await client.distube.stop();
+    await client.distube.stop(queue);
 
     const embed = new EmbedBuilder({
       description: ":stop_button: **Đã dừng phát nhạc!**",
