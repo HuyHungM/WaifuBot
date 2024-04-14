@@ -19,11 +19,6 @@ module.exports = {
     if (checkSameRoom({ message: message, interaction: null, client: client }))
       return;
 
-    // if (!message.member.voice.channel)
-    //   return message.reply(
-    //     "Bạn phải tham gia một kênh thoại trước khi sử dụng lệnh này!"
-    //   );
-
     const permissions = message.member.voice.channel.permissionsFor(
       message.client.user
     );
