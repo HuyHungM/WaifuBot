@@ -9,7 +9,7 @@ module.exports = {
   description: "Dừng phát nhạc",
   usage: `stop`,
   run: async (client, message, args) => {
-    const queue = client.distube.getQueue(message.guildId);
+    const queue = client.distube.getQueue(message);
 
     if (!queue) return message.reply({ embeds: [noMusicEmbed] });
     await client.distube.stop();

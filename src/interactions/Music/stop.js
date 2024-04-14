@@ -8,7 +8,7 @@ module.exports = {
   type: ApplicationCommandType.ChatInput,
   options: [],
   run: async (client, interaction) => {
-    const queue = client.distube.getQueue(interaction.guildId);
+    const queue = client.distube.getQueue(interaction);
 
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
