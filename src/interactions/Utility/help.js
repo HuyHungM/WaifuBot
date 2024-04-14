@@ -9,7 +9,7 @@ const packageJson = require("../../../package.json");
 
 module.exports = {
   name: "help",
-  description: "Hướng dẫn sài lệnh!",
+  description: "Hướng dẫn dùng lệnh!",
   type: ApplicationCommandType.ChatInput,
   options: [
     {

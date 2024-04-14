@@ -1,4 +1,4 @@
-const { ActivityType, REST, Routes } = require("discord.js");
+const { ActivityType } = require("discord.js");
 
 module.exports = (client) => {
   client.once("ready", async () => {
@@ -13,22 +13,5 @@ module.exports = (client) => {
       ],
       status: "idle",
     });
-
-    const interactionData = client.interactions.map((interaction) => ({
-      name: interaction.name,
-      description: interaction.description,
-      type: interaction.type,
-      options: interaction.options || [],
-    }));
-
-    const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
-
-    try {
-      await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-        body: interactionData,
-      });
-    } catch (error) {
-      console.log(error);
-    }
   });
 };

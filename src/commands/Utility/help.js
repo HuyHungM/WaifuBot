@@ -11,7 +11,7 @@ module.exports = {
   name: "help",
   category: "Utility",
   aliases: [],
-  description: "Hướng dẫn sài lệnh!",
+  description: "Hướng dẫn dùng lệnh!",
   usage: `help [tên lệnh]`,
   run: async (client, message, args) => {
     if (!args[0]) return getAll(client, message);
