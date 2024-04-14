@@ -26,12 +26,6 @@ module.exports = {
   run: async (client, interaction) => {
     checkSameRoom({ message: null, interaction: interaction, client: client });
 
-    // if (!interaction.member.voice.channel)
-    //   return interaction.reply({
-    //     content: "Bạn phải tham gia một kênh thoại trước khi sử dụng lệnh này!",
-    //     ephemeral: true,
-    //   });
-
     const permissions = interaction.member.voice.channel.permissionsFor(
       interaction.client.user
     );
