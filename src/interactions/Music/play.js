@@ -9,6 +9,7 @@ const {
   ApplicationCommandOptionType,
 } = require("discord.js");
 const config = require("../../config/config");
+const { checkSameRoom } = require("../../utils/music");
 
 module.exports = {
   name: "play",
@@ -23,11 +24,13 @@ module.exports = {
     },
   ],
   run: async (client, interaction) => {
-    if (!interaction.member.voice.channel)
-      return interaction.reply({
-        content: "Bạn phải tham gia một kênh thoại trước khi sử dụng lệnh này!",
-        ephemeral: true,
-      });
+    checkSameRoom({ message: null, interaction: interaction, client: client });
+
+    // if (!interaction.member.voice.channel)
+    //   return interaction.reply({
+    //     content: "Bạn phải tham gia một kênh thoại trước khi sử dụng lệnh này!",
+    //     ephemeral: true,
+    //   });
 
     const permissions = interaction.member.voice.channel.permissionsFor(
       interaction.client.user

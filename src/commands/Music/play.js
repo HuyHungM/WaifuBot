@@ -7,6 +7,7 @@ const {
   ButtonStyle,
 } = require("discord.js");
 const config = require("../../config/config");
+const { checkSameRoom } = require("../../utils/music");
 
 module.exports = {
   name: "play",
@@ -15,10 +16,13 @@ module.exports = {
   description: "Phát nhạc từ Youtube/Spotify/SoundCloud",
   usage: `play <tên/link nhạc>`,
   run: async (client, message, args) => {
-    if (!message.member.voice.channel)
-      return message.reply(
-        "Bạn phải tham gia một kênh thoại trước khi sử dụng lệnh này!"
-      );
+    if (checkSameRoom({ message: message, interaction: null, client: client }))
+      return;
+
+    // if (!message.member.voice.channel)
+    //   return message.reply(
+    //     "Bạn phải tham gia một kênh thoại trước khi sử dụng lệnh này!"
+    //   );
 
     const permissions = message.member.voice.channel.permissionsFor(
       message.client.user

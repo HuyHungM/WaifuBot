@@ -177,6 +177,12 @@ module.exports = (client) => {
       .on("finishSong", async (queue, song) => {
         let msg = client.playingSong.get(queue.id);
         await msg.delete();
+      })
+      .on("disconnect", async (queue) => {
+        let msg = client.playingSong.get(queue.id);
+        if (msg) {
+          await msg.delete();
+        }
       });
   });
 };
