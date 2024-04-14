@@ -83,7 +83,7 @@ module.exports = {
 
       // Create Embed
       const embedDescription = searchResult
-        .sort((a, b) => (a.name < b.name ? 1 : -1))
+        .sort((a, b) => (a.views < b.views ? 1 : -1))
         .map(
           (song, i) =>
             `\`${i + 1}.\` **${song.name}** - \`${
