@@ -45,7 +45,7 @@ const checkSameRoom = ({ message, interaction, client }) => {
 };
 
 const noMusicEmbed = new EmbedBuilder({
-  description: `${config.emotes.error} Hiện tại không có bài hát nào đang phát!`,
+  description: `${config.emotes.error} **Hiện tại không có bài hát nào đang phát!**`,
 }).setColor(config.getEmbedConfig().errorColor);
 
 module.exports = { checkSameRoom, noMusicEmbed };
