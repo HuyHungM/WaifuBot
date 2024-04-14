@@ -16,7 +16,7 @@ module.exports = {
 
     const embed = new EmbedBuilder({
       description: ":stop_button: **Đã dừng phát nhạc!**",
-    }).setColor(config.getEmbedConfig.color);
+    }).setColor(config.getEmbedConfig().color);
 
     interaction.reply({ embeds: [embed], ephemeral: true });
   },
