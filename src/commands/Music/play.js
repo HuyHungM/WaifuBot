@@ -51,9 +51,9 @@ module.exports = {
     };
 
     try {
-      const searchResult = (
-        await client.distube.search(args.join(" "), searchOptions)
-      ).sort((a, b) => (a.views < b.views ? 1 : -1));
+      const searchResult = await client.distube
+        .search(args.join(" "), searchOptions)
+        .sort((a, b) => (a.views < b.views ? 1 : -1));
 
       const searchedSong = Object.fromEntries(
         searchResult.map((song, index) => [
