@@ -51,10 +51,9 @@ module.exports = {
     };
 
     try {
-      const searchResult = await client.distube.search(
-        args.join(" "),
-        searchOptions
-      );
+      const searchResult = await client.distube
+        .search(args.join(" "), searchOptions)
+        .sort((a, b) => (a.views < b.views ? 1 : -1));
 
       const searchedSong = Object.fromEntries(
         searchResult.map((song, index) => [
@@ -67,7 +66,6 @@ module.exports = {
 
       // Create Embed
       const embedDescription = searchResult
-        .sort((a, b) => (a.views < b.views ? 1 : -1))
         .map(
           (song, i) =>
             `\`${i + 1}.\` **${song.name}** - \`${
