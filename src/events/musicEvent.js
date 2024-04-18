@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, ChannelType } = require("discord.js");
 const config = require("../config/config");
 
 module.exports = (client) => {
@@ -175,13 +175,21 @@ module.exports = (client) => {
         queue.textChannel.send({ embeds: [embed] });
       })
       .on("finishSong", async (queue, song) => {
-        let msg = client.playingSong.get(queue.id);
-        await msg.delete();
+        let message = client.playingSong.get(queue.id);
+        let guild = client.guilds.fetch(message.guildId);
+        let channel = guild?.channels?.fetch(message.channel.id);
+        message = channel?.messages?.fetch(message.id);
+        if (message) {
+          await message.delete();
+        }
       })
       .on("disconnect", async (queue) => {
-        let msg = client.playingSong.get(queue.id);
-        if (msg) {
-          await msg.delete();
+        let message = client.playingSong.get(queue.id);
+        let guild = client.guilds.fetch(message.guildId);
+        let channel = guild?.channels?.fetch(message.channel.id);
+        message = channel?.messages?.fetch(message.id);
+        if (message) {
+          await message.delete();
         }
       });
   });
