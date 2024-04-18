@@ -19,7 +19,7 @@ module.exports = {
       type: ApplicationCommandOptionType.Integer,
     },
   ],
-  run: async (client, interaction, args) => {
+  run: async (client, interaction) => {
     const queue = client.distube.getQueue(interaction);
 
     const volume = interaction.options.get("number").value;

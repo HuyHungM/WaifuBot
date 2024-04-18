@@ -33,7 +33,7 @@ module.exports = {
       ],
     },
   ],
-  run: async (client, interaction, args) => {
+  run: async (client, interaction) => {
     const queue = client.distube.getQueue(interaction);
 
     if (!queue)

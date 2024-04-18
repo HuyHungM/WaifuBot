@@ -7,7 +7,7 @@ module.exports = {
   description: "Bỏ qua bài hát hiện tại",
   type: ApplicationCommandType.ChatInput,
   options: [],
-  run: async (client, interaction, args) => {
+  run: async (client, interaction) => {
     const queue = client.distube.getQueue(interaction);
 
     if (!queue)

@@ -8,7 +8,7 @@ module.exports = {
   description: "Chỉnh chế độ tự động phát",
   type: ApplicationCommandType.ChatInput,
   options: [],
-  run: async (client, interaction, args) => {
+  run: async (client, interaction) => {
     const queue = client.distube.getQueue(interaction);
 
     if (!queue)
