@@ -13,12 +13,12 @@ const { checkSameRoom } = require("../../utils/music");
 
 module.exports = {
   name: "play",
-  description: "Phát nhạc từ Youtube/Spotify/SoundCloud",
+  description: "Nghe nhạc cùng waifu của bạn",
   type: ApplicationCommandType.ChatInput,
   options: [
     {
       name: "link-or-query",
-      description: "tên/link bài hát",
+      description: "tên/link bài hát Youtube/Spotify/SoundCloud",
       required: true,
       type: ApplicationCommandOptionType.String,
     },
@@ -35,7 +35,7 @@ module.exports = {
     ) {
       return interaction.reply({
         content:
-          "Bot không có quyền tham gia hoặc phát âm thanh trong kênh này!",
+          "Em chưa có quyền để kết nối hay phát phát nhạc trong kênh này!",
         ephemeral: true,
       });
     }
@@ -54,13 +54,13 @@ module.exports = {
       ephemeral: false,
     });
 
-    const searchOptions = {
-      limit: 5,
-      type: SearchResultType.VIDEO,
-      safeSearch: false,
-    };
-
     try {
+      const searchOptions = {
+        limit: 5,
+        type: SearchResultType.VIDEO,
+        safeSearch: false,
+      };
+
       const searchResult = (
         await client.distube.search(
           interaction.options.get("link-or-query").value,
@@ -89,7 +89,7 @@ module.exports = {
         .join("\n\n");
 
       const embedData = {
-        title: "🔎 Kết quả tìm kiếm...",
+        title: "Anh muốn nghe bài nào ạ :heart:",
         description: embedDescription,
         footer: {
           text: config.getEmbedConfig().footer,

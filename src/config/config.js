@@ -9,7 +9,7 @@ module.exports = {
   },
   emotes: {
     error: "❌",
-    success: "✔",
+    success: "✅",
   },
   music: {
     filters: {

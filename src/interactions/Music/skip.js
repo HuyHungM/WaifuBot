@@ -3,29 +3,36 @@ const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 
 module.exports = {
-  name: "stop",
-  description: "Dừng phát nhạc",
+  name: "skip",
+  description: "Bỏ qua bài hát hiện tại",
   type: ApplicationCommandType.ChatInput,
   options: [],
-  run: async (client, interaction) => {
+  run: async (client, interaction, args) => {
     const queue = client.distube.getQueue(interaction);
 
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
 
+    if (queue.songs.size <= 1 && !queue.autoplay) {
+      const embed = new EmbedBuilder({
+        description: `${config.emotes.error} **Hàng đợi chỉ còn 1 bài hát, không thể skip!**`,
+      }).setColor(config.getEmbedConfig().errorColor);
+      interaction.reply({ embeds: [embed], ephemeral: true });
+    }
+
     try {
       const embed = new EmbedBuilder({
-        description: ":stop_button: **Đã dừng phát nhạc!**",
+        description: `:track_next: **Đã bỏ qua bài** \`${queue.songs[0].name}\`**!**`,
       }).setColor(config.getEmbedConfig().color);
 
-      await client.distube.stop(queue);
+      await client.distube.skip(queue);
 
       interaction.reply({ embeds: [embed], ephemeral: true });
     } catch (error) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
       }).setColor(config.getEmbedConfig().errorColor);
-      interaction.reply({ embeds: [embed] });
+      interaction.reply({ embeds: [embed], ephemeral: true });
       console.log(error);
     }
   },

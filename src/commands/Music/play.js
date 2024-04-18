@@ -13,8 +13,8 @@ module.exports = {
   name: "play",
   aliases: ["p"],
   category: "Music",
-  description: "Phát nhạc từ Youtube/Spotify/SoundCloud",
-  usage: `play <tên/link nhạc>`,
+  description: "Nghe nhạc cùng waifu của bạn",
+  usage: `play <tên/link nhạc> (Youtube/Spotify/SoundCloud)`,
   run: async (client, message, args) => {
     if (checkSameRoom({ message: message, interaction: null, client: client }))
       return;
@@ -27,7 +27,7 @@ module.exports = {
       !permissions.has(PermissionsBitField.Flags.Speak)
     ) {
       return message.reply(
-        "Bot không có quyền tham gia hoặc phát âm thanh trong kênh này!"
+        "Em chưa có quyền để kết nối hay phát phát nhạc trong kênh này!"
       );
     }
 
@@ -44,13 +44,13 @@ module.exports = {
       embeds: [searchingEmbed],
     });
 
-    const searchOptions = {
-      limit: 5,
-      type: SearchResultType.VIDEO,
-      safeSearch: false,
-    };
-
     try {
+      const searchOptions = {
+        limit: 5,
+        type: SearchResultType.VIDEO,
+        safeSearch: false,
+      };
+
       const searchResult = (
         await client.distube.search(args.join(" "), searchOptions)
       ).sort((a, b) => (a.views < b.views ? 1 : -1));
@@ -75,7 +75,7 @@ module.exports = {
         .join("\n\n");
 
       const embedData = {
-        title: "🔎 Kết quả tìm kiếm...",
+        title: "Anh muốn nghe bài nào ạ :heart:",
         description: embedDescription,
         footer: {
           text: config.getEmbedConfig().footer,

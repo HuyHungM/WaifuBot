@@ -3,22 +3,28 @@ const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 
 module.exports = {
-  name: "stop",
+  name: "skip",
   aliases: [],
   category: "Music",
-  description: "Dừng phát nhạc",
-  usage: `stop`,
+  description: "Bỏ qua bài hát hiện tại",
+  usage: `skip`,
   run: async (client, message, args) => {
     const queue = client.distube.getQueue(message);
 
     if (!queue) return message.reply({ embeds: [noMusicEmbed] });
+    if (queue.songs.size <= 1 && !queue.autoplay) {
+      const embed = new EmbedBuilder({
+        description: `${config.emotes.error} **Hàng đợi chỉ còn 1 bài hát, không thể skip!**`,
+      }).setColor(config.getEmbedConfig().errorColor);
+      message.reply({ embeds: [embed] });
+    }
 
     try {
       const embed = new EmbedBuilder({
-        description: ":stop_button: **Đã dừng phát nhạc!**",
+        description: `:track_next: **Đã bỏ qua bài** \`${queue.songs[0].name}\`**!**`,
       }).setColor(config.getEmbedConfig().color);
 
-      await client.distube.stop(queue);
+      await client.distube.skip(queue);
 
       message.channel.send({ embeds: [embed] });
     } catch (error) {
