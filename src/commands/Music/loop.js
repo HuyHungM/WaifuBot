@@ -17,7 +17,7 @@ module.exports = {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Vui lòng tắt chế độ tự động phát!**`,
       }).setColor(config.getEmbedConfig().errorColor);
-      message.reply({ embeds: [embed] });
+      return message.reply({ embeds: [embed] });
     }
 
     try {

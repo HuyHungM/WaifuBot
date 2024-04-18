@@ -17,7 +17,7 @@ module.exports = {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
       }).setColor(config.getEmbedConfig().errorColor);
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      return interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
     try {
