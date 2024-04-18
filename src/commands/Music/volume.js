@@ -12,7 +12,9 @@ module.exports = {
     const queue = client.distube.getQueue(message);
 
     if (!queue) return message.reply({ embeds: [noMusicEmbed] });
-    if (isNaN(args[0]) || Number(args[0]) > 125 || Number(args[0]) < 0) {
+
+    const volume = args[0];
+    if (isNaN(volume) || Number(volume) > 125 || Number(volume) < 0) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Kiểu âm lượng không hợp lệ!** \`0 - 125\``,
       }).setColor(config.getEmbedConfig().color);
@@ -21,7 +23,7 @@ module.exports = {
     }
 
     try {
-      const volume = await client.distube.setVolume(queue, Number(args[0]));
+      await client.distube.setVolume(queue, Number(args[0]));
 
       let vol = {
         low: "🔈",
@@ -32,7 +34,7 @@ module.exports = {
       const embed = new EmbedBuilder({
         description: `${
           volume <= 35 ? vol.low : volume <= 70 ? vol.medium : vol.high
-        } **Đã chỉnh âm lượng thành** \`${volume}\` **!**`,
+        } **Đã chỉnh âm lượng thành** \`${volume}%\` **!**`,
       }).setColor(config.getEmbedConfig().color);
 
       message.channel.send({ embeds: [embed] });

@@ -46,7 +46,7 @@ module.exports = {
       const embed = new EmbedBuilder({
         description: `${
           volume <= 35 ? vol.low : volume <= 70 ? vol.medium : vol.high
-        } **Đã chỉnh âm lượng thành** \`${volume}\` **!**`,
+        } **Đã chỉnh âm lượng thành** \`${volume}%\` **!**`,
       }).setColor(config.getEmbedConfig().color);
 
       interaction.reply({ embeds: [embed], ephemeral: true });
