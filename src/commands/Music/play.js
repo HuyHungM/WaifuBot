@@ -31,6 +31,14 @@ module.exports = {
       );
     }
 
+    const songQuery = args.join(" ");
+    if (songQuery.trim() === "") {
+      const embed = new EmbedBuilder({
+        description: `${config.emotes.error} **Vui lòng nhập tên/link bài hát!**`,
+      }).setColor(config.getEmbedConfig().color);
+      return message.reply({ embeds: [embed] });
+    }
+
     // searching embed
     const searchingEmbedData = {
       description: "🔎 **Đang tìm kiếm...**",
@@ -45,6 +53,17 @@ module.exports = {
     });
 
     try {
+      const urlRegex = /^(?:https?|ftp):\/\/[\w/\-?=%.]+\.[\w/\-?=%.]+$/;
+      if (urlRegex.test(songQuery)) {
+        await client.distube.play(message.member.voice.channel, songQuery, {
+          member: message.member,
+          textChannel: message.channel,
+          message,
+        });
+
+        return await searchingMessage.delete();
+      }
+
       const searchOptions = {
         limit: 5,
         type: SearchResultType.VIDEO,
@@ -52,8 +71,15 @@ module.exports = {
       };
 
       const searchResult = (
-        await client.distube.search(args.join(" "), searchOptions)
+        await client.distube.search(songQuery, searchOptions)
       ).sort((a, b) => (a.views < b.views ? 1 : -1));
+
+      if (!searchResult) {
+        const embed = new EmbedBuilder({
+          description: `${config.emotes.error} **Không tìm thấy kết quả nào cho** \`${songQuery}\` **!**`,
+        }).setColor(config.getEmbedConfig().color);
+        return message.reply({ embeds: [embed] });
+      }
 
       const searchedSong = Object.fromEntries(
         searchResult.map((song, index) => [

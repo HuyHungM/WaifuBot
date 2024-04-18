@@ -55,6 +55,18 @@ module.exports = {
     });
 
     try {
+      const songQuery = interaction.options.get("link-or-query").value;
+      const urlRegex = /^(?:https?|ftp):\/\/[\w/\-?=%.]+\.[\w/\-?=%.]+$/;
+      if (urlRegex.test(songQuery)) {
+        await client.distube.play(interaction.member.voice.channel, songQuery, {
+          member: interaction.member,
+          textChannel: interaction.channel,
+          interaction,
+        });
+
+        return await searchingMessage.delete();
+      }
+
       const searchOptions = {
         limit: 5,
         type: SearchResultType.VIDEO,
@@ -62,11 +74,15 @@ module.exports = {
       };
 
       const searchResult = (
-        await client.distube.search(
-          interaction.options.get("link-or-query").value,
-          searchOptions
-        )
+        await client.distube.search(songQuery, searchOptions)
       ).sort((a, b) => (a.views < b.views ? 1 : -1));
+
+      if (!searchResult) {
+        const embed = new EmbedBuilder({
+          description: `${config.emotes.error} **Không tìm thấy kết quả nào cho** \`${songQuery}\` **!**`,
+        }).setColor(config.getEmbedConfig().color);
+        return interaction.reply({ embeds: [embed], ephemeral: true });
+      }
 
       const searchedSong = Object.fromEntries(
         searchResult.map((song, index) => [
