@@ -12,7 +12,7 @@ module.exports = {
     const queue = client.distube.getQueue(message);
 
     if (!queue) return message.reply({ embeds: [noMusicEmbed] });
-    if (!isNaN(args[0]) || Number(args[0]) > 125 || Number(args[0]) < 0) {
+    if (isNaN(args[0]) || Number(args[0]) > 125 || Number(args[0]) < 0) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Kiểu âm lượng không hợp lệ!** \`0 - 125\``,
       }).setColor(config.getEmbedConfig().color);
