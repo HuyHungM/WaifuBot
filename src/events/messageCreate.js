@@ -11,7 +11,7 @@ module.exports = (client) => {
       return command.run(client, message, args);
     }
 
-    const prefix = process.env.PREFIX;
+    const prefix = process.env.PREFIX.toLowerCase();
     if (!message.content.startsWith(prefix)) return;
     if (!message.guild) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
