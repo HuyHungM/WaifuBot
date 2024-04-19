@@ -46,7 +46,8 @@ module.exports = {
     }
 
     try {
-      let mode = interaction?.options?.get("mode")?.value || undefined;
+      let mode = undefined;
+      mode = interaction?.options?.get("mode")?.value;
 
       mode = await client.distube.setRepeatMode(queue, mode);
 
