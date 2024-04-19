@@ -14,11 +14,11 @@ module.exports = {
     if (!queue) return message.reply({ embeds: [noMusicEmbed] });
 
     try {
+      await client.distube.stop(queue);
+
       const embed = new EmbedBuilder({
         description: ":stop_button: **Đã dừng phát nhạc!**",
       }).setColor(config.getEmbedConfig().color);
-
-      await client.distube.stop(queue);
 
       message.channel.send({ embeds: [embed] });
     } catch (error) {

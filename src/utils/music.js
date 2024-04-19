@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const config = require("../config/config");
+const { RepeatMode } = require("distube");
 
 const checkSameRoom = ({ message, interaction, client }) => {
   if (message) {
@@ -48,4 +49,36 @@ const noMusicEmbed = new EmbedBuilder({
   description: `${config.emotes.error} **Hiện tại không có bài hát nào đang phát!**`,
 }).setColor(config.getEmbedConfig().errorColor);
 
-module.exports = { checkSameRoom, noMusicEmbed };
+const loopModeEmotes = {
+  [RepeatMode.DISABLED]: config.emotes.success,
+  [RepeatMode.SONG]: ":repeat_one:",
+  [RepeatMode.QUEUE]: ":repeat:",
+};
+
+const loopModeMessages = {
+  [RepeatMode.DISABLED]: "Tắt",
+  [RepeatMode.SONG]: "Lặp lại bài hát",
+  [RepeatMode.QUEUE]: "Lặp lại hàng đợi",
+};
+
+const autoplayModeMessages = {
+  [false]: "Tắt",
+  [true]: "Bật",
+};
+
+const filterSubCommand = {
+  ADD: "add",
+  REMOVE: "remove",
+  CLEAR: "clear",
+  ACTIVES: "actives",
+  LIST: "list",
+};
+
+module.exports = {
+  checkSameRoom,
+  noMusicEmbed,
+  filterSubCommand,
+  loopModeEmotes,
+  loopModeMessages,
+  autoplayModeMessages,
+};

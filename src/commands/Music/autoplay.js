@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const config = require("../../config/config");
-const { noMusicEmbed } = require("../../utils/music");
+const { noMusicEmbed, autoplayModeMessages } = require("../../utils/music");
 const { RepeatMode } = require("distube");
 
 module.exports = {
@@ -23,13 +23,8 @@ module.exports = {
     try {
       let mode = await client.distube.toggleAutoplay(queue);
 
-      const modeMessages = {
-        [false]: "Tắt",
-        [true]: "Bật",
-      };
-
       const embed = new EmbedBuilder({
-        description: `${config.emotes.success} **Đã chỉnh chế độ lặp lại thành** \`${modeMessages[mode]}\`**!**`,
+        description: `${config.emotes.success} **Đã chỉnh chế độ lặp lại thành** \`${autoplayModeMessages[mode]}\`**!**`,
       }).setColor(config.getEmbedConfig().color);
 
       message.channel.send({ embeds: [embed] });

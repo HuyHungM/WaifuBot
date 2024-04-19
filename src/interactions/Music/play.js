@@ -13,12 +13,12 @@ const { checkSameRoom } = require("../../utils/music");
 
 module.exports = {
   name: "play",
-  description: "Nghe nhạc cùng waifu của bạn",
+  description: "Nghe nhạc cùng waifu của bạn!",
   type: ApplicationCommandType.ChatInput,
   options: [
     {
       name: "link-or-query",
-      description: "tên/link bài hát Youtube/Spotify/SoundCloud",
+      description: "Tên/link bài hát Youtube/Spotify/SoundCloud",
       required: true,
       type: ApplicationCommandOptionType.String,
     },

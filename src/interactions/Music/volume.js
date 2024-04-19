@@ -14,7 +14,7 @@ module.exports = {
   options: [
     {
       name: "number",
-      description: "âm lượng",
+      description: "Âm lượng",
       required: true,
       type: ApplicationCommandOptionType.Integer,
     },

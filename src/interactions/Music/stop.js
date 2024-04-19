@@ -14,11 +14,11 @@ module.exports = {
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
 
     try {
+      await client.distube.stop(queue);
+
       const embed = new EmbedBuilder({
         description: ":stop_button: **Đã dừng phát nhạc!**",
       }).setColor(config.getEmbedConfig().color);
-
-      await client.distube.stop(queue);
 
       interaction.reply({ embeds: [embed], ephemeral: true });
     } catch (error) {
