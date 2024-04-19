@@ -176,18 +176,12 @@ module.exports = (client) => {
       })
       .on("finishSong", async (queue, song) => {
         let message = client.playingSong.get(queue.id);
-        let fetchMessage = client.guilds.fetch(message.guildId)?.channels?.fetch(message.channelId)?.messages?.fetch(message.id);
-        console.log(fetchMessage);
         if (message) {
           await message.delete();
         }
       })
       .on("disconnect", async (queue) => {
         let message = client.playingSong.get(queue.id);
-        let guild = client.guilds.fetch(message.guildId);
-        let channel = guild?.channels?.fetch(message.channelId);
-        message = channel?.messages?.fetch(message.id);
-        console.log(message, guild, channel);
         if (message) {
           await message.delete();
         }
