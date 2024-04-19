@@ -20,6 +20,7 @@ module.exports = (client) => {
 
     if (!command) command = client.commands.get(client.aliases.get(cmd));
     if (command) {
+      console.log(command);
       command.run(client, message, args);
     }
   });

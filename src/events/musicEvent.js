@@ -188,6 +188,7 @@ module.exports = (client) => {
         let guild = client.guilds.fetch(message.guildId);
         let channel = guild?.channels?.fetch(message.channel.id);
         message = channel?.messages?.fetch(message.id);
+        console.log(message, guild, channel);
         if (message) {
           await message.delete();
         }

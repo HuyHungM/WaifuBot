@@ -13,7 +13,7 @@ module.exports = {
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
 
-    if (queue.songs.size <= 1 && !queue.autoplay) {
+    if (queue.songs.length <= 1 && !queue.autoplay) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Hàng đợi chỉ còn 1 bài hát, không thể skip!**`,
       }).setColor(config.getEmbedConfig().errorColor);

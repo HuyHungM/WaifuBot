@@ -10,6 +10,7 @@ module.exports = (client) => {
     const { commandName } = interaction;
     const command = client.interactions.get(commandName);
     if (command) {
+      console.log(command);
       command.run(client, interaction);
     }
   });
