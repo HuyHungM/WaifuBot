@@ -176,10 +176,8 @@ module.exports = (client) => {
       })
       .on("finishSong", async (queue, song) => {
         let message = client.playingSong.get(queue.id);
-        let guild = client.guilds.fetch(message.guildId);
-        let channel = guild?.channels?.fetch(message.channelId);
-        message = channel?.messages?.fetch(message.id);
-        console.log(message, channel, guild);
+        let fetchMessage = client.guilds.fetch(message.guildId)?.channels?.fetch(message.channelId)?.messages?.fetch(message.id);
+        console.log(fetchMessage);
         if (message) {
           await message.delete();
         }
