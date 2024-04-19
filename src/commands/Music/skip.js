@@ -16,7 +16,7 @@ module.exports = {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Hàng đợi chỉ còn 1 bài hát, không thể skip!**`,
       }).setColor(config.getEmbedConfig().errorColor);
-      message.reply({ embeds: [embed] });
+      return message.reply({ embeds: [embed] });
     }
 
     try {
