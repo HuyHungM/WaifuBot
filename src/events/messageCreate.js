@@ -11,8 +11,8 @@ module.exports = (client) => {
       return command.run(client, message, args);
     }
 
-    const prefix = process.env.PREFIX;
-    if (!message.content.startsWith(prefix)) return;
+    const prefix = process.env.PREFIX.toLowerCase();
+    if (!message.content.toLowerCase().startsWith(prefix)) return;
     if (!message.guild) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const cmd = args.shift().toLowerCase();
@@ -20,7 +20,6 @@ module.exports = (client) => {
 
     if (!command) command = client.commands.get(client.aliases.get(cmd));
     if (command) {
-      console.log(command);
       command.run(client, message, args);
     }
   });
