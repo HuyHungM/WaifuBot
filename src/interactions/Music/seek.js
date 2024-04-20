@@ -13,10 +13,22 @@ module.exports = {
   type: ApplicationCommandType.ChatInput,
   options: [
     {
-      name: "duration",
-      description: "Khoảng thời gian (h/m/s)",
+      name: "second",
+      description: "Giây",
       required: true,
-      type: ApplicationCommandOptionType.String,
+      type: ApplicationCommandOptionType.Integer,
+    },
+    {
+      name: "minute",
+      description: "Phút",
+      required: false,
+      type: ApplicationCommandOptionType.Integer,
+    },
+    {
+      name: "hour",
+      description: "Giờ",
+      required: false,
+      type: ApplicationCommandOptionType.Integer,
     },
   ],
   run: async (client, interaction) => {
@@ -26,14 +38,17 @@ module.exports = {
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
 
     try {
-      let duration = interaction.options.get("duration").value;
+      const hour = interaction.options.get("hour").value || 0;
+      const minute = interaction.options.get("minute").value || 0;
+      const second = interaction.options.get("second").value || 0;
+      let duration = `${hour}h ${minute}m ${second}s`.trim().split(/ +/g);
 
       let time = 0;
 
-      for (let i = 0; i < args.length; i++) {
-        time += ms(duration);
+      for (let i = 0; i < duration.length; i++) {
+        time += ms(duration[i]);
       }
-      i /= 1000;
+      time /= 1000;
 
       if (isNaN(time)) {
         const embed = new EmbedBuilder({

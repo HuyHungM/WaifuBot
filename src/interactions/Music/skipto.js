@@ -5,51 +5,47 @@ const {
 } = require("discord.js");
 const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
-const volume = require("../../commands/Music/volume");
 
 module.exports = {
-  name: "volume",
-  description: "Chỉnh âm lượng",
+  name: "skipto",
+  description: "Bỏ qua bài hát đến một vị trí nhất định",
   type: ApplicationCommandType.ChatInput,
   options: [
     {
-      name: "number",
-      description: "Âm lượng",
+      name: "position",
+      description: "Vị trí",
       required: true,
-      type: ApplicationCommandOptionType.Number,
+      type: ApplicationCommandOptionType.Integer,
     },
   ],
   run: async (client, interaction) => {
     const queue = client.distube.getQueue(interaction);
 
-    const volume = interaction.options.get("number").value;
-
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
-    if (volume > 125 || volume < 0) {
+
+    const position = interaction.options.get("position").value;
+
+    if (position > queue.songs.length || position < 1) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Kiểu âm lượng không hợp lệ!** \`0 - 125\``,
+        description: `${config.emotes.error} **Vị trí không hợp lệ!** \`1 - ${queue.songs.length}\``,
       }).setColor(config.getEmbedConfig().color);
 
       return interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
     try {
-      await client.distube.setVolume(queue, volume);
+      const skipToSong = await client.distube.jump(queue, position);
 
-      let vol = {
-        low: "🔈",
-        medium: "🔉",
-        high: "🔊",
-      };
+      if (skipToSong) {
+        const embed = new EmbedBuilder({
+          description: `:track_next: **Đã bỏ qua đến bài** \`${
+            skipToSong.name
+          }\`**!**\n**Hàng đợi còn** \`${queue.songs.length - 1}\` bài`,
+        }).setColor(config.getEmbedConfig().color);
 
-      const embed = new EmbedBuilder({
-        description: `${
-          volume <= 35 ? vol.low : volume <= 70 ? vol.medium : vol.high
-        } **Đã chỉnh âm lượng thành** \`${volume}%\` **!**`,
-      }).setColor(config.getEmbedConfig().color);
-
-      interaction.reply({ embeds: [embed], ephemeral: true });
+        interaction.reply({ embeds: [embed], ephemeral: true });
+      }
     } catch (error) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,

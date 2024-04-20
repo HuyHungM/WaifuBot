@@ -1,4 +1,4 @@
-const { EmbedBuilder, ChannelType } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const config = require("../config/config");
 
 module.exports = (client) => {
@@ -45,7 +45,7 @@ module.exports = (client) => {
             },
             {
               name: "Filters: ",
-              value: `\`${queue.filters.values.join(", ") || "Tắt"}\``,
+              value: `\`${queue.filters.names.join(", ") || "Tắt"}\``,
               inline: true,
             },
           ],

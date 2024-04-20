@@ -20,7 +20,7 @@ module.exports = {
       for (let i = 0; i < args.length; i++) {
         time += ms(args[i]);
       }
-      i /= 1000;
+      time /= 1000;
 
       if (isNaN(time) || !args[0]) {
         const embed = new EmbedBuilder({
