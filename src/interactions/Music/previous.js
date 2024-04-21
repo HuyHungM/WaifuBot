@@ -1,11 +1,10 @@
 const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
 const config = require("../../config/config");
-const { noMusicEmbed, autoplayModeMessages } = require("../../utils/music");
-const { RepeatMode } = require("distube");
+const { noMusicEmbed } = require("../../utils/music");
 
 module.exports = {
-  name: "autoplay",
-  description: "Chỉnh chế độ tự động phát",
+  name: "previous",
+  description: "Phát bài hát trước đó",
   type: ApplicationCommandType.ChatInput,
   options: [],
   run: async (client, interaction) => {
@@ -13,18 +12,20 @@ module.exports = {
 
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
-    if (queue.repeatMode != RepeatMode.DISABLED) {
+
+    if (!queue.previousSongs || queue.previousSongs.length === 0) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${config.emotes.error} **Bài hát trước đó không tồn tại!**`,
+      }).setColor(config.getEmbedConfig().color);
+
       return interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
     try {
-      let mode = await client.distube.toggleAutoplay(queue);
+      const previousSong = await client.distube.previous(queue);
 
       const embed = new EmbedBuilder({
-        description: `${config.emotes.success} **Đã chỉnh chế độ tự động phát lại thành** \`${autoplayModeMessages[mode]}\`**!**`,
+        description: `:track_previous: **Đã phát bài hát trước đó** \`${previousSong.name}\` - \`${previousSong.formattedDuration}\` **!**`,
       }).setColor(config.getEmbedConfig().color);
 
       interaction.reply({ embeds: [embed], ephemeral: true });

@@ -72,7 +72,7 @@ module.exports = {
 
       const searchResult = (
         await client.distube.search(songQuery, searchOptions)
-      ).sort((a, b) => (a.views < b.views ? 1 : -1));
+      )?.sort((a, b) => (a.views < b.views ? 1 : -1));
 
       if (!searchResult) {
         const embed = new EmbedBuilder({

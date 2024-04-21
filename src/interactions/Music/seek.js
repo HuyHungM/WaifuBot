@@ -38,9 +38,9 @@ module.exports = {
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
 
     try {
-      const hour = interaction.options.get("hour").value || 0;
-      const minute = interaction.options.get("minute").value || 0;
-      const second = interaction.options.get("second").value || 0;
+      const hour = interaction.options.get("hour")?.value || 0;
+      const minute = interaction.options.get("minute")?.value || 0;
+      const second = interaction.options.get("second")?.value || 0;
       let duration = `${hour}h ${minute}m ${second}s`.trim().split(/ +/g);
 
       let time = 0;

@@ -1,30 +1,31 @@
 const { EmbedBuilder } = require("discord.js");
 const config = require("../../config/config");
-const { noMusicEmbed, autoplayModeMessages } = require("../../utils/music");
-const { RepeatMode } = require("distube");
+const { noMusicEmbed } = require("../../utils/music");
 
 module.exports = {
-  name: "autoplay",
+  name: "pause",
   aliases: [],
   category: "Music",
-  description: "Chỉnh chế độ tự động phát",
-  usage: `autoplay`,
+  description: "Tạm dừng bài hát",
+  usage: `pause`,
   run: async (client, message, args) => {
     const queue = client.distube.getQueue(message);
 
     if (!queue) return message.reply({ embeds: [noMusicEmbed] });
-    if (queue.repeatMode != RepeatMode.DISABLED) {
+
+    if (queue.paused) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${config.emotes.error} **Bài hát hiện đã tạm dừng!**`,
+      }).setColor(config.getEmbedConfig().color);
+
       return message.reply({ embeds: [embed] });
     }
 
     try {
-      let mode = await client.distube.toggleAutoplay(queue);
+      await client.distube.pause(queue);
 
       const embed = new EmbedBuilder({
-        description: `${config.emotes.success} **Đã chỉnh chế độ tự động phát lại thành** \`${autoplayModeMessages[mode]}\`**!**`,
+        description: `:arrow_forward: **Đã tạm dừng bài hát!**`,
       }).setColor(config.getEmbedConfig().color);
 
       message.channel.send({ embeds: [embed] });

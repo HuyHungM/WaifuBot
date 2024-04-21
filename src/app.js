@@ -22,6 +22,7 @@ const client = new Client({
 client.commands = new Collection();
 client.aliases = new Collection();
 client.interactions = new Collection();
+client.interactionButtons = new Collection();
 client.categories = readdirSync("./src/commands/");
 
 readdirSync("./src/handlers")
