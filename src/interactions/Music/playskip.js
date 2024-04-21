@@ -26,20 +26,6 @@ module.exports = {
   run: async (client, interaction) => {
     checkSameRoom({ message: null, interaction: interaction, client: client });
 
-    const permissions = interaction.member.voice.channel.permissionsFor(
-      interaction.client.user
-    );
-    if (
-      !permissions.has(PermissionsBitField.Flags.Connect) ||
-      !permissions.has(PermissionsBitField.Flags.Speak)
-    ) {
-      return interaction.reply({
-        content:
-          "Em chưa có quyền để kết nối hay phát phát nhạc trong kênh này!",
-        ephemeral: true,
-      });
-    }
-
     // searching embed
     const searchingEmbedData = {
       description: "🔎 **Đang tìm kiếm...**",
@@ -107,7 +93,7 @@ module.exports = {
         .join("\n\n");
 
       const embedData = {
-        title: "Anh muốn nghe bài nào ạ :heart:",
+        title: "🔎 Kết quả tìm kiếm...",
         description: embedDescription,
         footer: {
           text: config.getEmbedConfig().footer,

@@ -22,7 +22,7 @@ module.exports = {
     }
 
     try {
-      await client.distube.pause(queue);
+      await client.distube.resume(queue);
 
       const embed = new EmbedBuilder({
         description: `:arrow_forward: **Đã tiếp tục bài hát!**`,

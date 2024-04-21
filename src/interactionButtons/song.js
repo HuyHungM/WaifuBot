@@ -10,20 +10,6 @@ module.exports = {
         ephemeral: true,
       });
 
-    const permissions = interaction.member.voice.channel.permissionsFor(
-      interaction.client.user
-    );
-    if (
-      !permissions.has(PermissionsBitField.Flags.Connect) ||
-      !permissions.has(PermissionsBitField.Flags.Speak)
-    ) {
-      return interaction.reply({
-        content:
-          "Bot không có quyền tham gia hoặc phát âm thanh trong kênh này!",
-        ephemeral: true,
-      });
-    }
-
     const messageID = args[1];
 
     try {

@@ -9,18 +9,6 @@ module.exports = {
     if (checkSameRoom({ message: message, interaction: null, client: client }))
       return;
 
-    const permissions = message.member.voice.channel.permissionsFor(
-      message.client.user
-    );
-    if (
-      !permissions.has(PermissionsBitField.Flags.Connect) ||
-      !permissions.has(PermissionsBitField.Flags.Speak)
-    ) {
-      return message.reply(
-        "Em chưa có quyền để kết nối hay phát phát nhạc trong kênh này!"
-      );
-    }
-
     const songQuery = args.join(" ");
     if (songQuery.trim() === "") {
       const embed = new EmbedBuilder({
@@ -94,7 +82,7 @@ module.exports = {
         .join("\n\n");
 
       const embedData = {
-        title: "Anh muốn nghe bài nào ạ :heart:",
+        title: "🔎 Kết quả tìm kiếm...",
         description: embedDescription,
         footer: {
           text: config.getEmbedConfig().footer,
