@@ -12,7 +12,7 @@ const button = "🔘";
 
 module.exports = {
   name: "queue",
-  description: "Xem danh sách nhạc đang phát",
+  description: "Xem danh sách bài hát đang phát",
   type: ApplicationCommandType.ChatInput,
   options: [],
   run: async (client, interaction) => {

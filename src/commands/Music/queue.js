@@ -13,7 +13,7 @@ module.exports = {
   name: "queue",
   aliases: [],
   category: "Music",
-  description: "Xem danh sách nhạc đang phát",
+  description: "Xem danh sách bài hát đang phát",
   usage: `queue`,
   run: async (client, message, args) => {
     const queue = await client.distube.getQueue(message);
