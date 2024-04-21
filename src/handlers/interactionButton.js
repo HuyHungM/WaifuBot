@@ -12,11 +12,11 @@ module.exports = (client) => {
           interactionButton
         );
         console.log(
-          `🟢 [COMMAND BUTTON]: Đã tải command button ${interactionButton.name}`
+          `🟢 [BUTTON COMMAND]: Đã tải button command ${interactionButton.name}`
         );
       } else {
         console.log(
-          `🟠 [WARN - SLASH COMMAND]: Không thể tải command button ${
+          `🟠 [WARN - BUTTON COMMAND]: Không thể tải button command ${
             file.split(".")[0]
           } - thiếu interactionButton.name`
         );

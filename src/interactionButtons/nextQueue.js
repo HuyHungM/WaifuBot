@@ -117,6 +117,7 @@ module.exports = {
       components: rowComponents,
     });
 
-    await interaction.message.edit({ embeds: [embed], components: [row] });
+    await interaction.message.delete();
+    await interaction.reply({ embeds: [embed], components: [row] });
   },
 };
