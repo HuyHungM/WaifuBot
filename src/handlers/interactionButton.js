@@ -15,7 +15,7 @@ module.exports = (client) => {
           `🟢 [BUTTON COMMAND]: Đã tải button command ${interactionButton.name}`
         );
       } else {
-        console.log(
+        console.warn(
           `🟠 [WARN - BUTTON COMMAND]: Không thể tải button command ${
             file.split(".")[0]
           } - thiếu interactionButton.name`

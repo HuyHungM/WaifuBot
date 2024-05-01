@@ -1,5 +1,4 @@
 const { ApplicationCommandType } = require("discord.js");
-const { findWaifu, updateWaifuMessage } = require("../../api/waifuAPI");
 
 module.exports = {
   name: "dm-chat",
@@ -7,7 +6,7 @@ module.exports = {
   type: ApplicationCommandType.ChatInput,
   options: [],
   run: async (client, interaction) => {
-    let waifuData = await findWaifu({ ownerID: interaction.user.id });
+    let waifuData = await client.waifuai.find({ ownerID: interaction.user.id });
     if (!waifuData)
       return interaction.reply({
         content: `Bạn chưa khởi tạo waifu cho mình. Vui lòng dùng lênh ${process.env.PREFIX}waifu-create.`,

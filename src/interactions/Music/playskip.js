@@ -1,6 +1,5 @@
 const { SearchResultType } = require("distube");
 const {
-  PermissionsBitField,
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
@@ -71,15 +70,6 @@ module.exports = {
         return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
-      const searchedSong = Object.fromEntries(
-        searchResult.map((song, index) => [
-          `song-skip_${index + 1}_${searchingMessage.id}`,
-          { url: song.url },
-        ])
-      );
-
-      client.searchedSongs.set(searchingMessage.id, searchedSong);
-
       // Create Embed
       const embedDescription = searchResult
         .map(
@@ -107,10 +97,9 @@ module.exports = {
       );
 
       // Create Button Row
-
       const rowData = {
-        components: Array.from({ length: 5 }, (_, index) => {
-          const buttonId = `song-skip_${index + 1}_${searchingMessage.id}`;
+        components: searchResult.map((song, index) => {
+          const buttonId = `song-skip ${song.url} ${searchingMessage.id}`;
           return new ButtonBuilder({
             custom_id: buttonId,
             label: `${index + 1}`,
@@ -122,7 +111,7 @@ module.exports = {
       const closeRowData = {
         components: [
           new ButtonBuilder({
-            custom_id: `close_${searchingMessage.id}`,
+            custom_id: `close ${searchingMessage.id}`,
             label: "X",
             style: ButtonStyle.Danger,
           }),
@@ -146,8 +135,7 @@ module.exports = {
         components: [],
         ephemeral: true,
       });
-      client.searchedSongs.delete(searchingMessage.id);
-      console.log(error);
+      console.error(error);
     }
   },
 };

@@ -32,7 +32,7 @@ module.exports = {
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
       }).setColor(config.getEmbedConfig().errorColor);
       message.reply({ embeds: [embed] });
-      console.log(error);
+      console.error(error);
     }
   },
 };

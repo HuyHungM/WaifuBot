@@ -1,5 +1,3 @@
-const { findWaifu } = require("../../api/waifuAPI");
-
 module.exports = {
   name: "dm-chat",
   aliases: ["dm", "dm-c", "ib"],
@@ -7,7 +5,7 @@ module.exports = {
   description: "Nhắn riêng với bot",
   usage: "dm-chat",
   run: async (client, message, args) => {
-    let waifuData = await findWaifu({ ownerID: message.author.id });
+    let waifuData = await client.waifuai.find({ ownerID: message.author.id });
     if (!waifuData)
       return message.reply(
         `Bạn chưa khởi tạo waifu cho mình. Vui lòng dùng lênh ${process.env.PREFIX}waifu-create.`

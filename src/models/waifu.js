@@ -10,10 +10,6 @@ const waifuSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-    model: {
-      type: String,
-      require: true,
-    },
     messages: {
       type: Array,
       require: true,

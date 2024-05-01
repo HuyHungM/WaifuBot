@@ -1,6 +1,3 @@
-const { deleteMessageState } = require("../../api/messageAPI");
-const { findWaifu, deleteWaifu } = require("../../api/waifuAPI");
-
 module.exports = {
   name: "waifu-delete",
   aliases: ["w-delete"],
@@ -8,7 +5,7 @@ module.exports = {
   description: "Xoá waifu cho bạn",
   usage: "waifu-delete",
   run: async (client, message, args) => {
-    const waifuData = await findWaifu({ ownerID: message.author.id });
+    const waifuData = await client.waifuai.find({ ownerID: message.author.id });
     if (!waifuData) return message.reply("Waifu của bạn chưa tồn tại");
 
     await message.author.createDM();
@@ -21,11 +18,11 @@ module.exports = {
     });
     await message.author.deleteDM();
 
-    const deleteWaifuData = await deleteWaifu({
+    const deleteWaifuData = await client.waifuai.delete({
       ownerID: message.author.id,
     });
 
-    const deleteDelayStateData = await deleteMessageState({
+    const deleteDelayStateData = await client.waifuai.deleteMessageState({
       ownerID: message.author.id,
     });
 

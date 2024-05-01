@@ -1,4 +1,4 @@
-const { PermissionsBitField, EmbedBuilder } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const config = require("../config/config");
 
 module.exports = {
@@ -13,23 +13,9 @@ module.exports = {
     const messageID = args[1];
 
     try {
-      let searchedSong = client.searchedSongs.get(messageID);
-      if (!searchedSong) {
-        const embed = new EmbedBuilder({
-          description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-        }).setColor(config.getEmbedConfig().errorColor);
-        return interaction.reply({
-          embeds: [embed],
-          ephemeral: true,
-        });
-      }
-
-      const song = searchedSong[interaction.customId];
-
       await interaction.message.delete();
-      await client.searchedSongs.delete(messageID);
 
-      await client.distube.play(interaction.member.voice.channel, song.url, {
+      await client.distube.play(interaction.member.voice.channel, args[0], {
         member: interaction.member,
         textChannel: interaction.channel,
         interaction,
@@ -43,8 +29,7 @@ module.exports = {
         embeds: [embed],
         ephemeral: true,
       });
-      client.searchedSongs.delete(messageID);
-      console.log(error);
+      console.error(error);
     }
   },
 };

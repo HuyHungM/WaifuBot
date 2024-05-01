@@ -15,6 +15,6 @@ module.exports = async (client) => {
       body: interactionData,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

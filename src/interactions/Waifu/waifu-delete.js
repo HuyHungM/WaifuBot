@@ -1,6 +1,4 @@
 const { ApplicationCommandType } = require("discord.js");
-const { deleteMessageState } = require("../../api/messageAPI");
-const { findWaifu, deleteWaifu } = require("../../api/waifuAPI");
 
 module.exports = {
   name: "waifu-delete",
@@ -8,7 +6,9 @@ module.exports = {
   type: ApplicationCommandType.ChatInput,
   options: [],
   run: async (client, interaction) => {
-    const waifuData = await findWaifu({ ownerID: interaction.user.id });
+    const waifuData = await client.waifuai.find({
+      ownerID: interaction.user.id,
+    });
     if (!waifuData)
       return interaction.reply({
         content: "Waifu của bạn chưa tồn tại",
@@ -25,11 +25,11 @@ module.exports = {
     });
     await interaction.user.deleteDM();
 
-    const deleteWaifuData = await deleteWaifu({
+    const deleteWaifuData = await client.waifuai.delete({
       ownerID: interaction.user.id,
     });
 
-    const deleteDelayStateData = await deleteMessageState({
+    const deleteDelayStateData = await client.waifuai.deleteMessageState({
       ownerID: interaction.user.id,
     });
 

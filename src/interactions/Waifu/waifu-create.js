@@ -2,8 +2,6 @@ const {
   ApplicationCommandType,
   ApplicationCommandOptionType,
 } = require("discord.js");
-const { createMessageState } = require("../../api/messageAPI");
-const { createWaifu, findWaifu } = require("../../api/waifuAPI");
 const AIConfig = require("../../config/AIConfig");
 
 module.exports = {
@@ -19,7 +17,7 @@ module.exports = {
     },
   ],
   run: async (client, interaction) => {
-    const waifuData = await findWaifu({ ownerID: interaction.id });
+    const waifuData = await client.waifuai.find({ ownerID: interaction.id });
     if (waifuData)
       return interaction.reply({
         content:
@@ -28,17 +26,16 @@ module.exports = {
       });
 
     try {
-      await createWaifu({
+      await client.waifuai.create({
         name: interaction.options.get("name").value,
         ownerID: interaction.user.id,
-        model: "gpt-3.5-turbo",
         messages: AIConfig.getStarterMessage(
           interaction,
           interaction.options.get("name").value
         ),
       });
 
-      await createMessageState({
+      await client.waifuai.createMessageState({
         isReplied: true,
         ownerID: interaction.user.id,
       });
@@ -57,7 +54,7 @@ module.exports = {
         content: "Đã xảy ra lỗi khi khởi tạo waifu cho bạn.",
         ephemeral: true,
       });
-      console.log(error);
+      console.error(error);
     }
   },
 };

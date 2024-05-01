@@ -1,4 +1,11 @@
+const {
+  EmbedBuilder,
+  ButtonBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+} = require("discord.js");
 const config = require("../../config/config");
+const { checkSameRoom } = require("../../utils/music");
 
 module.exports = {
   name: "playskip",
@@ -60,15 +67,6 @@ module.exports = {
         return message.reply({ embeds: [embed] });
       }
 
-      const searchedSong = Object.fromEntries(
-        searchResult.map((song, index) => [
-          `song-skip_${index + 1}_${searchingMessage.id}`,
-          { url: song.url },
-        ])
-      );
-
-      client.searchedSongs.set(searchingMessage.id, searchedSong);
-
       // Create Embed
       const embedDescription = searchResult
         .map(
@@ -98,8 +96,8 @@ module.exports = {
       // Create Button Row
 
       const rowData = {
-        components: Array.from({ length: 5 }, (_, index) => {
-          const buttonId = `song-skip_${index + 1}_${searchingMessage.id}`;
+        components: searchResult.map((song, index) => {
+          const buttonId = `song-skip ${song.url}`;
           return new ButtonBuilder({
             custom_id: buttonId,
             label: `${index + 1}`,
@@ -111,7 +109,7 @@ module.exports = {
       const closeRowData = {
         components: [
           new ButtonBuilder({
-            custom_id: `close_${searchingMessage.id}`,
+            custom_id: `close ${searchingMessage.id}`,
             label: "X",
             style: ButtonStyle.Danger,
           }),
@@ -130,8 +128,7 @@ module.exports = {
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
       }).setColor(config.getEmbedConfig().errorColor);
       searchingMessage.edit({ embeds: [errorEmbed], components: [] });
-      client.searchedSongs.delete(searchingMessage.id);
-      console.log(error);
+      console.error(error);
     }
   },
 };

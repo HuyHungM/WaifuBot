@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= client.user.username %></title>
+    <link rel="shortcut icon" href="/assets/logo.png" type="image/png" />
+    <!-- MATERIAL ICON -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/global.css" />
+  </head>
+  <body onload="loadPage()" class="dark-theme">
+    <div id="loader">
+      <div class="loading">
+        <span></span>
+      </div>
+    </div>
+
+    <div id="container">
+      <!-- NAVBAR -->
+      <nav id="navbar" class="isScroll">
+        <div class="center">
+          <a href="#" class="name hover-glow"><%= client.user.username %></a>
+          <ul class="social-credit">
+            <li class="hover-glow">
+              <a href="#">
+                <i class="fa-brands fa-discord"></i>
+              </a>
+            </li>
+            <li class="hover-glow">
+              <a href="#">
+                <i class="fa-brands fa-youtube"></i>
+              </a>
+            </li>
+            <li class="hover-glow">
+              <a href="#">
+                <i class="fa-brands fa-tiktok"></i>
+              </a>
+            </li>
+            <li class="hover-glow">
+              <a href="#">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+            </li>
+            <li class="hover-glow">
+              <a href="#">
+                <i class="fa-brands fa-x-twitter"></i>
+              </a>
+            </li>
+            <li class="hover-glow">
+              <a href="#">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- INTRODUCE -->
+      <section id="introduce">
+        <h2>Introducing</h2>
+        <h1><span>Waifu</span> Bot</h1>
+        <div class="intro-button">
+          <a id="invite" href="">Add to Discord</a>
+          <a id="dashboard" href="/dashboard">Dashboard</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="/js/global.js"></script>
+  </body>
+</html>

@@ -1,5 +1,3 @@
-const { createMessageState } = require("../../api/messageAPI");
-const { createWaifu, findWaifu } = require("../../api/waifuAPI");
 const AIConfig = require("../../config/AIConfig");
 
 module.exports = {
@@ -9,7 +7,7 @@ module.exports = {
   description: "Tạo waifu cho bạn",
   usage: "waifu-create <tên>",
   run: async (client, message, args) => {
-    const waifuData = await findWaifu({ ownerID: message.author.id });
+    const waifuData = await client.waifuai.find({ ownerID: message.author.id });
     if (waifuData)
       return message.reply(
         "Bạn đã khởi tạo waifu cho riêng mình. Vui lòng dùng lệnh waifu-delete để tạo mới."
@@ -19,14 +17,13 @@ module.exports = {
       return message.reply("Vui lòng đặt tên cho waifu của bạn.");
 
     try {
-      await createWaifu({
+      await client.waifuai.create({
         name: args.join(" "),
         ownerID: message.author.id,
-        model: "gpt-3.5-turbo",
         messages: AIConfig.getStarterMessage(message, args),
       });
 
-      await createMessageState({
+      await client.waifuai.createMessageState({
         isReplied: true,
         ownerID: message.author.id,
       });
@@ -42,6 +39,7 @@ module.exports = {
       message.author.send("Chào anh nhé :heart:");
     } catch (error) {
       message.reply("Đã xảy ra lỗi khi khởi tạo waifu cho bạn.");
+      console.error(error);
     }
   },
 };

@@ -1,14 +1,14 @@
 module.exports = (client) => {
   process.on("unhandledRejection", (reason, p) => {
-    console.log("🔴 [AntiCrash]: Unhandled Rejection/Catch");
-    console.log(reason);
+    console.error("🔴 [AntiCrash]: Unhandled Rejection/Catch");
+    console.error(reason);
   });
   process.on("uncaughtException", (err, origin) => {
-    console.log("🔴 [AntiCrash]: Uncaught Exception/Catch");
-    console.log(err);
+    console.error("🔴 [AntiCrash]: Uncaught Exception/Catch");
+    console.error(err);
   });
   process.on("uncaughtExceptionMonitor", (err, origin) => {
-    console.log("🔴 [AntiCrash]: Uncaught Exception/Catch (MONITOR)");
-    console.log(err);
+    console.error("🔴 [AntiCrash]: Uncaught Exception/Catch (MONITOR)");
+    console.error(err);
   });
 };

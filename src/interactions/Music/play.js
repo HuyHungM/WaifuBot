@@ -146,7 +146,7 @@ module.exports = {
         ephemeral: true,
       });
       client.searchedSongs.delete(searchingMessage.id);
-      console.log(error);
+      console.error(error);
     }
   },
 };

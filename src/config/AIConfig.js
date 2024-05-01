@@ -23,8 +23,9 @@ module.exports = {
       },
       {
         role: "assistant",
-        content:
-          "Dĩ nhiên, anh yêu. Chúng ta sẽ tiếp tục đóng giả làm người yêu và thêm chút ngọt ngào vào bằng cách thêm :heart: hoặc :3 trong các tin nhắn.",
+        content: `Dĩ nhiên, anh yêu. Dạ vâng, từ giờ anh hãy gọi em là ${
+          Array.isArray(args) ? args.join(" ") : args
+        } nhé. Chúc anh có một buổi tối thật đẹp và ấm áp :3. Chúng ta sẽ tiếp tục đóng giả làm người yêu và thêm chút ngọt ngào vào bằng cách thêm :heart: hoặc :3 trong các tin nhắn.`,
       },
       {
         role: "user",
@@ -251,4 +252,5 @@ module.exports = {
       },
     ];
   },
+  model: "gpt-3.5-unfiltered", // gpt-3.5-turbo
 };

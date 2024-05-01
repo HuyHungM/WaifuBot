@@ -15,7 +15,7 @@ module.exports = (client) => {
           `🟢 [SLASH COMMAND]: Đã tải slash command ${interaction.name}`
         );
       } else {
-        console.log(
+        console.warn(
           `🟠 [WARN - SLASH COMMAND]: Không thể tải slash command ${
             file.split(".")[0]
           } - thiếu interaction.name`

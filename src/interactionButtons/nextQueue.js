@@ -88,7 +88,7 @@ module.exports = {
     if (currentPage > 1) {
       rowComponents.push(
         new ButtonBuilder({
-          custom_id: `previous-queue_${currentPage}`,
+          custom_id: `previous-queue ${currentPage}`,
           emoji: "◀",
           style: ButtonStyle.Primary,
         })
@@ -97,7 +97,7 @@ module.exports = {
 
     rowComponents.push(
       new ButtonBuilder({
-        custom_id: `close_${interaction.message.id}`,
+        custom_id: `close ${interaction.message.id}`,
         label: "X",
         style: ButtonStyle.Danger,
       })
@@ -106,7 +106,7 @@ module.exports = {
     if (totalPages > 1 && currentPage < totalPages) {
       rowComponents.push(
         new ButtonBuilder({
-          custom_id: `next-queue_${currentPage}`,
+          custom_id: `next-queue ${currentPage}`,
           emoji: "▶",
           style: ButtonStyle.Primary,
         })

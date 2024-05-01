@@ -2,11 +2,7 @@ const {
   ApplicationCommandType,
   ApplicationCommandOptionType,
 } = require("discord.js");
-const {
-  findMessageState,
-  updateMessageState,
-} = require("../../api/messageAPI");
-const { findWaifu, updateWaifuMessage } = require("../../api/waifuAPI");
+const { model } = require("../../config/AIConfig");
 
 module.exports = {
   name: "chat",
@@ -21,7 +17,9 @@ module.exports = {
     },
   ],
   run: async (client, interaction) => {
-    let waifuData = await findWaifu({ ownerID: interaction.user.id });
+    let waifuData = await client.waifuai.find({
+      ownerID: interaction.user.id,
+    });
     if (!waifuData)
       return interaction.reply({
         content:
@@ -37,13 +35,13 @@ module.exports = {
         ephemeral: true,
       });
 
-    const messageState = await findMessageState({
+    const messageState = await client.waifuai.findMessageState({
       ownerID: interaction.user.id,
     });
 
     if (!messageState?.isReplied) return;
 
-    await updateMessageState({
+    await client.waifuai.updateMessageState({
       state: false,
       ownerID: interaction.user.id,
     });
@@ -52,32 +50,42 @@ module.exports = {
 
     try {
       interaction.reply({ content: "`Đang soạn...`", ephemeral: true });
-      const res = await client.waifuai.create({
+      const res = await client.waifuai.createMessage({
         messages: waifuData.messages,
-        model: waifuData.model,
-        max_tokens: 1000,
+        model: model,
       });
 
       interaction.editReply(res.choices[0].message.content);
+
+      if (res?.choices[0]?.message?.content?.toLowerCase().includes("error")) {
+        return await client.waifuai.updateMessageState({
+          state: true,
+          ownerID: message.author.id,
+        });
+      }
 
       waifuData.messages.push({
         role: "assistant",
         content: res.choices[0].message.content,
       });
 
-      await updateWaifuMessage({
+      waifuData.messages.push({
+        role: "system",
+        content: `Bạn tên là ${waifuData.name}`,
+      });
+
+      await client.waifuai.updateMessage({
         ownerID: interaction.user.id,
         messages: waifuData.messages,
       });
 
-      await updateMessageState({
+      await client.waifuai.updateMessageState({
         state: true,
         ownerID: interaction.user.id,
       });
     } catch (error) {
-      console.error(error);
       interaction.reply({ content: "Đã xảy ra lỗi", ephemeral: true });
-      await updateMessageState({
+      await client.waifuai.updateMessageState({
         state: true,
         ownerID: interaction.user.id,
       });

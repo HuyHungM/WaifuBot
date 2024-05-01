@@ -24,6 +24,7 @@ client.aliases = new Collection();
 client.interactions = new Collection();
 client.interactionButtons = new Collection();
 client.categories = readdirSync("./src/commands/");
+module.exports = client;
 
 readdirSync("./src/handlers")
   .filter((file) => file.endsWith(".js"))

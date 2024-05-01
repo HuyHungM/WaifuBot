@@ -75,7 +75,7 @@ module.exports = {
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
       }).setColor(config.getEmbedConfig().errorColor);
       interaction.reply({ embeds: [embed], ephemeral: true });
-      console.log(error);
+      console.error(error);
     }
   },
 };

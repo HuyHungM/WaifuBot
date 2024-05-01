@@ -1,8 +1,4 @@
-const {
-  findMessageState,
-  updateMessageState,
-} = require("../../api/messageAPI");
-const { findWaifu, updateWaifuMessage } = require("../../api/waifuAPI");
+const { model } = require("../../config/AIConfig");
 
 module.exports = {
   name: "chat",
@@ -11,7 +7,7 @@ module.exports = {
   description: "Nhắn tin với bot",
   usage: "chat <nội dung tin nhắn>",
   run: async (client, message, args) => {
-    let waifuData = await findWaifu({ ownerID: message.author.id });
+    let waifuData = await client.waifuai.find({ ownerID: message.author.id });
     if (!waifuData)
       return message.reply(
         "Bạn chưa khởi tạo waifu cho mình. Vui lòng dùng lênh waifu-create."
@@ -22,11 +18,13 @@ module.exports = {
     if (args.join(" ").length > 256)
       return message.reply("Giới hạn kí tự 256.");
 
-    const messageState = await findMessageState({ ownerID: message.author.id });
+    const messageState = await client.waifuai.findMessageState({
+      ownerID: message.author.id,
+    });
 
     if (!messageState.isReplied) return;
 
-    await updateMessageState({
+    await client.waifuai.updateMessageState({
       state: false,
       ownerID: message.author.id,
     });
@@ -35,32 +33,46 @@ module.exports = {
 
     waifuData.messages.push({ role: "user", content: args.join(" ") });
     await client.waifuai
-      .create({
+      .createMessage({
         messages: waifuData.messages,
-        model: waifuData.model,
-        max_tokens: 1000,
+        model: model,
       })
       .then(async (res) => {
         message.reply(res.choices[0].message.content);
+
+        if (
+          res?.choices[0]?.message?.content?.toLowerCase().includes("error")
+        ) {
+          return await client.waifuai.updateMessageState({
+            state: true,
+            ownerID: message.author.id,
+          });
+        }
 
         waifuData.messages.push({
           role: "assistant",
           content: res.choices[0].message.content,
         });
 
-        await updateWaifuMessage({
+        waifuData.messages.push({
+          role: "system",
+          content: `Bạn tên là ${waifuData.name}`,
+        });
+
+        await client.waifuai.updateMessage({
           ownerID: message.author.id,
           messages: waifuData.messages,
         });
 
-        await updateMessageState({
+        await client.waifuai.updateMessageState({
           state: true,
           ownerID: message.author.id,
         });
       })
       .catch(async (error) => {
-        message.channel.send("Đã xảy ra lỗi ", error);
-        await updateMessageState({
+        console.error(error);
+        message.channel.send("Đã xảy ra lỗi!");
+        await client.waifuai.updateMessageState({
           state: true,
           ownerID: message.author.id,
         });

@@ -1,0 +1,126 @@
+/* ---------- ROOT VARIABLES ----------*/
+:root {
+  --color-primary: #7380ec;
+  --color-danger: #ff7782;
+  --color-success: #41f1b6;
+  --color-warning: #ffbb55;
+  --color-white: #fff;
+  --color-info-dark: #7d8da1;
+  --color-info-light: #dce1eb;
+  --color-dark: #363949;
+  --color-light: rgba(132, 139, 200, 0.18);
+  --color-primary-variant: #111e88;
+  --color-dark-variant: #677483;
+  --color-background: #f6f6f9;
+
+  --card-border-radius: 2rem;
+  --border-radius-1: 0.4rem;
+  --border-radius-2: 0.8rem;
+  --border-radius-3: 1.2rem;
+  --border-radius-4: 1.8rem;
+
+  --card-padding: 1.8rem;
+  --padding-1: 1.2rem;
+
+  --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+/* ========== NAVBAR ========== */
+#navbar {
+  width: 100%;
+  height: 77px;
+  background-color: transparent;
+  padding: 25px 15px 15px;
+  position: fixed;
+  transition: height 300ms ease, width 300ms ease;
+}
+
+#navbar.isScroll {
+  padding: 15px;
+  height: 67px;
+  background: linear-gradient(to right,  #737feceb, #111f88e2);
+  filter: opacity(0.9);
+}
+
+#navbar .center {
+  margin: 0 157.4px;
+  padding: 0 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+#navbar .center .name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#navbar .center .social-credit {
+  display: flex;
+}
+
+#navbar .center .social-credit i {
+  margin: 0 5px;
+}
+
+/* ========== INTRODUCE ========== */
+#introduce {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  column-gap: 30px;
+}
+
+#introduce h2 {
+  font-size: 27px;
+  font-weight: 500;
+  color: var(--color-info-light)
+}
+
+#introduce h1 {
+  font-size: 70px;
+  font-weight: 600;
+  padding: 19.2px;
+}
+
+#introduce h1 span {
+  color: var(--color-primary)
+}
+
+#introduce .intro-button {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+#introduce .intro-button a {
+  height: 50px;
+  border-radius: var(--border-radius-2);
+  width: 300px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 300ms ease;
+}
+
+#introduce .intro-button a:hover {
+  scale: 1.05;
+  filter: brightness(0.8);
+}
+
+#introduce .intro-button a#invite {
+  background: linear-gradient(to right, var(--color-primary), var(--color-primary-variant));
+}
+
+#introduce .intro-button a#dashboard {
+  border: 1px lightgray solid;
+  filter: brightness(1.1);
+}

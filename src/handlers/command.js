@@ -13,7 +13,7 @@ module.exports = (client) => {
         client.commands.set(command.name, command);
         console.log(`🟢 [COMMAND]: Đã tải command ${command.name}`);
       } else {
-        console.log(
+        console.warn(
           `🟠 [WARN - COMMAND]: Không thể tải command ${
             file.split(".")[0]
           } - thiếu command.name`
