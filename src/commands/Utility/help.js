@@ -45,7 +45,7 @@ function getAll(client, message) {
     fields: [
       {
         name: `Version: v${packageJson.version}`,
-        value: `✨ [Support Server](${process.env.SUPPORT_SERVER}) | [Dashboard](${process.env.DASHBOARD_DOMAIN}) | By ${config.ownerName}`,
+        value: `✨ [Support Server](${process.env.SUPPORT_SERVER}) | [Dashboard](${process.env.DOMAIN}) | By ${config.ownerName}`,
         inline: false,
       },
     ],
