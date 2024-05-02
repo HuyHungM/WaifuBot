@@ -24,7 +24,7 @@ module.exports = {
         description: `:track_next: **Đã bỏ qua bài** \`${queue.songs[0].name}\`**!**`,
       }).setColor(config.getEmbedConfig().color);
 
-      await client.distube.skip(queue);
+      await queue.skip();
 
       message.channel.send({ embeds: [embed] });
     } catch (error) {

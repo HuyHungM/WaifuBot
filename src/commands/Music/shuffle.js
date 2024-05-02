@@ -14,7 +14,7 @@ module.exports = {
     if (!queue) return message.reply({ embeds: [noMusicEmbed] });
 
     try {
-      await client.distube.shuffle(queue);
+      await queue.shuffle();
 
       const embed = new EmbedBuilder({
         description: `:twisted_rightwards_arrows: **Đã xáo trộn hàng đợi!**`,

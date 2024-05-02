@@ -1,10 +1,12 @@
 const { EmbedBuilder } = require("discord.js");
+const discord = require("discord.js");
 const config = require("../config/config");
+const distube = require("distube");
 
 module.exports = (client) => {
-  client.on("ready", () => {
+  client.on(discord.Events.ClientReady, () => {
     client.distube
-      .on("playSong", async (queue, song) => {
+      .on(distube.Events.PLAY_SONG, async (queue, song) => {
         let vol = {
           low: "🔈",
           medium: "🔉",
@@ -67,7 +69,7 @@ module.exports = (client) => {
         let msg = await queue.textChannel.send({ embeds: [embed] });
         client.playingSong.set(queue.id, msg);
       })
-      .on("addSong", (queue, song) => {
+      .on(distube.Events.ADD_SONG, (queue, song) => {
         //Create Embed
         const embedData = {
           title: "Thêm bài hát",
@@ -93,7 +95,7 @@ module.exports = (client) => {
         //Send Info Message
         queue.textChannel.send({ embeds: [embed] });
       })
-      .on("addList", (queue, playlist) => {
+      .on(distube.Events.ADD_LIST, (queue, playlist) => {
         //Create Embed
         const embedData = {
           title: "Thêm Playlist",
@@ -119,7 +121,7 @@ module.exports = (client) => {
         //Send Info Message
         queue.textChannel.send({ embeds: [embed] });
       })
-      .on("error", (channel, e) => {
+      .on(distube.Events.ERROR, (channel, e) => {
         //Create Embed
         const embedData = {
           description: `${config.emotes.error} **Đã xảy ra lỗi:** ${e
@@ -135,7 +137,7 @@ module.exports = (client) => {
         channel.send({ embeds: [embed] });
         console.error(e);
       })
-      .on("empty", (queue) => {
+      .on(distube.Events.EMPTY, (queue) => {
         //Create Embed
         const embedData = {
           description: "❗**Kênh thoại trống! Đang rời khỏi kênh...**",
@@ -148,7 +150,7 @@ module.exports = (client) => {
         //Send Info Message
         queue.textChannel.send({ embeds: [embed] });
       })
-      .on("searchNoResult", (message, query) => {
+      .on(distube.Events.SEARCH_NO_RESULT, (message, query) => {
         //Create Embed
         const embedData = {
           description: `${config.emotes.errors} **Không tìm thấy kết quả nào cho** \`${query}\`!`,
@@ -161,7 +163,7 @@ module.exports = (client) => {
         //Send Info Message
         message.channel.send({ embeds: [embed] });
       })
-      .on("finish", (queue) => {
+      .on(distube.Events.FINISH, (queue) => {
         //Create Embed
         const embedData = {
           description: `${config.emotes.success} **Đã phát xong hàng đợi!**`,
@@ -174,13 +176,13 @@ module.exports = (client) => {
         //Send Info Message
         queue.textChannel.send({ embeds: [embed] });
       })
-      .on("finishSong", async (queue, song) => {
+      .on(distube.Events.FINISH_SONG, async (queue, song) => {
         let message = client.playingSong.get(queue.id);
         if (message) {
           await message.delete();
         }
       })
-      .on("disconnect", async (queue) => {
+      .on(distube.Events.DISCONNECT, async (queue) => {
         let message = client.playingSong.get(queue.id);
         if (message) {
           await message.delete();

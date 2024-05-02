@@ -53,7 +53,7 @@ module.exports = {
       let mode = undefined;
       mode = interaction?.options?.get("mode")?.value;
 
-      mode = await client.distube.setRepeatMode(queue, mode);
+      mode = await queue.setRepeatMode(mode);
 
       const embed = new EmbedBuilder({
         description: `${loopModeEmotes[mode]} **Đã chỉnh chế độ lặp lại thành** \`${loopModeMessages[mode]}\`**!**`,

@@ -1,7 +1,7 @@
-const { ChannelType } = require("discord.js");
+const { ChannelType, Events } = require("discord.js");
 
 module.exports = (client) => {
-  client.on("messageCreate", (message) => {
+  client.on(Events.MessageCreate, (message) => {
     if (message.author.bot) return;
 
     if (message.channel.type === ChannelType.DM) {

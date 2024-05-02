@@ -1,5 +1,7 @@
+const { Events } = require("discord.js");
+
 module.exports = (client) => {
-  client.on("interactionCreate", (interaction) => {
+  client.on(Events.InteractionCreate, (interaction) => {
     if (!interaction.isCommand()) return;
     if (!interaction.inGuild())
       return interaction.reply({

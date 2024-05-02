@@ -1,4 +1,4 @@
-const { EmbedBuilder, embedLength } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const config = require("../../config/config");
 const { noMusicEmbed, filterSubCommand } = require("../../utils/music");
 

@@ -23,7 +23,7 @@ module.exports = {
     }
 
     try {
-      await client.distube.setVolume(queue, Number(args[0]));
+      await queue.setVolume(Number(args[0]));
 
       let vol = {
         low: "🔈",

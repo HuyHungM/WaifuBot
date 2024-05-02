@@ -14,7 +14,7 @@ module.exports = {
     if (!queue) return message.reply({ embeds: [noMusicEmbed] });
 
     try {
-      await client.distube.stop(queue);
+      await queue.stop();
 
       const embed = new EmbedBuilder({
         description: ":stop_button: **Đã dừng phát nhạc!**",

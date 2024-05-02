@@ -63,7 +63,7 @@ module.exports = {
         return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
-      await client.distube.seek(queue, time);
+      await queue.seek(time);
 
       const embed = new EmbedBuilder({
         description: `:fast_forward: **Đã tua đến** \`${queue.formattedCurrentTime}\`**!**`,

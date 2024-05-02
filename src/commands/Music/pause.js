@@ -22,10 +22,10 @@ module.exports = {
     }
 
     try {
-      await client.distube.pause(queue);
+      await queue.pause();
 
       const embed = new EmbedBuilder({
-        description: `:arrow_forward: **Đã tạm dừng bài hát!**`,
+        description: `:pause_button: **Đã tạm dừng bài hát!**`,
       }).setColor(config.getEmbedConfig().color);
 
       message.channel.send({ embeds: [embed] });

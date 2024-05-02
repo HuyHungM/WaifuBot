@@ -21,7 +21,7 @@ module.exports = {
     }
 
     try {
-      let mode = await client.distube.toggleAutoplay(queue);
+      let mode = await queue.toggleAutoplay();
 
       const embed = new EmbedBuilder({
         description: `${config.emotes.success} **Đã chỉnh chế độ tự động phát lại thành** \`${autoplayModeMessages[mode]}\`**!**`,

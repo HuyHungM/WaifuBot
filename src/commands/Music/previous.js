@@ -22,7 +22,7 @@ module.exports = {
     }
 
     try {
-      const previousSong = await client.distube.previous(queue);
+      const previousSong = await queue.previous();
 
       const embed = new EmbedBuilder({
         description: `:track_previous: **Đã phát bài hát trước đó** \`${previousSong.name}\` - \`${previousSong.formattedDuration}\` **!**`,

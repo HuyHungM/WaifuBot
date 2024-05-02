@@ -35,7 +35,7 @@ module.exports = {
     }
 
     try {
-      const skipToSong = await client.distube.jump(queue, position);
+      const skipToSong = await queue.jump(position);
 
       if (skipToSong) {
         const embed = new EmbedBuilder({

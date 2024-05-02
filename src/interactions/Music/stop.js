@@ -14,7 +14,7 @@ module.exports = {
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
 
     try {
-      await client.distube.stop(queue);
+      await queue.stop();
 
       const embed = new EmbedBuilder({
         description: ":stop_button: **Đã dừng phát nhạc!**",
