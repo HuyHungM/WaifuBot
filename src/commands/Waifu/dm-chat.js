@@ -1,7 +1,9 @@
+const { commandCategory } = require("../../utils/other");
+
 module.exports = {
   name: "dm-chat",
   aliases: ["dm", "dm-c", "ib"],
-  category: "Waifu",
+  category: commandCategory.WAIFU,
   description: "Nhắn riêng với bot",
   usage: "dm-chat",
   run: async (client, message, args) => {

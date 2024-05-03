@@ -1,10 +1,12 @@
 const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
 const config = require("../../config/config");
-const { noMusicEmbed, autoplayModeMessages } = require("../../utils/music");
+const { noMusicEmbed, autoplayModeMessage } = require("../../utils/music");
 const { RepeatMode } = require("distube");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "autoplay",
+  category: commandCategory.MUSIC,
   description: "Chỉnh chế độ tự động phát",
   type: ApplicationCommandType.ChatInput,
   options: [],
@@ -24,7 +26,7 @@ module.exports = {
       let mode = await queue.toggleAutoplay();
 
       const embed = new EmbedBuilder({
-        description: `${config.emotes.success} **Đã chỉnh chế độ tự động phát lại thành** \`${autoplayModeMessages[mode]}\`**!**`,
+        description: `${config.emotes.success} **Đã chỉnh chế độ tự động phát lại thành** \`${autoplayModeMessage[mode]}\`**!**`,
       }).setColor(config.getEmbedConfig().color);
 
       interaction.reply({ embeds: [embed], ephemeral: true });

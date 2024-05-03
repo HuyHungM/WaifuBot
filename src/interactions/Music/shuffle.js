@@ -1,9 +1,11 @@
 const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
 const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "shuffle",
+  category: commandCategory.MUSIC,
   description: "Xáo trộn hàng đợi",
   type: ApplicationCommandType.ChatInput,
   options: [],

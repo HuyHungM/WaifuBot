@@ -1,11 +1,12 @@
 const { EmbedBuilder } = require("discord.js");
 const config = require("../../config/config");
 const { noMusicEmbed, filterSubCommand } = require("../../utils/music");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "filter",
   aliases: [],
-  category: "Music",
+  category: commandCategory.MUSIC,
   description: "Thêm filter cho bài hát",
   usage: `filter <add/remove/clear/actives/list> [tên filter]`,
   run: async (client, message, args) => {

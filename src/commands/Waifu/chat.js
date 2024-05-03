@@ -1,9 +1,10 @@
 const { model } = require("../../config/AIConfig");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "chat",
   aliases: ["c"],
-  category: "Waifu",
+  category: commandCategory.WAIFU,
   description: "Nhắn tin với bot",
   usage: "chat <nội dung tin nhắn>",
   run: async (client, message, args) => {

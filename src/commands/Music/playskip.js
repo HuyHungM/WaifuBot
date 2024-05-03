@@ -5,17 +5,14 @@ const {
   ButtonStyle,
 } = require("discord.js");
 const config = require("../../config/config");
-const { checkSameRoom } = require("../../utils/music");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "playskip",
   aliases: ["pskip"],
-  category: "🎵 Music",
+  category: commandCategory.MUSIC,
   usage: `playskip <tên/link nhạc> (Youtube/Spotify/SoundCloud)`,
   run: async (client, message, args) => {
-    if (checkSameRoom({ message: message, interaction: null, client: client }))
-      return;
-
     const songQuery = args.join(" ");
     if (songQuery.trim() === "") {
       const embed = new EmbedBuilder({

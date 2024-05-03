@@ -6,9 +6,11 @@ const {
 const { stripIndent } = require("common-tags");
 const config = require("../../config/config");
 const packageJson = require("../../../package.json");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "help",
+  category: commandCategory.UTILITY,
   description: "Hướng dẫn dùng lệnh!",
   type: ApplicationCommandType.ChatInput,
   options: [

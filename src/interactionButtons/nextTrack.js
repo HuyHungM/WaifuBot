@@ -1,20 +1,14 @@
-const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
-const config = require("../../config/config");
-const { noMusicEmbed } = require("../../utils/music");
-const { commandCategory } = require("../../utils/other");
+const { EmbedBuilder } = require("discord.js");
+const config = require("../config/config");
+const { noMusicEmbed } = require("../utils/music");
 
 module.exports = {
-  name: "skip",
-  category: commandCategory.MUSIC,
-  description: "Bỏ qua bài hát hiện tại",
-  type: ApplicationCommandType.ChatInput,
-  options: [],
-  run: async (client, interaction) => {
+  name: "next-track",
+  run: async (client, interaction, args) => {
     const queue = client.distube.getQueue(interaction);
 
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
-
     if (queue.songs.length <= 1 && !queue.autoplay) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Hàng đợi chỉ còn 1 bài hát, không thể skip!**`,
@@ -22,14 +16,16 @@ module.exports = {
       return interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
-    try {
+    if (queue.paused) {
       const embed = new EmbedBuilder({
-        description: `:track_next: **Đã bỏ qua bài** \`${queue.songs[0].name}\`**!**`,
+        description: `${config.emotes.error} **Hàng đợi đang tạm dừng, không thể chuyển bài hát!**`,
       }).setColor(config.getEmbedConfig().color);
 
-      await queue.skip();
+      return interaction.reply({ embeds: [embed], ephemeral: true });
+    }
 
-      interaction.reply({ embeds: [embed], ephemeral: true });
+    try {
+      await queue.skip();
     } catch (error) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,

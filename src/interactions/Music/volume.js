@@ -6,9 +6,11 @@ const {
 const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 const volume = require("../../commands/Music/volume");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "volume",
+  category: commandCategory.MUSIC,
   description: "Chỉnh âm lượng",
   type: ApplicationCommandType.ChatInput,
   options: [

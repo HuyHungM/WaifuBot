@@ -5,9 +5,11 @@ const {
 } = require("discord.js");
 const config = require("../../config/config");
 const { noMusicEmbed, filterSubCommand } = require("../../utils/music");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "filter",
+  category: commandCategory.MUSIC,
   description: "Thêm filter cho bài hát",
   type: ApplicationCommandType.ChatInput,
   options: [

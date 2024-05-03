@@ -1,7 +1,9 @@
+const { commandCategory } = require("../../utils/other");
+
 module.exports = {
   name: "waifu-delete",
   aliases: ["w-delete"],
-  category: "Waifu",
+  category: commandCategory.WAIFU,
   description: "Xoá waifu cho bạn",
   usage: "waifu-delete",
   run: async (client, message, args) => {

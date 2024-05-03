@@ -1,8 +1,10 @@
 const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
 const config = require("../../config/config.js");
+const { commandCategory } = require("../../utils/other.js");
 
 module.exports = {
   name: "ping",
+  category: commandCategory.UTILITY,
   description: "Ping của bot",
   type: ApplicationCommandType.ChatInput,
   options: [],

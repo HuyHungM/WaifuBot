@@ -7,11 +7,13 @@ const {
 } = require("discord.js");
 const config = require("../../config/config.js");
 const { noMusicEmbed } = require("../../utils/music.js");
+const { commandCategory } = require("../../utils/other.js");
 const dash = "▬";
 const button = "🔘";
 
 module.exports = {
   name: "queue",
+  category: commandCategory.MUSIC,
   description: "Xem danh sách bài hát đang phát",
   type: ApplicationCommandType.ChatInput,
   options: [],
@@ -82,8 +84,8 @@ module.exports = {
             inline: true,
           },
           {
-            name: "Yêu cầu bởi:",
-            value: `\`${playingSong.user.username}\``,
+            name: "Trạng thái:",
+            value: `\`${queue.playing ? "Đang phát" : "Tạm dừng"}\``,
             inline: true,
           },
           {

@@ -3,7 +3,7 @@ const config = require("../config/config");
 
 module.exports = (client) => {
   client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
-    const guildID = newState.channel.id;
+    const guildID = newState.guild.id;
     const queue = client.distube.getQueue(guildID);
 
     if (!queue) return;
@@ -51,7 +51,7 @@ module.exports = (client) => {
               ":arrow_forward: **Tiếp tục phát nhạc vì đã đủ người trong phòng!**",
           }).setColor(config.getEmbedConfig().color);
 
-          await queue.textChannel.send(embed);
+          await queue.textChannel.send({ embeds: [embed] });
           await queue.resume();
         }
         break;
@@ -63,7 +63,7 @@ module.exports = (client) => {
               ":pause_button: **Hàng đợi đã bị tạm dừng vì không còn ai trong phòng!**",
           }).setColor(config.getEmbedConfig().color);
 
-          await queue.textChannel.send(embed);
+          await queue.textChannel.send({ embeds: [embed] });
           await queue.pause();
         }
         break;

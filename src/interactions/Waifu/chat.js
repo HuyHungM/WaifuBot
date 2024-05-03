@@ -3,9 +3,11 @@ const {
   ApplicationCommandOptionType,
 } = require("discord.js");
 const { model } = require("../../config/AIConfig");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "chat",
+  category: commandCategory.WAIFU,
   description: "Nhắn tin với bot",
   type: ApplicationCommandType.ChatInput,
   options: [

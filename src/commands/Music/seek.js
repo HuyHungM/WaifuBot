@@ -2,11 +2,12 @@ const { EmbedBuilder } = require("discord.js");
 const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 const ms = require("ms");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "seek",
   aliases: [],
-  category: "Music",
+  category: commandCategory.MUSIC,
   description: "Tua thời lượng bài hát",
   usage: `seek <khoảng thời gian (h/m/s)>`,
   run: async (client, message, args) => {

@@ -1,15 +1,10 @@
-const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
-const config = require("../../config/config");
-const { noMusicEmbed } = require("../../utils/music");
-const { commandCategory } = require("../../utils/other");
+const { EmbedBuilder } = require("discord.js");
+const config = require("../config/config");
+const { noMusicEmbed } = require("../utils/music");
 
 module.exports = {
-  name: "previous",
-  category: commandCategory.MUSIC,
-  description: "Phát bài hát trước đó",
-  type: ApplicationCommandType.ChatInput,
-  options: [],
-  run: async (client, interaction) => {
+  name: "previous-track",
+  run: async (client, interaction, args) => {
     const queue = client.distube.getQueue(interaction);
 
     if (!queue)
@@ -23,14 +18,16 @@ module.exports = {
       return interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
-    try {
-      const previousSong = await queue.previous();
-
+    if (queue.paused) {
       const embed = new EmbedBuilder({
-        description: `:track_previous: **Đã phát bài hát trước đó** \`${previousSong.name}\` - \`${previousSong.formattedDuration}\` **!**`,
+        description: `${config.emotes.error} **Hàng đợi đang tạm dừng, không thể chuyển bài hát!**`,
       }).setColor(config.getEmbedConfig().color);
 
-      interaction.reply({ embeds: [embed], ephemeral: true });
+      return interaction.reply({ embeds: [embed], ephemeral: true });
+    }
+
+    try {
+      await queue.previous();
     } catch (error) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,

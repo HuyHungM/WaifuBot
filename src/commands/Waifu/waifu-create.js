@@ -1,9 +1,10 @@
 const AIConfig = require("../../config/AIConfig");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "waifu-create",
   aliases: ["w-create"],
-  category: "Waifu",
+  category: commandCategory.WAIFU,
   description: "Tạo waifu cho bạn",
   usage: "waifu-create <tên>",
   run: async (client, message, args) => {

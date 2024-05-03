@@ -6,9 +6,11 @@ const {
 const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 const ms = require("ms");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "seek",
+  category: commandCategory.MUSIC,
   description: "Tua thời lượng bài hát",
   type: ApplicationCommandType.ChatInput,
   options: [

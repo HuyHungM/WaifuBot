@@ -6,13 +6,15 @@ const {
 const config = require("../../config/config");
 const {
   noMusicEmbed,
-  loopModeEmotes,
-  loopModeMessages,
+  loopModeEmote,
+  loopModeMessage,
 } = require("../../utils/music");
 const { RepeatMode } = require("distube");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "loop",
+  category: commandCategory.MUSIC,
   description: "Chỉnh chế độ lặp",
   type: ApplicationCommandType.ChatInput,
   options: [
@@ -56,7 +58,7 @@ module.exports = {
       mode = await queue.setRepeatMode(mode);
 
       const embed = new EmbedBuilder({
-        description: `${loopModeEmotes[mode]} **Đã chỉnh chế độ lặp lại thành** \`${loopModeMessages[mode]}\`**!**`,
+        description: `${loopModeEmote[mode]} **Đã chỉnh chế độ lặp lại thành** \`${loopModeMessage[mode]}\`**!**`,
       }).setColor(config.getEmbedConfig().color);
 
       interaction.reply({ embeds: [embed], ephemeral: true });

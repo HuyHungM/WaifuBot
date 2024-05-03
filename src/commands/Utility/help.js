@@ -6,10 +6,11 @@ const {
 const { stripIndent } = require("common-tags");
 const config = require("../../config/config");
 const packageJson = require("../../../package.json");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "help",
-  category: "Utility",
+  category: commandCategory.UTILITY,
   aliases: [],
   description: "Hướng dẫn dùng lệnh!",
   usage: `help [tên lệnh]`,

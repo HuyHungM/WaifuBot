@@ -1,18 +1,23 @@
-const { EmbedBuilder } = require("discord.js");
+const {
+  EmbedBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
+} = require("discord.js");
 const discord = require("discord.js");
 const config = require("../config/config");
 const distube = require("distube");
+const {
+  volumeIcon,
+  loopModeEmote,
+  loopModeMessage,
+  autoplayModeMessage,
+} = require("../utils/music");
 
 module.exports = (client) => {
   client.on(discord.Events.ClientReady, () => {
     client.distube
       .on(distube.Events.PLAY_SONG, async (queue, song) => {
-        let vol = {
-          low: "🔈",
-          medium: "🔉",
-          high: "🔊",
-        };
-
         //Create Embed
         const embedData = {
           title: `🎶  Hiện đang phát ♪`,
@@ -21,28 +26,22 @@ module.exports = (client) => {
             {
               name: `${
                 queue.volume <= 35
-                  ? vol.low
+                  ? volumeIcon.low
                   : queue.volume <= 70
-                  ? vol.medium
-                  : vol.high
+                  ? volumeIcon.medium
+                  : volumeIcon.high
               } Âm lượng: `,
               value: `\`${queue.volume}%\``,
               inline: true,
             },
             {
               name: "Chế độ lặp lại: ",
-              value: `\`${
-                queue.repeatMode
-                  ? queue.repeatMode === 2
-                    ? "Lặp lại hàng đợi"
-                    : "Lặp lại bài hát"
-                  : "Tắt"
-              }\``,
+              value: `\`${loopModeMessage[queue.repeatMode]}\``,
               inline: true,
             },
             {
               name: "Tự động phát: ",
-              value: `\`${queue.autoplay ? "Bật" : "Tắt"}\``,
+              value: `\`${autoplayModeMessage[queue.autoplay]}\``,
               inline: true,
             },
             {
@@ -65,9 +64,57 @@ module.exports = (client) => {
           config.getEmbedConfig().color
         );
 
+        // Create Button Row
+        const rowComponents_1 = [
+          new ButtonBuilder({
+            custom_id: `autoplay ${queue.id}`,
+            emoji: `🔎`,
+            style: ButtonStyle.Primary,
+          }),
+          new ButtonBuilder({
+            custom_id: `previous-track ${queue.id}`,
+            emoji: "⏮",
+            style: ButtonStyle.Primary,
+          }),
+          new ButtonBuilder({
+            custom_id: `${queue.playing ? "pause-queue" : "resume-queue"} ${
+              queue.id
+            }`,
+            emoji: `${queue.playing ? "⏸" : "▶"}`,
+            style: ButtonStyle.Primary,
+          }),
+          new ButtonBuilder({
+            custom_id: `next-track ${queue.id}`,
+            emoji: "⏮",
+            style: ButtonStyle.Primary,
+          }),
+          new ButtonBuilder({
+            custom_id: `loop ${queue.id}`,
+            emoji: `${loopModeEmote[queue.repeatMode]}`,
+            style: ButtonStyle.Primary,
+          }),
+        ];
+
+        const row_1 = new ActionRowBuilder({
+          components: rowComponents_1,
+        });
+
+        const row_2 = new ActionRowBuilder({
+          components: [
+            new ButtonBuilder({
+              custom_id: `stop-queue ${queue.id}`,
+              emoji: "🛑",
+              style: ButtonStyle.Danger,
+            }),
+          ],
+        });
+
         //Send Info Message
-        let msg = await queue.textChannel.send({ embeds: [embed] });
-        client.playingSong.set(queue.id, msg);
+        let msg = await queue.textChannel.send({
+          embeds: [embed],
+          components: [row_1, row_2],
+        });
+        client.playingSong.set(queue.textChannel.guildId, msg);
       })
       .on(distube.Events.ADD_SONG, (queue, song) => {
         //Create Embed
@@ -177,15 +224,15 @@ module.exports = (client) => {
         queue.textChannel.send({ embeds: [embed] });
       })
       .on(distube.Events.FINISH_SONG, async (queue, song) => {
-        let message = client.playingSong.get(queue.id);
+        let message = client.playingSong.get(queue.textChannel.guildId);
         if (message) {
           await message.delete();
         }
       })
       .on(distube.Events.DISCONNECT, async (queue) => {
-        let message = client.playingSong.get(queue.id);
+        let message = client.playingSong.get(queue.textChannel.guildId);
         if (message) {
-          await message.delete();
+          client.playingSong.delete(queue.textChannel.guildId);
         }
       });
   });

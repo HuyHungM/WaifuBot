@@ -1,7 +1,9 @@
 const { ApplicationCommandType } = require("discord.js");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "waifu-delete",
+  category: commandCategory.WAIFU,
   description: "Xoá waifu cho bạn",
   type: ApplicationCommandType.ChatInput,
   options: [],

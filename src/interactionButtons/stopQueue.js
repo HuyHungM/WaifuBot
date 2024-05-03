@@ -1,15 +1,10 @@
-const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
-const config = require("../../config/config");
-const { noMusicEmbed } = require("../../utils/music");
-const { commandCategory } = require("../../utils/other");
+const { EmbedBuilder } = require("discord.js");
+const config = require("../config/config");
+const { noMusicEmbed } = require("../utils/music");
 
 module.exports = {
-  name: "stop",
-  category: commandCategory.MUSIC,
-  description: "Dừng phát nhạc",
-  type: ApplicationCommandType.ChatInput,
-  options: [],
-  run: async (client, interaction) => {
+  name: "stop-queue",
+  run: async (client, interaction, args) => {
     const queue = client.distube.getQueue(interaction);
 
     if (!queue)
@@ -27,7 +22,7 @@ module.exports = {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
       }).setColor(config.getEmbedConfig().errorColor);
-      interaction.reply({ embeds: [embed] });
+      interaction.reply({ embeds: [embed], ephemeral: true });
       console.error(error);
     }
   },

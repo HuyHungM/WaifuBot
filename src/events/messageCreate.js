@@ -1,4 +1,6 @@
 const { ChannelType, Events } = require("discord.js");
+const { commandCategory } = require("../utils/other");
+const { checkSameRoom } = require("../utils/music");
 
 module.exports = (client) => {
   client.on(Events.MessageCreate, (message) => {
@@ -20,6 +22,12 @@ module.exports = (client) => {
 
     if (!command) command = client.commands.get(client.aliases.get(cmd));
     if (command) {
+      if (command.category === commandCategory.MUSIC) {
+        if (
+          checkSameRoom({ message: message, interaction: null, client: client })
+        )
+          return;
+      }
       command.run(client, message, args);
     }
   });

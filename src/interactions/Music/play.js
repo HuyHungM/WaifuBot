@@ -9,10 +9,11 @@ const {
   ApplicationCommandOptionType,
 } = require("discord.js");
 const config = require("../../config/config");
-const { checkSameRoom } = require("../../utils/music");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "play",
+  category: commandCategory.MUSIC,
   description: "Nghe nhạc cùng waifu của bạn!",
   type: ApplicationCommandType.ChatInput,
   options: [
@@ -24,8 +25,6 @@ module.exports = {
     },
   ],
   run: async (client, interaction) => {
-    checkSameRoom({ message: null, interaction: interaction, client: client });
-
     // searching embed
     const searchingEmbedData = {
       description: "🔎 **Đang tìm kiếm...**",

@@ -1,9 +1,11 @@
 const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
 const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "pause",
+  category: commandCategory.MUSIC,
   description: "Tạm dừng bài hát",
   type: ApplicationCommandType.ChatInput,
   options: [],

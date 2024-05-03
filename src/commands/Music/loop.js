@@ -2,15 +2,16 @@ const { EmbedBuilder } = require("discord.js");
 const config = require("../../config/config");
 const {
   noMusicEmbed,
-  loopModeEmotes,
-  loopModeMessages,
+  loopModeEmote,
+  loopModeMessage,
 } = require("../../utils/music");
 const { RepeatMode } = require("distube");
+const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "loop",
   aliases: ["repeat"],
-  category: "Music",
+  category: commandCategory.MUSIC,
   description: "Chỉnh chế độ lặp",
   usage: `loop [queue | song | off]`,
   run: async (client, message, args) => {
@@ -45,7 +46,7 @@ module.exports = {
       mode = await queue.setRepeatMode(mode);
 
       const embed = new EmbedBuilder({
-        description: `${loopModeEmotes[mode]} **Đã chỉnh chế độ lặp lại thành** \`${loopModeMessages[mode]}\`**!**`,
+        description: `${loopModeEmote[mode]} **Đã chỉnh chế độ lặp lại thành** \`${loopModeMessage[mode]}\`**!**`,
       }).setColor(config.getEmbedConfig().color);
 
       message.channel.send({ embeds: [embed] });
