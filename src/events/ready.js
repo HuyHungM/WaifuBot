@@ -11,7 +11,7 @@ module.exports = (client) => {
           type: ActivityType.Custom,
         },
       ],
-      status: "idle",
+      status: "online",
     });
   });
 };

@@ -1,4 +1,4 @@
-/* ---------- ROOT VARIABLES ----------*/
+/* ========== ROOT VARIABLES ========== */
 :root {
   --color-primary: #7380ec;
   --color-danger: #ff7782;
@@ -25,6 +25,17 @@
   --box-shadow: 0 2rem 3rem var(--color-light);
 }
 
+/* =========== CONTAINER =========== */
+#container {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
+  width: 100%;
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+}
+
 /* ========== NAVBAR ========== */
 #navbar {
   width: 100%;
@@ -32,10 +43,11 @@
   background-color: transparent;
   padding: 25px 15px 15px;
   position: fixed;
-  transition: height 300ms ease, width 300ms ease;
+  transition: all 400ms ease-in-out;
+  z-index: 9999;
 }
 
-#navbar.isScroll {
+#navbar.isScrolled {
   padding: 15px;
   height: 67px;
   background: linear-gradient(to right,  #737feceb, #111f88e2);
@@ -46,7 +58,6 @@
   margin: 0 157.4px;
   padding: 0 15px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   height: 100%;
@@ -55,6 +66,16 @@
 #navbar .center .name {
   font-size: 16px;
   font-weight: 600;
+  max-height: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#navbar .center .name .logo {
+  border-radius: 50%;
+  width: 37px;
+  height: 37px;
 }
 
 #navbar .center .social-credit {
@@ -67,7 +88,8 @@
 
 /* ========== INTRODUCE ========== */
 #introduce {
-  height: 100vh;
+  height: calc(100vh - 77px);
+  padding-top: 77px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -76,19 +98,24 @@
   column-gap: 30px;
 }
 
+#introduce > * {
+  text-align: center;
+}
+
 #introduce h2 {
   font-size: 27px;
   font-weight: 500;
-  color: var(--color-info-light)
+  color: var(--color-info-light);
 }
 
 #introduce h1 {
   font-size: 70px;
   font-weight: 600;
   padding: 19.2px;
+  color: var(--color-info-light);
 }
 
-#introduce h1 span {
+#introduce h1 > span:nth-of-type(1) {
   color: var(--color-primary)
 }
 
@@ -102,7 +129,7 @@
 #introduce .intro-button a {
   height: 50px;
   border-radius: var(--border-radius-2);
-  width: 300px;
+  width: 200px;
   background: transparent;
   display: flex;
   align-items: center;
@@ -123,4 +150,28 @@
 #introduce .intro-button a#dashboard {
   border: 1px lightgray solid;
   filter: brightness(1.1);
+}
+
+/* ========== MEDIA QUERIES =========== */
+@media screen and (max-width: 768px) {
+  #navbar .center {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 469px) {
+  #introduce h1 {
+    font-size: 50px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  #navbar .center .name span {
+    display: none;
+  }
+/* 
+  #navbar .center .social-credit {
+    display: none;
+  } */
 }
