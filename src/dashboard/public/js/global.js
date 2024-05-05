@@ -11,7 +11,7 @@ $(document).ready(function () {
   splitTextIntoSpans(".bubble-text");
   splitTextIntoSpans(".shining-text");
 
-  setInterval(shiningText(), 3000);
+  setInterval(shiningText, 3000);
 
   $(document).scroll(function () {
     $(".fly-in-animation").each(function () {
