@@ -87,12 +87,8 @@ img {
     transition: text-shadow 300ms ease;
 }
 
-.hover-glow-white:hover {
-    text-shadow: 0 0 5px var(--color-dark);
-}
-
-.hover-glow-primary:hover {
-    text-shadow: 0 0 5px var(--color-primary);
+.hover-glow:hover {
+    text-shadow: 0 0 5px var(--color-text-shadow);
 }
 
 .bubble-text {
