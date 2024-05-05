@@ -9,6 +9,16 @@ function showPage() {
 
 $(document).ready(function () {
   splitTextIntoSpans(".bubble-text");
+
+  $(document).scroll(function () {
+    $(".fly-in-animation").each(function () {
+      let scrollTop = $(document).scrollTop() + $(window).height();
+      let elementTop = $(this).offset().top + 150;
+      if (scrollTop > elementTop) {
+        $(this).addClass("active");
+      }
+    });
+  });
 });
 
 function splitTextIntoSpans(target) {
