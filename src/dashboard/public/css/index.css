@@ -189,6 +189,18 @@
   gap: 200px;
 }
 
+#features img {
+  transition: transform 400ms ease;
+}
+
+#features > section > .left img:hover {
+  transform: rotateX(30deg) rotateY(35deg) rotateZ(-20deg);
+}
+
+#features > section > .right img:hover {
+  transform: rotateX(28deg) rotateY(-35deg) rotateZ(20deg);
+}
+
 #features > section {
   display: flex;
   align-items: center;
