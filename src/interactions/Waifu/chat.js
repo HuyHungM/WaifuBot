@@ -7,7 +7,7 @@ const { commandCategory } = require("../../utils/other");
 
 module.exports = {
   name: "chat",
-  category: dCategory.WAIFU,
+  category: commandCategory.WAIFU,
   description: "Nhắn tin với bot",
   type: ApplicationCommandType.ChatInput,
   options: [
