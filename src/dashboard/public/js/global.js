@@ -17,6 +17,10 @@ $(document).ready(function () {
       if (scrollTop > elementTop) {
         $(this).addClass("active");
       }
+
+      if (scrollTop < elementTop - 150) {
+        $(this).removeClass("active");
+      }
     });
   });
 });

@@ -103,7 +103,7 @@
 
 /* ========== INTRODUCE ========== */
 #introduce {
-  min-height: calc(100vh - 77px);
+  min-height: 100vh;
   height: auto;
   padding-top: 77px;
   width: 100%;
@@ -182,7 +182,7 @@
 #features {
   width: 100%;
   height: auto;
-  margin-top: 256px;
+  margin-top: 128px;
   padding: 0 20px 0 20px;
   display: flex;
   flex-direction: column;
