@@ -49,6 +49,8 @@
   min-height: 100vh;
   display: none;
   flex-direction: column;
+  opacity: 0;
+  animation: fade 300ms ease-in-out forwards;
 }
 
 /* ========== NAVBAR ========== */
