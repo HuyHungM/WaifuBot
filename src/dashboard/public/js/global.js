@@ -9,14 +9,6 @@ function showPage() {
 
 $(document).ready(function () {
   splitTextIntoSpans(".bubble-text");
-
-  $(document).scroll(function () {
-    if ($(this).scrollTop() > 0) {
-      $("#navbar").addClass("isScrolled");
-    } else {
-      $("#navbar").removeClass("isScrolled");
-    }
-  });
 });
 
 function splitTextIntoSpans(target) {
@@ -24,15 +16,17 @@ function splitTextIntoSpans(target) {
     $(this).addClass("split-text");
     let text = $(this).text();
     let splitText = text
-      .split(" ")
-      .map(function (word) {
+      .trim()
+      .split(/ +/g)
+      .map(function (word, index) {
+        console.log(word);
         let char = word
           .split("")
           .map(function (char) {
             return `<span class="split-char">${char}</span>`;
           })
           .join("");
-        return `<div class="split-word">${char}&nbsp</div>`;
+        return `<div class="split-word">${char}${index < word.length - 1 ? "&nbsp" : ""}</div>`;
       })
       .join("");
 

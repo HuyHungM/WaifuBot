@@ -2,11 +2,12 @@ const app = require("express").Router();
 const ejs = require("ejs");
 const { Auth, UnAuth } = require("../middlewares/auth");
 const client = require("../../app");
+const moment = require("moment");
 
 app.get("/", (req, res) => {
   ejs.renderFile(
     "./src/dashboard/views/index.html",
-    { client },
+    { client, moment },
     (err, html) => {
       if (err) {
         console.error(err);

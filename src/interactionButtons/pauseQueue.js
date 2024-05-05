@@ -121,6 +121,11 @@ module.exports = {
             emoji: "🛑",
             style: ButtonStyle.Danger,
           }),
+          new ButtonBuilder({
+            custom_id: `close ${queue.id}`,
+            label: "X",
+            style: ButtonStyle.Danger,
+          }),
         ],
       });
 

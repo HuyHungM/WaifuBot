@@ -106,6 +106,11 @@ module.exports = (client) => {
               emoji: "🛑",
               style: ButtonStyle.Danger,
             }),
+            new ButtonBuilder({
+              custom_id: `close ${queue.id}`,
+              label: "X",
+              style: ButtonStyle.Danger,
+            }),
           ],
         });
 
@@ -227,6 +232,7 @@ module.exports = (client) => {
         let message = client.playingSong.get(queue.textChannel.guildId);
         if (message) {
           await message.delete();
+          client.playingSong.delete(queue.textChannel.guildId);
         }
       })
       .on(distube.Events.DISCONNECT, async (queue) => {

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 /* ========== ROOT VARIABLES ========== */
 :root {
@@ -6,14 +6,14 @@
     --color-danger: #ff7782;
     --color-success: #41f1b6;
     --color-warning: #ffbb55;
-    --color-white: #fff;
+    --color-white: #202528;
     --color-info-dark: #7d8da1;
     --color-info-light: #dce1eb;
-    --color-dark: #363949;
-    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark: #edeffd;
+    --color-light: rgba(0, 0, 0, 0.4);
     --color-primary-variant: #111e88;
-    --color-dark-variant: #677483;
-    --color-background: #f6f6f9;
+    --color-dark-variant: #a3bdcc;
+    --color-background: #18181b;
 
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
@@ -24,25 +24,14 @@
     --card-padding: 1.8rem;
     --padding-1: 1.2rem;
 
-    --box-shadow: 0 2rem 3rem var(--color-light);
+    --box-shadow: 0 2rem 3rem var(--color-light); 
 
     --_fw-900: 900;
     --_fw-700: 700;
     --_fw-400: 400;
 }
 
-/* ========== DARK THEME VARIABLES ========== */
-.dark-theme {
-    --color-background: #18181b;
-    --color-white: #202528;
-    --color-dark: #edeffd;
-    --color-dark-variant: #a3bdcc;
-
-    --color-light: rgba(0, 0, 0, 0.4);
-    --box-shadow: 0 2rem 3rem var(--color-light); 
-}
-
-*{
+* {
     margin: 0;
     padding: 0;
     outline: none;
@@ -63,14 +52,15 @@
 }
 
 html{
-    font-size: 14px;
+    font-size: 16px;
+    scroll-behavior: smooth;
 }
 
 body {
     width: 100vw;
     height: auto;
     min-height: 100vh;
-    font-family: poppins, sans-serif;
+    font-family: "JetBrains Mono", monospace;
     font-size: 0.88rem;
     background: var(--color-background);
     user-select: none;
@@ -97,12 +87,17 @@ img {
     transition: text-shadow 300ms ease;
 }
 
-.hover-glow:hover {
+.hover-glow-white:hover {
     text-shadow: 0 0 5px var(--color-dark);
+}
+
+.hover-glow-primary:hover {
+    text-shadow: 0 0 5px var(--color-primary);
 }
 
 .bubble-text {
     user-select: none;
+    cursor: pointer;
 
     &.split-text {
         display: inline-flex;
@@ -132,6 +127,24 @@ img {
         font-weight: var(--_fw-400);
     }
     }
+}
+
+@keyframes flyIn {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    } to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.fly-in-animation {
+    opacity: 0;
+}
+
+.fly-in-animation.active {
+    animation: flyIn 600ms ease-in-out forwards;
 }
 
 #loader {

@@ -1,17 +1,17 @@
 /* ========== ROOT VARIABLES ========== */
 :root {
-  --color-primary: #7380ec;
+  --color-primary: #5868fa;
   --color-danger: #ff7782;
   --color-success: #41f1b6;
   --color-warning: #ffbb55;
-  --color-white: #fff;
+  --color-white: #202528;
   --color-info-dark: #7d8da1;
   --color-info-light: #dce1eb;
-  --color-dark: #363949;
-  --color-light: rgba(132, 139, 200, 0.18);
+  --color-dark: #edeffd;
+  --color-light: rgba(0, 0, 0, 0.4);
   --color-primary-variant: #111e88;
-  --color-dark-variant: #677483;
-  --color-background: #f6f6f9;
+  --color-dark-variant: #a3bdcc;
+  --color-background: #18181b;
 
   --card-border-radius: 2rem;
   --border-radius-1: 0.4rem;
@@ -22,7 +22,22 @@
   --card-padding: 1.8rem;
   --padding-1: 1.2rem;
 
-  --box-shadow: 0 2rem 3rem var(--color-light);
+  --box-shadow: 0 2rem 3rem var(--color-light); 
+
+  --_fw-900: 900;
+  --_fw-700: 700;
+  --_fw-400: 400;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  appearance: none;
+  border: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
 }
 
 /* =========== CONTAINER =========== */
@@ -43,7 +58,7 @@
   background-color: transparent;
   padding: 25px 15px 15px;
   position: fixed;
-  transition: all 400ms ease-in-out;
+  transition: all 300ms ease-in-out;
   z-index: 9999;
 }
 
@@ -88,7 +103,8 @@
 
 /* ========== INTRODUCE ========== */
 #introduce {
-  height: calc(100vh - 77px);
+  min-height: calc(100vh - 77px);
+  height: auto;
   padding-top: 77px;
   width: 100%;
   display: flex;
@@ -106,6 +122,9 @@
   font-size: 27px;
   font-weight: 500;
   color: var(--color-info-light);
+  opacity: 0;
+  animation: flyIn 400ms ease-out forwards;
+  animation-delay: 200ms;
 }
 
 #introduce h1 {
@@ -113,6 +132,9 @@
   font-weight: 600;
   padding: 19.2px;
   color: var(--color-info-light);
+  opacity: 0;
+  animation: flyIn 400ms ease-out forwards;
+  animation-delay: 400ms;
 }
 
 #introduce h1 > span:nth-of-type(1) {
@@ -124,11 +146,14 @@
   gap: 20px;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  opacity: 0;
+  animation: flyIn 400ms ease-out forwards;
+  animation-delay: 600ms;
 }
 
 #introduce .intro-button a {
   height: 50px;
-  border-radius: var(--border-radius-2);
+  border-radius: var(--border-radius-1);
   width: 200px;
   background: transparent;
   display: flex;
@@ -143,16 +168,198 @@
   filter: brightness(0.8);
 }
 
-#introduce .intro-button a#invite {
+#introduce .intro-button a#invite-btn {
   background: linear-gradient(to right, var(--color-primary), var(--color-primary-variant));
 }
 
-#introduce .intro-button a#dashboard {
+#introduce .intro-button a#dashboard-btn {
   border: 1px lightgray solid;
   filter: brightness(1.1);
 }
 
+/* ========== FEATURES ==========*/
+#features {
+  width: 100%;
+  height: auto;
+  margin-top: 256px;
+  padding: 0 20px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 200px;
+}
+
+#features > section {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+
+#features > section > .content {
+  max-width: 435px;
+  width: 435px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+#features > section > .content .name {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+#features > section > .content .name .icon {
+  border-radius: 4px;
+  border: 1px var(--color-info-dark) solid;
+  padding: 8px;
+}
+
+#features > section > .content .name .icon i {
+  color: var(--color-info-dark);
+  text-shadow: 0 0 8px var(--color-dark-variant);
+}
+
+#features > section > .content .name p {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-info-dark)
+}
+
+#features > section > .content .title {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+#features > section > .content .description {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-info-dark);
+  line-height: 1.5;
+}
+
+#features > section > .content .more {
+  width: fit-content;
+  padding: 12px 24px;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px var(--color-dark-variant) solid;
+  font-weight: 500;
+  transition: background 200ms ease-in-out;
+}
+
+#features > section > .content .more:hover {
+  background-color: var(--color-dark-variant);
+}
+
+/* ========== INVITE ========== */
+#invite {
+  margin: 256px 120px 0;
+  padding: 0 12px;
+  height: auto;
+}
+
+#invite .center {
+  padding: 64px 32px;
+  position: relative;
+  background-image: url("/assets/images/invite.svg");
+  border-radius: 8px;
+  height: auto;
+  width: 100%;
+  display: flex;
+}
+
+#invite .center > div {
+  flex: 0.5
+}
+
+#invite .center .left {
+  margin-left: 32px;
+  row-gap: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+#invite .center .left .content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+#invite .center .left .content .title {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+#invite .center .left .content .subtitle {
+  color: #C2C1FB;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+#invite .center .left .content .subtitle span {
+  color: var(--color-dark)
+}
+
+#invite .center .left #invite-btn {
+  padding: 12px 24px;
+  background-color: #FFFFFF14;
+  border-radius: 4px;
+  width: fit-content;
+  font-weight: 500;
+  transition: background 200ms ease;
+}
+
+#invite .center .left #invite-btn:hover {
+  background-color: #FFFFFF50;
+}
+
+#invite .center .right {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+}
+
+/* ========== FOOTER ========== */
+#footer {
+  width: 100%;
+  height: auto;
+  margin-top: 100px;
+}
+
+#footer .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 32px;
+  flex-wrap: wrap;
+  border-top: 2px var(--color-light) solid;
+}
+
+#footer .content .right {
+  display: flex;
+  row-gap: 16px;
+  column-gap: 32px;
+}
+
 /* ========== MEDIA QUERIES =========== */
+@media screen and (max-width: 1200px) {
+
+  #invite {
+    margin: 256px 40px 0;
+  }
+
+  #invite .center .left {
+    flex: 1;
+  }
+
+  #invite .center .right {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 768px) {
   #navbar .center {
     margin: 0;
