@@ -129,6 +129,40 @@ img {
     }
 }
 
+.shining-text {
+    user-select: none;
+
+    &.split-text {
+        display: inline-flex;
+    }
+
+    & .split-char {
+        font-weight: 200;
+        transition: font-weight 0.5s ease, text-shadow 0.5s ease;
+
+    &.active {
+        font-weight: var(--_fw-900);
+        text-shadow: 0 0 10px var(--color-text-shadow);
+    }
+
+    /* // right side */
+    &.active + .split-char {
+        font-weight: var(--_fw-700);
+    }
+    &.active + .split-char + .split-char {
+        font-weight: var(--_fw-400);
+    }
+
+    /* // left side */
+    &:has(+ .split-char.active) {
+        font-weight: var(--_fw-700);
+    }
+    &:has(+ .split-char + .split-char.active) {
+        font-weight: var(--_fw-400);
+    }
+    }
+}
+
 .fly-in-animation {
     opacity: 0;
 }

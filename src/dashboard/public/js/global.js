@@ -9,6 +9,30 @@ function showPage() {
 
 $(document).ready(function () {
   splitTextIntoSpans(".bubble-text");
+  splitTextIntoSpans(".shining-text");
+
+  setInterval(function () {
+    $(".shining-text").each(function () {
+      var delay = 0;
+
+      $(this)
+        .find(".split-word")
+        .each(function () {
+          $(this)
+            .find(".split-char")
+            .each(function () {
+              var $char = $(this);
+              setTimeout(function () {
+                $char.addClass("active");
+                setTimeout(function () {
+                  $char.removeClass("active");
+                }, 500);
+              }, delay);
+              delay += 100;
+            });
+        });
+    });
+  }, 3000);
 
   $(document).scroll(function () {
     $(".fly-in-animation").each(function () {
