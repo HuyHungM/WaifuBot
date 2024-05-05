@@ -68,7 +68,7 @@ function getAll(client, interaction) {
     config.getEmbedConfig().color
   );
 
-  return interaction.reply({ embeds: [embed] });
+  return interaction.reply({ embeds: [embed], ephemeral: true });
 }
 
 function getCMD(client, interaction) {
@@ -109,5 +109,5 @@ function getCMD(client, interaction) {
   const embed = new EmbedBuilder(embedData).setColor(
     config.getEmbedConfig().color
   );
-  return interaction.reply({ embeds: [embed] });
+  return interaction.reply({ embeds: [embed], ephemeral: true });
 }
