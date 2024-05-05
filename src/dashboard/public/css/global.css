@@ -129,16 +129,6 @@ img {
     }
 }
 
-@keyframes flyIn {
-    from {
-        opacity: 0;
-        transform: translateY(100px);
-    } to {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-}
-
 .fly-in-animation {
     opacity: 0;
 }
