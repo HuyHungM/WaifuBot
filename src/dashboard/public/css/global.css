@@ -132,6 +132,10 @@ img {
         display: inline-flex;
     }
 
+    & .split-word {
+        margin: 0 6px;
+    }
+
     & .split-char {
         font-weight: 200;
         transition: font-weight 0.5s ease, text-shadow 0.5s ease;
@@ -164,7 +168,7 @@ img {
 }
 
 .fly-in-animation.active {
-    animation: flyIn 600ms ease-in-out forwards;
+    animation: flyIn 400ms ease-in-out forwards;
 }
 
 #loader {

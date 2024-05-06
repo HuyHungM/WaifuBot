@@ -36,14 +36,13 @@ function splitTextIntoSpans(target) {
       .trim()
       .split(/ +/g)
       .map(function (word, index) {
-        console.log(word);
         let char = word
           .split("")
           .map(function (char) {
             return `<span class="split-char">${char}</span>`;
           })
           .join("");
-        return `<div class="split-word">${char}${index < word.length - 1 ? "&nbsp" : ""}</div>`;
+        return `<div class="split-word">${char}</div>`;
       })
       .join("");
 

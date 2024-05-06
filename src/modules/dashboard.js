@@ -15,20 +15,12 @@ module.exports = (client) => {
 
     app.use(bodyParser.json());
 
-    app.use(
-      session({
-        secret: generateRandomString(16),
-        resave: false,
-        saveUninitialized: false,
-      })
-    );
-
     passport.use(
       new DiscordStrategy(
         {
           clientID: process.env.CLIENT_ID,
           clientSecret: process.env.CLIENT_SECRET_ID,
-          callbackURL: `${process.env.DOMAIN}:${process.env.PORT}${process.env.CALLBACK_URL}`,
+          callbackURL: `${process.env.DOMAIN}${process.env.CALLBACK_URL}`,
           scope: `${OAuth2Scopes.Identify} ${OAuth2Scopes.Guilds} ${OAuth2Scopes.GuildsJoin} ${OAuth2Scopes.Email}`,
         },
         function (accessToken, refreshToken, profile, done) {
@@ -39,6 +31,14 @@ module.exports = (client) => {
       )
     );
 
+    app.use(
+      session({
+        secret: generateRandomString(16),
+        resave: false,
+        saveUninitialized: false,
+      })
+    );
+
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -47,8 +47,8 @@ module.exports = (client) => {
       passport.authenticate("discord", {
         failureRedirect: process.env.FAILURE_REDIRECT,
       }),
-      (req, res) => {
-        res.redirect("/");
+      function (req, res) {
+        res.redirect("/servers");
       }
     );
 

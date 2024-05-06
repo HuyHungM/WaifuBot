@@ -2,10 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title><%= client.user.username %> - Đăng nhập</title>
+    <link rel="shortcut icon" href="/assets/images/logo.png" type="image/png" />
+    <!-- MATERIAL ICON -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="/css/animation.css" />
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/login.css" />
   </head>
-  <body>
-    <a href="/auth/callback">Login with discord</a>
+  <body onload="loadPage()">
+    <div id="loader">
+      <div class="loading">
+        <span></span>
+      </div>
+    </div>
+
+    <div id="container">
+      <div id="background">
+        <video autoplay loop muted>
+          <source src="/assets/videos/background-movie.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <section id="login">
+        <h1
+          class="shining-text"
+          style="--color-text-shadow: var(--color-success)"
+        >
+          Đăng nhập
+        </h1>
+        <a href="/auth/callback" id="login-btn">
+          <i class="fa-brands fa-discord"></i>
+          Đăng nhập bằng Discord
+        </a>
+      </section>
+    </div>
+
+    <!-- SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="/js/global.js"></script>
   </body>
 </html>

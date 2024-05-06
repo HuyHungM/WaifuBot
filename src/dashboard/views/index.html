@@ -31,7 +31,7 @@
       <!-- NAVBAR -->
       <nav id="navbar">
         <div class="center">
-          <a href="#" class="name"
+          <a href="/" class="name"
             ><img src="/assets/images/logo.png" class="logo" />
             <span
               class="bubble-text hover-glow"
@@ -106,13 +106,19 @@
             style="--color-text-shadow: var(--color-primary)"
             >Waifu</span
           >
-          <span class="shining-text" style="--color-text-shadow: #edeffd"
+          <span
+            class="shining-text"
+            style="--color-text-shadow: var(--color-dark)"
             >Bot</span
           >
         </h1>
         <div class="intro-button">
-          <a id="invite-btn" href="">Thêm vào Discord</a>
-          <a id="dashboard-btn" href="/dashboard">Bảng điều khiển</a>
+          <a
+            id="invite-btn"
+            href="https://discord.com/oauth2/authorize?client_id=<%= client.user.id %>&permissions=3222528&response_type=code&redirect_uri=<%= callbackURL %>&scope=identify+guilds+guilds.join+email+bot"
+            >Thêm vào Discord</a
+          >
+          <a id="dashboard-btn" href="/servers">Bảng điều khiển</a>
         </div>
       </section>
 
@@ -171,7 +177,12 @@
                 <span><%= client.guilds.cache.size %></span> server sử dụng!
               </div>
             </div>
-            <a id="invite-btn" href="#"> Thêm vào Discord </a>
+            <a
+              id="invite-btn"
+              href="https://discord.com/oauth2/authorize?client_id=<%= client.user.id %>&permissions=3222528&response_type=code&redirect_uri=<%= callbackURL %>&scope=identify+guilds+guilds.join+email+bot"
+            >
+              Thêm vào Discord
+            </a>
           </div>
           <div class="right">
             <svg
