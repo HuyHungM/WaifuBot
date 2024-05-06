@@ -1831,6 +1831,11 @@ undici@^5.22.1, undici@^5.25.2, undici@^5.27.2, undici@^5.7.0, undici@five:
   dependencies:
     "@fastify/busboy" "^2.0.0"
 
+undici@^6.15.0:
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-6.15.0.tgz#ce97f0a0734439e65acc7059cd60824693987103"
+  integrity sha512-VviMt2tlMg1BvQ0FKXxrz1eJuyrcISrL2sPfBf7ZskX/FCEc/7LeThQaoygsMJpNqrATWQIsRVx+1Dpe4jaYuQ==
+
 undici@^6.9.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-6.13.0.tgz#7edbf4b7f3aac5f8a681d515151bf55cb3589d72"
