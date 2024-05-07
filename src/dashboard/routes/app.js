@@ -3,6 +3,7 @@ const ejs = require("ejs");
 const { Auth, UnAuth } = require("../middlewares/auth");
 const client = require("../../app");
 const moment = require("moment");
+const { PermissionsBitField } = require("discord.js");
 
 app.get("/", (req, res) => {
   ejs.renderFile(
@@ -22,10 +23,43 @@ app.get("/", (req, res) => {
   );
 });
 
+app.get("/servers", Auth, (req, res) => {
+  if (req.query.guild_id) return res.redirect(`/server/${req.query.guild_id}`);
+
+  const user = req.user;
+
+  user.guilds = user.guilds.filter((guild) => {
+    const hasPermission = new PermissionsBitField(guild.permissions_new).has(
+      PermissionsBitField.Flags.ManageGuild,
+      true
+    );
+    if (hasPermission) {
+      guild.inGuild = client.guilds.cache.has(guild.id);
+      return guild;
+    }
+  });
+  console.log(user.guilds);
+  ejs.renderFile(
+    "./src/dashboard/views/servers.html",
+    {
+      client,
+      domain: process.env.DOMAIN,
+      user,
+    },
+    (err, html) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.status(404).send(html);
+      }
+    }
+  );
+});
+
 app.get("/login", UnAuth, (req, res) => {
   ejs.renderFile(
     "./src/dashboard/views/login.html",
-    { client },
+    { client, callbackURL: process.env.CALLBACK_URL },
     (err, html) => {
       if (err) {
         console.error(err);

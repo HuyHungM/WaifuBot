@@ -7,17 +7,10 @@ module.exports = {
   run: async (client, interaction, args) => {
     const queue = client.distube.getQueue(interaction);
 
-    if (!queue)
-      return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
+    if (!queue) return await interaction.message.delete();
 
     try {
       await queue.stop();
-
-      const embed = new EmbedBuilder({
-        description: ":stop_button: **Đã dừng phát nhạc!**",
-      }).setColor(config.getEmbedConfig().color);
-
-      interaction.reply({ embeds: [embed], ephemeral: true });
     } catch (error) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Đã xảy ra lỗi!**`,

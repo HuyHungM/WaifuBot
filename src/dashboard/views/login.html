@@ -28,12 +28,15 @@
     </div>
 
     <div id="container">
+      <!-- BACKGROUND -->
       <div id="background">
         <video autoplay loop muted>
           <source src="/assets/videos/background-movie.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
+
+      <!-- LOGIN FORM -->
       <section id="login">
         <h1
           class="shining-text"
@@ -41,7 +44,7 @@
         >
           Đăng nhập
         </h1>
-        <a href="/auth/callback" id="login-btn">
+        <a href="<%= callbackURL %>" id="login-btn">
           <i class="fa-brands fa-discord"></i>
           Đăng nhập bằng Discord
         </a>
