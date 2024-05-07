@@ -38,13 +38,14 @@ app.get("/servers", Auth, (req, res) => {
       return guild;
     }
   });
-  console.log(user.guilds);
+
   ejs.renderFile(
     "./src/dashboard/views/servers.html",
     {
       client,
       domain: process.env.DOMAIN,
       user,
+      moment,
     },
     (err, html) => {
       if (err) {
