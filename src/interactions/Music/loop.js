@@ -9,7 +9,7 @@ const {
   loopModeEmote,
   loopModeMessage,
 } = require("../../utils/music");
-const { RepeatMode } = require("distube");
+const { QueueRepeatMode } = require("discord-player");
 const { commandCategory } = require("../../utils/other");
 
 module.exports = {
@@ -26,15 +26,15 @@ module.exports = {
       choices: [
         {
           name: "Tắt",
-          value: RepeatMode.DISABLED,
+          value: QueueRepeatMode.OFF,
         },
         {
           name: "Lặp lại bài hát",
-          value: RepeatMode.SONG,
+          value: QueueRepeatMode.TRACK,
         },
         {
           name: "Lặp lại hàng đợi",
-          value: RepeatMode.QUEUE,
+          value: QueueRepeatMode.QUEUE,
         },
       ],
     },

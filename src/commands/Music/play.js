@@ -1,4 +1,3 @@
-const { SearchResultType } = require("distube");
 const {
   EmbedBuilder,
   ActionRowBuilder,
@@ -7,13 +6,14 @@ const {
 } = require("discord.js");
 const config = require("../../config/config");
 const { commandCategory } = require("../../utils/other");
+const { useMainPlayer } = require("discord-player");
 
 module.exports = {
   name: "play",
   aliases: ["p"],
   category: commandCategory.MUSIC,
   description: "Nghe nhạc cùng waifu của bạn",
-  usage: `play <tên/link nhạc> (Youtube/Spotify/SoundCloud)`,
+  usage: `play <tên/link nhạc>`,
   run: async (client, message, args) => {
     const songQuery = args.join(" ");
     if (songQuery.trim() === "") {
@@ -37,26 +37,33 @@ module.exports = {
     });
 
     try {
+      const player = useMainPlayer();
+
       const urlRegex = /^(?:https?|ftp):\/\/[\w/\-?=%.]+\.[\w/\-?=%.]+$/;
       if (urlRegex.test(songQuery)) {
-        await client.distube.play(message.member.voice.channel, songQuery, {
-          member: message.member,
-          textChannel: message.channel,
-          message,
+        await player.play(message.member.voice.channel, songQuery, {
+          requestedBy: message.author,
         });
+        // await client.distube.play(message.member.voice.channel, songQuery, {
+        //   member: message.member,
+        //   textChannel: message.channel,
+        //   message,
+        // });
 
         return await searchingMessage.delete();
       }
 
       const searchOptions = {
-        limit: 5,
-        type: SearchResultType.VIDEO,
-        safeSearch: false,
+        fallbackSearchEngine: "youtube",
+        requestedBy: message.author,
       };
 
       const searchResult = (
-        await client.distube.search(songQuery, searchOptions)
-      )?.sort((a, b) => (a.views < b.views ? 1 : -1));
+        await player.search(songQuery, searchOptions)
+      )._data.tracks
+        ?.sort((a, b) => (a.views < b.views ? 1 : -1))
+        .slice(0, 5);
+      console.log(searchResult);
 
       if (!searchResult) {
         const embed = new EmbedBuilder({
@@ -69,11 +76,11 @@ module.exports = {
       const embedDescription = searchResult
         .map(
           (song, i) =>
-            `\`${i + 1}.\` **${song.name}** - \`${
-              song.uploader.name
-            }\`\n__Views:__ \`${song.views.toLocaleString(
+            `\`${i + 1}.\` **${song.raw.title}** - \`${
+              song.raw.channel.name
+            }\`\n__Views:__ \`${song.raw.views.toLocaleString(
               "vi-VN"
-            )}\` - __Thời lượng:__ \`${song.formattedDuration}\``
+            )}\` - __Thời lượng:__ \`${song.raw.durationFormatted}\``
         )
         .join("\n\n");
 

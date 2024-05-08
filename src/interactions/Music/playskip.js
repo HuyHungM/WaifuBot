@@ -1,4 +1,4 @@
-const { SearchResultType } = require("distube");
+const { SearchResultType } = require("discord-player");
 const {
   EmbedBuilder,
   ActionRowBuilder,

@@ -12,7 +12,7 @@ const {
   volumeIcon,
   autoplayModeMessage,
 } = require("../utils/music");
-const { RepeatMode } = require("distube");
+const { QueueRepeatMode } = require("discord-player");
 
 module.exports = {
   name: "loop",
@@ -33,13 +33,13 @@ module.exports = {
 
       switch (args[0]) {
         case "off":
-          mode = RepeatMode.DISABLED;
+          mode = QueueRepeatMode.DISABLED;
           break;
         case "song":
-          mode = RepeatMode.SONG;
+          mode = QueueRepeatMode.SONG;
           break;
         case "queue":
-          mode = RepeatMode.QUEUE;
+          mode = QueueRepeatMode.QUEUE;
           break;
         default:
           mode = mode;

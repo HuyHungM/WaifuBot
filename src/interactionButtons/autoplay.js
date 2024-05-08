@@ -12,7 +12,7 @@ const {
   loopModeMessage,
   loopModeEmote,
 } = require("../utils/music");
-const { RepeatMode } = require("distube");
+const { QueueRepeatMode } = require("discord-player");
 
 module.exports = {
   name: "autoplay",
@@ -21,7 +21,7 @@ module.exports = {
 
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
-    if (queue.repeatMode != RepeatMode.DISABLED) {
+    if (queue.repeatMode != QueueRepeatMode.DISABLED) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
       }).setColor(config.getEmbedConfig().errorColor);

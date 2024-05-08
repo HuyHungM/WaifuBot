@@ -5,7 +5,7 @@ const {
   loopModeEmote,
   loopModeMessage,
 } = require("../../utils/music");
-const { RepeatMode } = require("distube");
+const { QueueRepeatMode } = require("discord-player");
 const { commandCategory } = require("../../utils/other");
 
 module.exports = {
@@ -30,13 +30,13 @@ module.exports = {
 
       switch (args[0]) {
         case "off":
-          mode = RepeatMode.DISABLED;
+          mode = QueueRepeatMode.OFF;
           break;
         case "song":
-          mode = RepeatMode.SONG;
+          mode = QueueRepeatMode.TRACK;
           break;
         case "queue":
-          mode = RepeatMode.QUEUE;
+          mode = QueueRepeatMode.QUEUE;
           break;
         default:
           mode = mode;

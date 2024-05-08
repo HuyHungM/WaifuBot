@@ -22,12 +22,12 @@ module.exports = (client) => {
 
     if (!command) command = client.commands.get(client.aliases.get(cmd));
     if (command) {
-      if (command.category === commandCategory.MUSIC) {
-        if (
-          checkSameRoom({ message: message, interaction: null, client: client })
-        )
-          return;
-      }
+      // if (command.category === commandCategory.MUSIC) {
+      //   if (
+      //     checkSameRoom({ message: message, interaction: null, client: client })
+      //   )
+      //     return;
+      // }
       command.run(client, message, args);
     }
   });
