@@ -4,6 +4,7 @@ const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 const config = require("../config/config");
 const { Collection } = require("discord.js");
+const { StreamType } = require("distube");
 
 module.exports = (client) => {
   const distube = new DisTube(client, {
@@ -25,6 +26,8 @@ module.exports = (client) => {
       new YtDlpPlugin(),
     ],
     customFilters: config.music.filters,
+    streamType: StreamType.OPUS,
+    joinNewVoiceChannel: false,
   });
 
   client.distube = distube;
