@@ -1,7 +1,6 @@
 const { ButtonStyle } = require("discord.js");
 const { noMusicEmbed } = require("../utils/music");
 const { ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
-const config = require("../config/config.js");
 
 const dash = "▬";
 const button = "🔘";
@@ -54,7 +53,7 @@ module.exports = {
         },
         footer: {
           text: `Trang - ${currentPage}/${totalPages} | ${
-            config.getEmbedConfig().footer
+            client.config.getEmbedConfig().footer
           }`,
           iconURL: client.user.displayAvatarURL({ dynamic: true }),
         },
@@ -82,7 +81,7 @@ module.exports = {
           },
         ],
         timestamp: new Date(),
-      }).setColor(config.getEmbedConfig().color);
+      }).setColor(client.config.getEmbedConfig().color);
 
       const rowComponents = [];
 
@@ -122,8 +121,8 @@ module.exports = {
       interaction.reply({ embeds: [embed], components: [row] });
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       interaction.reply({ embeds: [embed], ephemeral: true });
       console.error(error);
     }

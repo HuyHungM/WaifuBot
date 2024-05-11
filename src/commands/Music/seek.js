@@ -1,5 +1,4 @@
 const { EmbedBuilder } = require("discord.js");
-const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 const ms = require("ms");
 const { commandCategory } = require("../../utils/other");
@@ -25,14 +24,14 @@ module.exports = {
 
       if (isNaN(time) || !args[0]) {
         const embed = new EmbedBuilder({
-          description: `${config.emotes.error} **Vui lòng nhập khoảng thời gian hợp lệ! (h/m/s)**`,
-        }).setColor(config.getEmbedConfig().errorColor);
+          description: `${client.config.emotes.error} **Vui lòng nhập khoảng thời gian hợp lệ! (h/m/s)**`,
+        }).setColor(client.config.getEmbedConfig().errorColor);
         return message.reply({ embeds: [embed] });
       }
       if (time > queue.songs[0].duration) {
         const embed = new EmbedBuilder({
-          description: `${config.emotes.error} **Giá trị nhập vào lớn hơn thời lượng bài hát!**`,
-        }).setColor(config.getEmbedConfig().errorColor);
+          description: `${client.config.emotes.error} **Giá trị nhập vào lớn hơn thời lượng bài hát!**`,
+        }).setColor(client.config.getEmbedConfig().errorColor);
         return message.reply({ embeds: [embed] });
       }
 
@@ -40,13 +39,13 @@ module.exports = {
 
       const embed = new EmbedBuilder({
         description: `:fast_forward: **Đã tua đến** \`${queue.formattedCurrentTime}\`**!**`,
-      }).setColor(config.getEmbedConfig().color);
+      }).setColor(client.config.getEmbedConfig().color);
 
       message.channel.send({ embeds: [embed] });
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       message.reply({ embeds: [embed] });
       console.error(error);
     }

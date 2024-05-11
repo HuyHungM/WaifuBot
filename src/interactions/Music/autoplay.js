@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
-const config = require("../../config/config");
 const { noMusicEmbed, autoplayModeMessage } = require("../../utils/music");
 const { RepeatMode } = require("distube");
 const { commandCategory } = require("../../utils/other");
@@ -17,8 +16,8 @@ module.exports = {
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
     if (queue.repeatMode != RepeatMode.DISABLED) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       return interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
@@ -26,14 +25,14 @@ module.exports = {
       let mode = await queue.toggleAutoplay();
 
       const embed = new EmbedBuilder({
-        description: `${config.emotes.success} **Đã chỉnh chế độ tự động phát lại thành** \`${autoplayModeMessage[mode]}\`**!**`,
-      }).setColor(config.getEmbedConfig().color);
+        description: `${client.config.emotes.success} **Đã chỉnh chế độ tự động phát lại thành** \`${autoplayModeMessage[mode]}\`**!**`,
+      }).setColor(client.config.getEmbedConfig().color);
 
       interaction.reply({ embeds: [embed], ephemeral: true });
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       interaction.reply({ embeds: [embed], ephemeral: true });
       console.error(error);
     }

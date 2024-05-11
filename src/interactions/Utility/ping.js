@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
-const config = require("../../config/config.js");
 const { commandCategory } = require("../../utils/other.js");
 
 module.exports = {
@@ -53,7 +52,7 @@ module.exports = {
     };
 
     const embed = new EmbedBuilder(embedData).setColor(
-      config.getEmbedConfig().color
+      client.config.getEmbedConfig().color
     );
 
     interaction.reply({ embeds: [embed], ephemeral: true });

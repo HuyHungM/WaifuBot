@@ -4,7 +4,6 @@ const {
   ApplicationCommandOptionType,
 } = require("discord.js");
 const { stripIndent } = require("common-tags");
-const config = require("../../config/config");
 const packageJson = require("../../../package.json");
 const { commandCategory } = require("../../utils/other");
 
@@ -53,19 +52,19 @@ function getAll(client, interaction) {
     fields: [
       {
         name: `Version: v${packageJson.version}`,
-        value: `✨ [Support Server](${process.env.SUPPORT_SERVER}) | [Dashboard](${process.env.DOMAIN}) | By ${config.ownerName}`,
+        value: `✨ [Support Server](${process.env.SUPPORT_SERVER}) | [Dashboard](${process.env.DOMAIN}) | By ${client.config.ownerName}`,
         inline: false,
       },
     ],
     footer: {
-      text: config.getEmbedConfig().footer,
+      text: client.config.getEmbedConfig().footer,
       iconURL: client.user.displayAvatarURL({ dynamic: true }),
     },
     timestamp: new Date(),
   };
 
   const embed = new EmbedBuilder(embedData).setColor(
-    config.getEmbedConfig().color
+    client.config.getEmbedConfig().color
   );
 
   return interaction.reply({ embeds: [embed], ephemeral: true });
@@ -82,13 +81,13 @@ function getCMD(client, interaction) {
       client.commands.get(client.aliases.get(command.value.toLowerCase()))
   );
   let info = `${
-    config.emotes.error
+    client.config.emotes.error
   } Không tìm thấy lệnh **${command.value.toLowerCase()}**`;
 
   if (!cmd) {
     embedData.description = info;
     const embed = new EmbedBuilder(embedData).setColor(
-      config.getEmbedConfig().errorColor
+      client.config.getEmbedConfig().errorColor
     );
     return interaction.reply({ embeds: [embed], ephemeral: true });
   }
@@ -107,7 +106,7 @@ function getCMD(client, interaction) {
   embedData.description = info;
 
   const embed = new EmbedBuilder(embedData).setColor(
-    config.getEmbedConfig().color
+    client.config.getEmbedConfig().color
   );
   return interaction.reply({ embeds: [embed], ephemeral: true });
 }

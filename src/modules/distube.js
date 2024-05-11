@@ -3,7 +3,6 @@ const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 const { DeezerPlugin } = require("@distube/deezer");
-const config = require("../config/config");
 const { Collection } = require("discord.js");
 const { StreamType } = require("distube");
 
@@ -20,6 +19,7 @@ module.exports = (client) => {
         api: {
           clientId: process.env.SPOTIFY_ID,
           clientSecret: process.env.SPOTIFY_SECRET,
+          topTracksCountry: "VN",
         },
         emitEventsAfterFetching: true,
       }),
@@ -27,7 +27,7 @@ module.exports = (client) => {
       new YtDlpPlugin(),
       new DeezerPlugin(),
     ],
-    customFilters: config.music.filters,
+    customFilters: client.config.music.filters,
     streamType: StreamType.OPUS,
     joinNewVoiceChannel: false,
   });

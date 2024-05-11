@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 const { readdirSync } = require("fs");
+const config = require("./config/config");
 
 const client = new Client({
   intents: [
@@ -24,6 +25,7 @@ client.aliases = new Collection();
 client.interactions = new Collection();
 client.interactionButtons = new Collection();
 client.categories = readdirSync("./src/commands/");
+client.config = config;
 module.exports = client;
 
 readdirSync("./src/handlers")

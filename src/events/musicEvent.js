@@ -5,7 +5,6 @@ const {
   ActionRowBuilder,
 } = require("discord.js");
 const discord = require("discord.js");
-const config = require("../config/config");
 const distube = require("distube");
 const {
   volumeIcon,
@@ -54,14 +53,14 @@ module.exports = (client) => {
             url: song.thumbnail,
           },
           footer: {
-            text: config.getEmbedConfig().footer,
+            text: client.config.getEmbedConfig().footer,
             iconURL: client.user.displayAvatarURL(),
           },
           timestamp: new Date(),
         };
 
         const embed = new EmbedBuilder(embedData).setColor(
-          config.getEmbedConfig().color
+          client.config.getEmbedConfig().color
         );
 
         // Create Button Row
@@ -136,7 +135,7 @@ module.exports = (client) => {
         };
 
         const embed = new EmbedBuilder(embedData).setColor(
-          config.getEmbedConfig().color
+          client.config.getEmbedConfig().color
         );
 
         //Send Info Message
@@ -162,7 +161,7 @@ module.exports = (client) => {
         };
 
         const embed = new EmbedBuilder(embedData).setColor(
-          config.getEmbedConfig().color
+          client.config.getEmbedConfig().color
         );
 
         //Send Info Message
@@ -171,13 +170,13 @@ module.exports = (client) => {
       .on(distube.Events.ERROR, (channel, e) => {
         //Create Embed
         const embedData = {
-          description: `${config.emotes.error} **Đã xảy ra lỗi:** ${e
+          description: `${client.config.emotes.error} **Đã xảy ra lỗi:** ${e
             .toString()
             .slice(0, 1974)}`,
         };
 
         const embed = new EmbedBuilder(embedData).setColor(
-          config.getEmbedConfig().errorColor
+          client.config.getEmbedConfig().errorColor
         );
 
         //Send Info Message
@@ -191,7 +190,7 @@ module.exports = (client) => {
         };
 
         const embed = new EmbedBuilder(embedData).setColor(
-          config.getEmbedConfig().errorColor
+          client.config.getEmbedConfig().errorColor
         );
 
         //Send Info Message
@@ -200,11 +199,11 @@ module.exports = (client) => {
       .on(distube.Events.SEARCH_NO_RESULT, (message, query) => {
         //Create Embed
         const embedData = {
-          description: `${config.emotes.errors} **Không tìm thấy kết quả nào cho** \`${query}\`!`,
+          description: `${client.config.emotes.errors} **Không tìm thấy kết quả nào cho** \`${query}\`!`,
         };
 
         const embed = new EmbedBuilder(embedData).setColor(
-          config.getEmbedConfig().errorColor
+          client.config.getEmbedConfig().errorColor
         );
 
         //Send Info Message
@@ -213,11 +212,11 @@ module.exports = (client) => {
       .on(distube.Events.FINISH, (queue) => {
         //Create Embed
         const embedData = {
-          description: `${config.emotes.success} **Đã phát xong hàng đợi!**`,
+          description: `${client.config.emotes.success} **Đã phát xong hàng đợi!**`,
         };
 
         const embed = new EmbedBuilder(embedData).setColor(
-          config.getEmbedConfig().color
+          client.config.getEmbedConfig().color
         );
 
         //Send Info Message

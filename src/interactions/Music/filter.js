@@ -3,7 +3,6 @@ const {
   ApplicationCommandType,
   ApplicationCommandOptionType,
 } = require("discord.js");
-const config = require("../../config/config");
 const { noMusicEmbed, filterSubCommand } = require("../../utils/music");
 const { commandCategory } = require("../../utils/other");
 
@@ -74,14 +73,14 @@ module.exports = {
             \n**Các filter hiện đang bật:** \n\`${queue.filters.names.join(
               ", "
             )}\``,
-            }).setColor(config.getEmbedConfig().color);
+            }).setColor(client.config.getEmbedConfig().color);
             interaction.reply({ embeds: [addEmbed], ephemeral: true });
           } else {
             const unavailableEmbed = new EmbedBuilder({
               title: "Không phải filter hợp lệ",
               description: `**Các filter hợp lệ gồm:**
               \n\`${Object.keys(client.distube.filters).join(" | ")}\``,
-            }).setColor(config.getEmbedConfig().color);
+            }).setColor(client.config.getEmbedConfig().color);
             interaction.reply({ embeds: [unavailableEmbed], ephemeral: true });
           }
           break;
@@ -97,16 +96,16 @@ module.exports = {
                 ? `**Các filter hiện đang bật:** \n\`${queue.filters.names.join(
                     ", "
                   )}\``
-                : `${config.emotes.success} **Hiện không có filter nào đang bật!**`
+                : `${client.config.emotes.success} **Hiện không có filter nào đang bật!**`
             }`,
-            }).setColor(config.getEmbedConfig().color);
+            }).setColor(client.config.getEmbedConfig().color);
             interaction.reply({ embeds: [removeEmbed], ephemeral: true });
           } else {
             const unavailableEmbed = new EmbedBuilder({
               title: "Không phải filter hợp lệ",
               description: `**Các filter hợp lệ gồm:**
               \n\`${Object.keys(client.distube.filters).join(" | ")}\``,
-            }).setColor(config.getEmbedConfig().color);
+            }).setColor(client.config.getEmbedConfig().color);
             interaction.reply({ embeds: [unavailableEmbed], ephemeral: true });
           }
           break;
@@ -114,8 +113,8 @@ module.exports = {
         case filterSubCommand.CLEAR:
           await queue.filters.clear();
           const clearEmbed = new EmbedBuilder({
-            description: `${config.emotes.success} **Đã tắt filter!**`,
-          }).setColor(config.getEmbedConfig().color);
+            description: `${client.config.emotes.success} **Đã tắt filter!**`,
+          }).setColor(client.config.getEmbedConfig().color);
           interaction.reply({ embeds: [clearEmbed], ephemeral: true });
           break;
 
@@ -126,24 +125,24 @@ module.exports = {
                 ? `**Các filter hiện đang bật:** \n\`${queue.filters.names.join(
                     ", "
                   )}\``
-                : `${config.emotes.success} **Hiện không có filter nào đang bật!**`
+                : `${client.config.emotes.success} **Hiện không có filter nào đang bật!**`
             }`,
-          }).setColor(config.getEmbedConfig().color);
+          }).setColor(client.config.getEmbedConfig().color);
           interaction.reply({ embeds: [activesEmbed], ephemeral: true });
           break;
 
         case filterSubCommand.LIST:
           const listEmbed = new EmbedBuilder({
-            description: `${config.emotes.success} **Các loại filter:** 
+            description: `${client.config.emotes.success} **Các loại filter:** 
           \n\`${Object.keys(client.distube.filters).join(" | ")}\``,
-          }).setColor(config.getEmbedConfig().color);
+          }).setColor(client.config.getEmbedConfig().color);
           interaction.reply({ embeds: [listEmbed], ephemeral: true });
           break;
       }
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       interaction.reply({ embeds: [embed], ephemeral: true });
       console.error(error);
     }

@@ -1,5 +1,4 @@
 const { EmbedBuilder } = require("discord.js");
-const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 const { commandCategory } = require("../../utils/other");
 
@@ -17,8 +16,8 @@ module.exports = {
     const volume = args[0];
     if (isNaN(volume) || Number(volume) > 125 || Number(volume) < 0) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Kiểu âm lượng không hợp lệ!** \`0 - 125\``,
-      }).setColor(config.getEmbedConfig().color);
+        description: `${client.config.emotes.error} **Kiểu âm lượng không hợp lệ!** \`0 - 125\``,
+      }).setColor(client.config.getEmbedConfig().color);
 
       return message.reply({ embeds: [embed] });
     }
@@ -36,13 +35,13 @@ module.exports = {
         description: `${
           volume <= 35 ? vol.low : volume <= 70 ? vol.medium : vol.high
         } **Đã chỉnh âm lượng thành** \`${volume}%\` **!**`,
-      }).setColor(config.getEmbedConfig().color);
+      }).setColor(client.config.getEmbedConfig().color);
 
       message.channel.send({ embeds: [embed] });
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       message.reply({ embeds: [embed] });
       console.error(error);
     }

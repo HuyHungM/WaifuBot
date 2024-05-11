@@ -1,5 +1,4 @@
 const { EmbedBuilder } = require("discord.js");
-const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 const { commandCategory } = require("../../utils/other");
 
@@ -16,8 +15,8 @@ module.exports = {
 
     if (queue.paused) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Bài hát hiện đã tạm dừng!**`,
-      }).setColor(config.getEmbedConfig().color);
+        description: `${client.config.emotes.error} **Bài hát hiện đã tạm dừng!**`,
+      }).setColor(client.config.getEmbedConfig().color);
 
       return message.reply({ embeds: [embed] });
     }
@@ -27,13 +26,13 @@ module.exports = {
 
       const embed = new EmbedBuilder({
         description: `:pause_button: **Đã tạm dừng bài hát!**`,
-      }).setColor(config.getEmbedConfig().color);
+      }).setColor(client.config.getEmbedConfig().color);
 
       message.channel.send({ embeds: [embed] });
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       message.reply({ embeds: [embed] });
       console.error(error);
     }

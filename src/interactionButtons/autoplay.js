@@ -4,7 +4,6 @@ const {
   ButtonStyle,
   ActionRowBuilder,
 } = require("discord.js");
-const config = require("../config/config");
 const {
   noMusicEmbed,
   autoplayModeMessage,
@@ -23,8 +22,8 @@ module.exports = {
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
     if (queue.repeatMode != RepeatMode.DISABLED) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       return interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
@@ -67,14 +66,14 @@ module.exports = {
           url: song.thumbnail,
         },
         footer: {
-          text: config.getEmbedConfig().footer,
+          text: client.config.getEmbedConfig().footer,
           iconURL: client.user.displayAvatarURL(),
         },
         timestamp: new Date(),
       };
 
       const embed = new EmbedBuilder(embedData).setColor(
-        config.getEmbedConfig().color
+        client.config.getEmbedConfig().color
       );
 
       // Create Button Row
@@ -131,8 +130,8 @@ module.exports = {
       client.playingSong.set(queue.textChannel.guildId, msg);
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       interaction.reply({ embeds: [embed], ephemeral: true });
       console.error(error);
     }

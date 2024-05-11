@@ -5,7 +5,6 @@ const {
   ButtonStyle,
   ApplicationCommandType,
 } = require("discord.js");
-const config = require("../../config/config.js");
 const { noMusicEmbed } = require("../../utils/music.js");
 const { commandCategory } = require("../../utils/other.js");
 const dash = "▬";
@@ -24,7 +23,7 @@ module.exports = {
 
     const waitingMessageEmbed = new EmbedBuilder({
       description: `🔎 **Đang tải...**`,
-    }).setColor(config.getEmbedConfig().color);
+    }).setColor(client.config.getEmbedConfig().color);
 
     const waitingMessage = await interaction.reply({
       embeds: [waitingMessageEmbed],
@@ -68,7 +67,9 @@ module.exports = {
           url: playingSong.thumbnail,
         },
         footer: {
-          text: `Trang - 1/${totalPages} | ${config.getEmbedConfig().footer}`,
+          text: `Trang - 1/${totalPages} | ${
+            client.config.getEmbedConfig().footer
+          }`,
           iconURL: client.user.displayAvatarURL({ dynamic: true }),
         },
         description: description,
@@ -95,7 +96,7 @@ module.exports = {
           },
         ],
         timestamp: new Date(),
-      }).setColor(config.getEmbedConfig().color);
+      }).setColor(client.config.getEmbedConfig().color);
 
       const rowComponents = [
         new ButtonBuilder({
@@ -122,8 +123,8 @@ module.exports = {
       await waitingMessage.edit({ embeds: [embed], components: [row] });
     } catch (error) {
       const errorEmbed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       waitingMessage.edit({ embeds: [errorEmbed], components: [] });
       console.error(error);
     }

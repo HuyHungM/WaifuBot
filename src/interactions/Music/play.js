@@ -8,7 +8,6 @@ const {
   ApplicationCommandType,
   ApplicationCommandOptionType,
 } = require("discord.js");
-const config = require("../../config/config");
 const { commandCategory } = require("../../utils/other");
 
 module.exports = {
@@ -31,7 +30,7 @@ module.exports = {
     };
 
     const searchingEmbed = new EmbedBuilder(searchingEmbedData).setColor(
-      config.getEmbedConfig().color
+      client.config.getEmbedConfig().color
     );
 
     const searchingMessage = await interaction.reply({
@@ -64,8 +63,8 @@ module.exports = {
 
       if (!searchResult) {
         const embed = new EmbedBuilder({
-          description: `${config.emotes.error} **Không tìm thấy kết quả nào cho** \`${songQuery}\` **!**`,
-        }).setColor(config.getEmbedConfig().color);
+          description: `${client.config.emotes.error} **Không tìm thấy kết quả nào cho** \`${songQuery}\` **!**`,
+        }).setColor(client.config.getEmbedConfig().color);
         return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
@@ -77,7 +76,7 @@ module.exports = {
               song.uploader.name
             }\`\n__Views:__ \`${song.views.toLocaleString(
               "vi-VN"
-            )}\` - __Thời lượng:__ \`${song.formattedDuration}\` - [[Link](${
+            )}\` - __Thời lượng:__ \`${song.formattedDuration}\` - [[Source](${
               song.url
             })]`
         )
@@ -87,14 +86,14 @@ module.exports = {
         title: "🔎 Kết quả tìm kiếm...",
         description: embedDescription,
         footer: {
-          text: config.getEmbedConfig().footer,
+          text: client.config.getEmbedConfig().footer,
           iconURL: client.user.displayAvatarURL(),
         },
         timestamp: new Date(),
       };
 
       const embed = new EmbedBuilder(embedData).setColor(
-        config.getEmbedConfig().color
+        client.config.getEmbedConfig().color
       );
 
       // Create Button Row
@@ -130,8 +129,8 @@ module.exports = {
       });
     } catch (error) {
       const errorEmbed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       searchingMessage.edit({
         embeds: [errorEmbed],
         components: [],

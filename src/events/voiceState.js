@@ -1,5 +1,4 @@
 const { Events, EmbedBuilder } = require("discord.js");
-const config = require("../config/config");
 
 module.exports = (client) => {
   client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
@@ -49,7 +48,7 @@ module.exports = (client) => {
           let embed = new EmbedBuilder({
             description:
               ":arrow_forward: **Tiếp tục phát nhạc vì đã đủ người trong phòng!**",
-          }).setColor(config.getEmbedConfig().color);
+          }).setColor(client.config.getEmbedConfig().color);
 
           await queue.textChannel.send({ embeds: [embed] });
           await queue.resume();
@@ -61,7 +60,7 @@ module.exports = (client) => {
           let embed = new EmbedBuilder({
             description:
               ":pause_button: **Hàng đợi đã bị tạm dừng vì không còn ai trong phòng!**",
-          }).setColor(config.getEmbedConfig().color);
+          }).setColor(client.config.getEmbedConfig().color);
 
           await queue.textChannel.send({ embeds: [embed] });
           await queue.pause();

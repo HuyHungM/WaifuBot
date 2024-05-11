@@ -1,5 +1,4 @@
 const { EmbedBuilder } = require("discord.js");
-const config = require("../../config/config");
 const { noMusicEmbed, filterSubCommand } = require("../../utils/music");
 const { commandCategory } = require("../../utils/other");
 
@@ -22,9 +21,9 @@ module.exports = {
         !Object.values(filterSubCommand).includes(subCommand)
       ) {
         const embed = new EmbedBuilder({
-          description: `${config.emotes.error} **Lệnh không hợp lệ!**
+          description: `${client.config.emotes.error} **Lệnh không hợp lệ!**
           \n**Ví dụ:** \`${process.env.PREFIX}filter <add/remove/clear/actives/list> [tên filter]\``,
-        }).setColor(config.getEmbedConfig().color);
+        }).setColor(client.config.getEmbedConfig().color);
         return message.reply({ embeds: [embed] });
       }
 
@@ -38,14 +37,14 @@ module.exports = {
             \n**Các filter hiện đang bật:** \n\`${queue.filters.names.join(
               ", "
             )}\``,
-            }).setColor(config.getEmbedConfig().color);
+            }).setColor(client.config.getEmbedConfig().color);
             message.channel.send({ embeds: [addEmbed] });
           } else {
             const unavailableEmbed = new EmbedBuilder({
               title: "Không phải filter hợp lệ",
               description: `**Các filter hợp lệ gồm:**
               \n\`${Object.keys(client.distube.filters).join(" | ")}\``,
-            }).setColor(config.getEmbedConfig().color);
+            }).setColor(client.config.getEmbedConfig().color);
             message.reply({ embeds: [unavailableEmbed] });
           }
           break;
@@ -61,16 +60,16 @@ module.exports = {
                 ? `**Các filter hiện đang bật:** \n\`${queue.filters.names.join(
                     ", "
                   )}\``
-                : `${config.emotes.success} **Hiện không có filter nào đang bật!**`
+                : `${client.config.emotes.success} **Hiện không có filter nào đang bật!**`
             }`,
-            }).setColor(config.getEmbedConfig().color);
+            }).setColor(client.config.getEmbedConfig().color);
             message.channel.send({ embeds: [removeEmbed] });
           } else {
             const unavailableEmbed = new EmbedBuilder({
               title: "Không phải filter hợp lệ",
               description: `**Các filter hợp lệ gồm:**
               \n\`${Object.keys(client.distube.filters).join(" | ")}\``,
-            }).setColor(config.getEmbedConfig().color);
+            }).setColor(client.config.getEmbedConfig().color);
             message.reply({ embeds: [unavailableEmbed] });
           }
           break;
@@ -78,8 +77,8 @@ module.exports = {
         case filterSubCommand.CLEAR:
           await queue.filters.clear();
           const clearEmbed = new EmbedBuilder({
-            description: `${config.emotes.success} **Đã tắt filter!**`,
-          }).setColor(config.getEmbedConfig().color);
+            description: `${client.config.emotes.success} **Đã tắt filter!**`,
+          }).setColor(client.config.getEmbedConfig().color);
           message.channel.send({ embeds: [clearEmbed] });
           break;
 
@@ -90,24 +89,24 @@ module.exports = {
                 ? `**Các filter hiện đang bật:** \n\`${queue.filters.names.join(
                     ", "
                   )}\``
-                : `${config.emotes.success} **Hiện không có filter nào đang bật!**`
+                : `${client.config.emotes.success} **Hiện không có filter nào đang bật!**`
             }`,
-          }).setColor(config.getEmbedConfig().color);
+          }).setColor(client.config.getEmbedConfig().color);
           message.channel.send({ embeds: [activesEmbed] });
           break;
 
         case filterSubCommand.LIST:
           const listEmbed = new EmbedBuilder({
-            description: `${config.emotes.success} **Các loại filter:** 
+            description: `${client.config.emotes.success} **Các loại filter:** 
           \n\`${Object.keys(client.distube.filters).join(" | ")}\``,
-          }).setColor(config.getEmbedConfig().color);
+          }).setColor(client.config.getEmbedConfig().color);
           message.channel.send({ embeds: [listEmbed] });
           break;
       }
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       message.reply({ embeds: [embed] });
       console.error(error);
     }

@@ -3,7 +3,6 @@ const {
   ApplicationCommandType,
   ApplicationCommandOptionType,
 } = require("discord.js");
-const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 const volume = require("../../commands/Music/volume");
 const { commandCategory } = require("../../utils/other");
@@ -30,8 +29,8 @@ module.exports = {
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
     if (volume > 125 || volume < 0) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Kiểu âm lượng không hợp lệ!** \`0 - 125\``,
-      }).setColor(config.getEmbedConfig().color);
+        description: `${client.config.emotes.error} **Kiểu âm lượng không hợp lệ!** \`0 - 125\``,
+      }).setColor(client.config.getEmbedConfig().color);
 
       return interaction.reply({ embeds: [embed], ephemeral: true });
     }
@@ -49,13 +48,13 @@ module.exports = {
         description: `${
           volume <= 35 ? vol.low : volume <= 70 ? vol.medium : vol.high
         } **Đã chỉnh âm lượng thành** \`${volume}%\` **!**`,
-      }).setColor(config.getEmbedConfig().color);
+      }).setColor(client.config.getEmbedConfig().color);
 
       interaction.reply({ embeds: [embed], ephemeral: true });
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       interaction.reply({ embeds: [embed], ephemeral: true });
       console.error(error);
     }

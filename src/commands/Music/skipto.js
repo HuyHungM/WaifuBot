@@ -1,5 +1,4 @@
 const { EmbedBuilder } = require("discord.js");
-const config = require("../../config/config");
 const { noMusicEmbed } = require("../../utils/music");
 const { commandCategory } = require("../../utils/other");
 
@@ -19,8 +18,8 @@ module.exports = {
       parseInt(args[0]) < 1
     ) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Vị trí không hợp lệ!** \`1 - ${queue.songs.length}\``,
-      }).setColor(config.getEmbedConfig().color);
+        description: `${client.config.emotes.error} **Vị trí không hợp lệ!** \`1 - ${queue.songs.length}\``,
+      }).setColor(client.config.getEmbedConfig().color);
 
       return message.reply({ embeds: [embed] });
     }
@@ -33,14 +32,14 @@ module.exports = {
           description: `:track_next: **Đã bỏ qua đến bài** \`${
             skipToSong.name
           }\`**!**\n**Hàng đợi còn** \`${queue.songs.length - 1}\` bài`,
-        }).setColor(config.getEmbedConfig().color);
+        }).setColor(client.config.getEmbedConfig().color);
 
         message.channel.send({ embeds: [embed] });
       }
     } catch (error) {
       const embed = new EmbedBuilder({
-        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
-      }).setColor(config.getEmbedConfig().errorColor);
+        description: `${client.config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(client.config.getEmbedConfig().errorColor);
       message.reply({ embeds: [embed] });
       console.error(error);
     }
