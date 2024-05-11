@@ -38,6 +38,7 @@
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",
     "superagent": "^8.1.2",
+    "tweetnacl": "^1.0.3",
     "undici": "^6.15.0",
     "utf-8-validate": "^6.0.3"
   }

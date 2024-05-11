@@ -73,7 +73,9 @@ module.exports = {
               song.uploader.name
             }\`\n__Views:__ \`${song.views.toLocaleString(
               "vi-VN"
-            )}\` - __Thời lượng:__ \`${song.formattedDuration}\``
+            )}\` - __Thời lượng:__ \`${song.formattedDuration}\` - [[Link](${
+              song.url
+            })]`
         )
         .join("\n\n");
 
