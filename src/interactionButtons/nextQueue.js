@@ -14,110 +14,118 @@ module.exports = {
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
 
-    const currentPage = Number(args[0]) + 1;
-    const playingSong = queue.songs[0];
+    try {
+      const currentPage = Number(args[0]) + 1;
+      const playingSong = queue.songs[0];
 
-    function nowPlaying() {
-      const curSong = queue.currentTime;
-      const durSong = playingSong.duration;
-      const percent = (curSong / durSong) * 15;
+      function nowPlaying() {
+        const curSong = queue.currentTime;
+        const durSong = playingSong.duration;
+        const percent = (curSong / durSong) * 15;
 
-      const str = `\`${queue.formattedCurrentTime}\` | ${dash.repeat(
-        percent - 1
-      )}${button.repeat(percent - (percent - 1))}${dash.repeat(
-        16 - percent
-      )} | \`${playingSong.formattedDuration}\``;
-      return str;
-    }
+        const str = `\`${queue.formattedCurrentTime}\` | ${dash.repeat(
+          percent - 1
+        )}${button.repeat(percent - (percent - 1))}${dash.repeat(
+          16 - percent
+        )} | \`${playingSong.formattedDuration}\``;
+        return str;
+      }
 
-    const totalPages = Math.ceil(queue.songs.length / 10);
+      const totalPages = Math.ceil(queue.songs.length / 10);
 
-    let description = queue.songs
-      .map(
-        (song, i) =>
-          `${
-            i === 0
-              ? `**🎶 Hiện đang phát:** \n[${song.name}](${song.url}) - \`${
-                  song.formattedDuration
-                }\` ${queue.songs.length > 1 ? ` \n\n**Hàng chờ:**` : ""}`
-              : `\`${i}.\` [${song.name}](${song.url}) - \`${song.formattedDuration}\`\n`
-          }`
-      )
-      .slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10)
-      .join("\n");
+      let description = queue.songs
+        .map(
+          (song, i) =>
+            `${
+              i === 0
+                ? `**🎶 Hiện đang phát:** \n[${song.name}](${song.url}) - \`${
+                    song.formattedDuration
+                  }\` ${queue.songs.length > 1 ? ` \n\n**Hàng chờ:**` : ""}`
+                : `\`${i}.\` [${song.name}](${song.url}) - \`${song.formattedDuration}\`\n`
+            }`
+        )
+        .slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10)
+        .join("\n");
 
-    let embed = new EmbedBuilder({
-      title: `Hàng đợi ${interaction.guild.name}`,
-      thumbnail: {
-        url: playingSong.thumbnail,
-      },
-      footer: {
-        text: `Trang - ${currentPage}/${totalPages} | ${
-          config.getEmbedConfig().footer
-        }`,
-        iconURL: client.user.displayAvatarURL({ dynamic: true }),
-      },
-      description: description,
-      fields: [
-        {
-          name: "Tổng bài hát:",
-          value: `\`${queue.songs.length}\``,
-          inline: true,
+      let embed = new EmbedBuilder({
+        title: `Hàng đợi ${interaction.guild.name}`,
+        thumbnail: {
+          url: playingSong.thumbnail,
         },
-        {
-          name: "Tổng thời lượng:",
-          value: `\`${queue.formattedDuration}\``,
-          inline: true,
+        footer: {
+          text: `Trang - ${currentPage}/${totalPages} | ${
+            config.getEmbedConfig().footer
+          }`,
+          iconURL: client.user.displayAvatarURL({ dynamic: true }),
         },
-        {
-          name: "Yêu cầu bởi:",
-          value: `\`${playingSong.user.username}\``,
-          inline: true,
-        },
-        {
-          name: "Thời lượng bài hát hiện tại:",
-          value: nowPlaying(),
-          inline: false,
-        },
-      ],
-      timestamp: new Date(),
-    }).setColor(config.getEmbedConfig().color);
+        description: description,
+        fields: [
+          {
+            name: "Tổng bài hát:",
+            value: `\`${queue.songs.length}\``,
+            inline: true,
+          },
+          {
+            name: "Tổng thời lượng:",
+            value: `\`${queue.formattedDuration}\``,
+            inline: true,
+          },
+          {
+            name: "Yêu cầu bởi:",
+            value: `\`${playingSong.user.username}\``,
+            inline: true,
+          },
+          {
+            name: "Thời lượng bài hát hiện tại:",
+            value: nowPlaying(),
+            inline: false,
+          },
+        ],
+        timestamp: new Date(),
+      }).setColor(config.getEmbedConfig().color);
 
-    const rowComponents = [];
+      const rowComponents = [];
 
-    if (currentPage > 1) {
+      if (currentPage > 1) {
+        rowComponents.push(
+          new ButtonBuilder({
+            custom_id: `previous-queue ${currentPage}`,
+            emoji: "◀",
+            style: ButtonStyle.Primary,
+          })
+        );
+      }
+
       rowComponents.push(
         new ButtonBuilder({
-          custom_id: `previous-queue ${currentPage}`,
-          emoji: "◀",
-          style: ButtonStyle.Primary,
+          custom_id: `close ${interaction.message.id}`,
+          label: "X",
+          style: ButtonStyle.Danger,
         })
       );
+
+      if (totalPages > 1 && currentPage < totalPages) {
+        rowComponents.push(
+          new ButtonBuilder({
+            custom_id: `next-queue ${currentPage}`,
+            emoji: "▶",
+            style: ButtonStyle.Primary,
+          })
+        );
+      }
+
+      const row = new ActionRowBuilder({
+        components: rowComponents,
+      });
+
+      interaction.message.delete();
+      interaction.reply({ embeds: [embed], components: [row] });
+    } catch (error) {
+      const embed = new EmbedBuilder({
+        description: `${config.emotes.error} **Đã xảy ra lỗi!**`,
+      }).setColor(config.getEmbedConfig().errorColor);
+      interaction.reply({ embeds: [embed], ephemeral: true });
+      console.error(error);
     }
-
-    rowComponents.push(
-      new ButtonBuilder({
-        custom_id: `close ${interaction.message.id}`,
-        label: "X",
-        style: ButtonStyle.Danger,
-      })
-    );
-
-    if (totalPages > 1 && currentPage < totalPages) {
-      rowComponents.push(
-        new ButtonBuilder({
-          custom_id: `next-queue ${currentPage}`,
-          emoji: "▶",
-          style: ButtonStyle.Primary,
-        })
-      );
-    }
-
-    const row = new ActionRowBuilder({
-      components: rowComponents,
-    });
-
-    interaction.message.delete();
-    interaction.reply({ embeds: [embed], components: [row] });
   },
 };

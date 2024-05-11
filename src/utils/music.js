@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const config = require("../config/config");
-const { QueueRepeatMode } = require("discord-player");
+const { RepeatMode } = require("distube");
 
 const checkSameRoom = ({ message, interaction, client }) => {
   if (message) {
@@ -50,15 +50,15 @@ const noMusicEmbed = new EmbedBuilder({
 }).setColor(config.getEmbedConfig().errorColor);
 
 const loopModeEmote = {
-  [QueueRepeatMode.OFF]: "⭕",
-  [QueueRepeatMode.QUEUE]: "🔂",
-  [QueueRepeatMode.TRACK]: "🔁",
+  [RepeatMode.DISABLED]: "⭕",
+  [RepeatMode.SONG]: "🔂",
+  [RepeatMode.QUEUE]: "🔁",
 };
 
 const loopModeMessage = {
-  [QueueRepeatMode.OFF]: "Tắt",
-  [QueueRepeatMode.TRACK]: "Lặp lại bài hát",
-  [QueueRepeatMode.QUEUE]: "Lặp lại hàng đợi",
+  [RepeatMode.DISABLED]: "Tắt",
+  [RepeatMode.SONG]: "Lặp lại bài hát",
+  [RepeatMode.QUEUE]: "Lặp lại hàng đợi",
 };
 
 const autoplayModeMessage = {

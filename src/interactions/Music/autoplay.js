@@ -1,7 +1,7 @@
 const { EmbedBuilder, ApplicationCommandType } = require("discord.js");
 const config = require("../../config/config");
 const { noMusicEmbed, autoplayModeMessage } = require("../../utils/music");
-const { QueueRepeatMode } = require("discord-player");
+const { RepeatMode } = require("distube");
 const { commandCategory } = require("../../utils/other");
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
 
     if (!queue)
       return interaction.reply({ embeds: [noMusicEmbed], ephemeral: true });
-    if (queue.repeatMode != QueueRepeatMode.DISABLED) {
+    if (queue.repeatMode != RepeatMode.DISABLED) {
       const embed = new EmbedBuilder({
         description: `${config.emotes.error} **Vui lòng tắt chế độ lặp!**`,
       }).setColor(config.getEmbedConfig().errorColor);

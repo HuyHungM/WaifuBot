@@ -1,23 +1,22 @@
 const { EmbedBuilder } = require("discord.js");
 const config = require("../config/config");
 const { checkSameRoom } = require("../utils/music");
-const { useMainPlayer } = require("discord-player");
 
 module.exports = {
   name: "song",
   run: async (client, interaction, args) => {
-    // if (
-    //   checkSameRoom({ message: null, interaction: interaction, client: client })
-    // )
-    //   return;
+    if (
+      checkSameRoom({ message: null, interaction: interaction, client: client })
+    )
+      return;
 
     try {
       await interaction.message.delete();
 
-      const player = useMainPlayer();
-
-      await player.play(interaction.member.voice.channel, args[0], {
-        requestedBy: interaction.author,
+      await client.distube.play(interaction.member.voice.channel, args[0], {
+        member: interaction.member,
+        textChannel: interaction.channel,
+        interaction,
       });
     } catch (error) {
       const embed = new EmbedBuilder({
