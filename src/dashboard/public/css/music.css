@@ -1,0 +1,151 @@
+/* ========== DASHBOARD - INSIGHT ========== */
+#dashboard .center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+#dashboard .center .queue-info {
+  display: flex;
+  gap: 1.6rem;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+#dashboard .center .queue-info > div {
+  flex: 0 0 calc(25% - 1.6rem);
+  max-width: calc(25% - 1.6rem);
+  min-width: 260px;
+  opacity: 0;
+  background: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  margin-top: 1rem;
+  box-shadow: var(--box-shadow);
+  transition: all 300ms ease;
+  animation: showChart 1s ease-out forwards;
+  animation-delay: var(--animation-delay);
+}
+
+#dashboard .center .queue-info > div:hover {
+  box-shadow: none;
+}
+
+#dashboard .center .queue-info > div i {
+  background: var(--background-icon); 
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: var(--color-white);
+  font-size: 16px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dashboard .center .queue-info > div .middle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#dashboard .center .queue-info h3 {
+  margin: 1rem 0 0.6rem;
+  font-size: 1rem;
+}
+
+#dashboard .center .queue-info small {
+  margin-top: 1.3rem;
+  display: block;
+}
+
+#dashboard .center .now-playing {
+  width: 100%;
+  max-width: 660px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  transition: all 300ms ease;
+  animation: showChart 1.2s ease forwards;
+  position: relative;
+}
+
+#dashboard .center .now-playing .background-cover {
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--card-border-radius);
+  filter: brightness(0.3);
+  display: flex !important;
+}
+
+#dashboard .center .now-playing:hover {
+  box-shadow: none;
+  transition: box-shadow 300ms ease;
+}
+
+#dashboard .center .now-playing > div {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+#dashboard .center .now-playing > div:first-of-type {
+  margin-top: 16px;
+}
+
+#dashboard .center .now-playing h1 {
+  font-weight: 600;
+  font-size: 32px;
+}
+
+#dashboard .center .now-playing h3,
+#dashboard .center .now-playing a {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#dashboard .center .now-playing h3.hover-text,
+#dashboard .center .now-playing a {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+#dashboard .center .now-playing h3.hover-text:hover,
+#dashboard .center .now-playing a:hover {
+  color: var(--color-success);
+}
+
+#dashboard .center .now-playing .next-song {
+  display: none;
+}
+
+#dashboard .center .now-playing .next-song.active {
+  display: unset;
+}
+
+#dashboard .center .now-playing .duration .navigation {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px
+}
+
+/* ========== MEDIA QUERIES ========== */
+@media screen and (max-width: 911px) {
+  #dashboard .center .queue-info > div {
+    max-width: 100%;
+    flex: 1; 
+  }
+}

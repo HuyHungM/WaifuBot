@@ -1,9 +1,10 @@
 const app = require("express").Router();
 const ejs = require("ejs");
-const { Auth, UnAuth } = require("../middlewares/auth");
+const { Auth, UnAuth, validGuild } = require("../middlewares/auth");
 const client = require("../../app");
 const moment = require("moment");
-const { PermissionsBitField } = require("discord.js");
+const { PermissionsBitField, ChannelType } = require("discord.js");
+const { RepeatMode } = require("distube");
 
 app.get("/", (req, res) => {
   ejs.renderFile(
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
       if (err) {
         console.error(err);
       } else {
-        res.status(404).send(html);
+        res.status(200).send(html);
       }
     }
   );
@@ -51,7 +52,58 @@ app.get("/servers", Auth, (req, res) => {
       if (err) {
         console.error(err);
       } else {
-        res.status(404).send(html);
+        res.status(200).send(html);
+      }
+    }
+  );
+});
+
+app.get("/server/:guildId", Auth, validGuild, (req, res) => {
+  const user = req.user;
+  const guild = client.guilds.cache.get(req.params.guildId);
+
+  ejs.renderFile(
+    "./src/dashboard/views/overview.html",
+    { client, guild, user, moment, ChannelType },
+    (err, html) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.status(200).send(html);
+      }
+    }
+  );
+});
+
+app.get("/server/:guildId/chatbot", Auth, validGuild, (req, res) => {
+  const user = req.user;
+  const guild = client.guilds.cache.get(req.params.guildId);
+
+  ejs.renderFile(
+    "./src/dashboard/views/music.html",
+    { client, guild, user, moment },
+    (err, html) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.status(200).send(html);
+      }
+    }
+  );
+});
+
+app.get("/server/:guildId/music", Auth, validGuild, (req, res) => {
+  const user = req.user;
+  const guild = client.guilds.cache.get(req.params.guildId);
+
+  ejs.renderFile(
+    "./src/dashboard/views/music.html",
+    { client, guild, user, moment, RepeatMode },
+    (err, html) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.status(200).send(html);
       }
     }
   );
@@ -65,7 +117,7 @@ app.get("/login", UnAuth, (req, res) => {
       if (err) {
         console.error(err);
       } else {
-        res.status(404).send(html);
+        res.status(200).send(html);
       }
     }
   );
@@ -73,7 +125,7 @@ app.get("/login", UnAuth, (req, res) => {
 
 app.get("/logout", Auth, (req, res) => {
   req.logout(function () {});
-  res.redirect("/login");
+  return res.redirect("/login");
 });
 
 module.exports = app;

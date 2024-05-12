@@ -1,34 +1,3 @@
-/* ========== ROOT VARIABLES ========== */
-:root {
-  --color-primary: #5868fa;
-  --color-danger: #ff7782;
-  --color-success: #41f1b6;
-  --color-warning: #ffbb55;
-  --color-white: #202528;
-  --color-info-dark: #7d8da1;
-  --color-info-light: #dce1eb;
-  --color-dark: #edeffd;
-  --color-light: rgba(0, 0, 0, 0.4);
-  --color-primary-variant: #111e88;
-  --color-dark-variant: #a3bdcc;
-  --color-background: #18181b;
-
-  --card-border-radius: 2rem;
-  --border-radius-1: 0.4rem;
-  --border-radius-2: 0.8rem;
-  --border-radius-3: 1.2rem;
-  --border-radius-4: 1.8rem;
-
-  --card-padding: 1.8rem;
-  --padding-1: 1.2rem;
-
-  --box-shadow: 0 2rem 3rem var(--color-light); 
-
-  --_fw-900: 900;
-  --_fw-700: 700;
-  --_fw-400: 400;
-}
-
 /* =========== CONTAINER =========== */
 #container {
   overflow-x: hidden;
@@ -46,8 +15,18 @@
 #navbar {
   width: 100%;
   height: 77px;
+  background-color: transparent;
   padding: 25px 15px 15px;
+  position: fixed;
   transition: all 250ms ease-in-out;
+  z-index: 9999;
+}
+
+#navbar.isScrolled {
+  padding: 15px;
+  height: 67px;
+  background: linear-gradient(to right,  #737feceb, #111f88e2);
+  filter: opacity(0.9);
 }
 
 #navbar .center {
@@ -84,10 +63,11 @@
 
 /* ========== SERVERS ========== */
 #servers {
-  height: calc(100vh - 77px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 77px;
 }
 
 #servers .title {

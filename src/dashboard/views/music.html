@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Âm nhạc - <%= guild.name %></title>
+    <link
+      rel="shortcut icon"
+      href="<%= client.user.displayAvatarURL({ extension: 'png' }) %>"
+      type="image/png"
+    />
+    <!-- MATERIAL ICON -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="/css/animation.css" />
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/music.css" />
+  </head>
+  <body onload="loadPage()" class="dashboard-body">
+    <div id="loader">
+      <div class="loading">
+        <span></span>
+      </div>
+    </div>
+
+    <div id="container">
+      <aside id="sidebar">
+        <div class="top">
+          <a class="name" href="/">
+            <img
+              src="<%= client.user.displayAvatarURL({ extension: 'png' }) %>"
+              alt="<%= client.user.username %>"
+              class="logo"
+            />
+            <span
+              class="shining-text"
+              style="--color-text-shadow: var(--color-success)"
+              ><%= client.user.username %>
+            </span>
+          </a>
+        </div>
+        <div class="sidebar-sections">
+          <div class="sidebar-section">
+            <div class="title">
+              <h2>Bảng điều khiển</h2>
+            </div>
+            <ul class="sidebar-items">
+              <li class="sidebar-item">
+                <a href="/server/<%= guild.id %>">
+                  <i class="fa-solid fa-eye"></i>
+                  <span>Tổng quan</span>
+                  <i class="fa-solid fa-chevron-right expand-icon"></i>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="/server/<%= guild.id %>/chatbot">
+                  <i class="fa-solid fa-robot"></i>
+                  <span>Chatbot</span>
+                  <i class="fa-solid fa-chevron-right expand-icon"></i>
+                </a>
+              </li>
+              <li class="sidebar-item active">
+                <a href="/server/<%= guild.id %>/music">
+                  <i class="fa-solid fa-music"></i>
+                  <span>Âm nhạc</span>
+                  <i class="fa-solid fa-chevron-right expand-icon"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="sidebar-section">
+            <div class="title">
+              <h2>Máy chủ</h2>
+            </div>
+            <ul class="sidebar-items">
+              <li class="sidebar-item active">
+                <a href="/server/<%= guild.id %>">
+                  <img
+                    src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : '/assets/images/default_guild_icon.png' %>"
+                    alt="<%= guild.name %>"
+                    class="logo"
+                  />
+                  <span><%= guild.name %></span>
+                  <i class="fa-solid fa-chevron-right expand-icon"></i>
+                </a>
+              </li>
+              <% user.guilds.filter((x) => (x.id !== guild.id)).map((guild) => {
+              %>
+              <li class="sidebar-item">
+                <a href="/server/<%= guild.id %>/music">
+                  <img
+                    src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : '/assets/images/default_guild_icon.png' %>"
+                    alt="<%= guild.name %>"
+                    class="logo"
+                  />
+                  <span><%= guild.name %></span>
+                  <i class="fa-solid fa-chevron-right expand-icon"></i>
+                </a>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <main id="main">
+        <header id="header">
+          <div class="profile">
+            <div class="btn">
+              <img
+                src="<%= user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : '/assets/images/logo.png' %>"
+                alt="<%= guild.name %>"
+                class="logo"
+              />
+              <span><%= user.username %></span>
+            </div>
+            <ul class="expand">
+              <li>
+                <a href="/servers">
+                  <i class="fa-solid fa-server"></i>
+                  <span>Danh sách m.chủ</span>
+                </a>
+              </li>
+              <li>
+                <a href="/logout">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span>Đăng xuất</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </header>
+
+        <section id="dashboard">
+          <div class="title">Âm nhạc - <%= guild.name %></div>
+          <div class="center">
+            <div class="queue-info">
+              <div
+                class="songs"
+                style="--background-icon: var(--color-primary)"
+              >
+                <i class="fa-solid fa-list-ol"></i>
+                <div class="middle">
+                  <h3>Hàng đợi</h3>
+                  <h1>Đang tải...</h1>
+                </div>
+                <small class="text-muted">Trực tiếp</small>
+              </div>
+              <div
+                class="autoplay"
+                style="--background-icon: var(--color-success)"
+              >
+                <i class="fa-solid fa-folder-plus"></i>
+                <div class="middle">
+                  <h3>Tự động phát</h3>
+                  <h1>Đang tải...</h1>
+                </div>
+                <small class="text-muted">Trực tiếp</small>
+              </div>
+              <div class="loop" style="--background-icon: var(--color-danger)">
+                <i class="fa-solid fa-repeat"></i>
+                <div class="middle">
+                  <h3>Chế độ lặp</h3>
+                  <h1>Đang tải...</h1>
+                </div>
+                <small class="text-muted">Trực tiếp</small>
+              </div>
+              <div
+                class="volume"
+                style="--background-icon: var(--color-warning)"
+              >
+                <i class="fa-solid fa-volume-high"></i>
+                <div class="middle">
+                  <h3>Âm thanh</h3>
+                  <h1>Đang tải...</h1>
+                </div>
+                <small class="text-muted">Trực tiếp</small>
+              </div>
+            </div>
+
+            <div class="now-playing">
+              <h1>Thông tin bài hát</h1>
+
+              <div class="current-song">
+                <h3>Hiện đang phát</h3>
+                <a href="#">Đang tải...</a>
+              </div>
+              <div class="next-song">
+                <h3>
+                  Kế tiếp:
+                  <a href="#" target="_blank"></a>
+                </h3>
+              </div>
+              <div class="duration">
+                <h3>Thời lượng</h3>
+                <div class="navigation">
+                  <h3 class="current-time"></h3>
+                  <h3 class="hover-text">Đang tải...</h3>
+                  <h3 class="song-time"></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io@4.7.5/client-dist/socket.io.min.js"></script>
+    <script>
+      const guildId = "<%- guild.id %>";
+      const RepeatMode = Object.create(<%- JSON.stringify(RepeatMode) %>);
+    </script>
+    <script src="/js/global.js"></script>
+    <script src="/js/music.js"></script>
+  </body>
+</html>

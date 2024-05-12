@@ -2,6 +2,8 @@ const express = require("express");
 const { static } = require("express");
 const session = require("express-session");
 const app = express();
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const { readdirSync } = require("fs");
@@ -68,6 +70,9 @@ module.exports = (client) => {
       const route = require(`../dashboard/routes/${file}`);
       app.use("/", route);
     }
+
+    require("../dashboard/api/socket.js")(client, io);
+
     app.use((req, res, next) => {
       ejs.renderFile(
         "./src/dashboard/views/error.html",
@@ -83,7 +88,7 @@ module.exports = (client) => {
       );
     });
 
-    app.listen(process.env.PORT, () =>
+    server.listen(process.env.PORT, () =>
       console.log(
         `🟢 [DASHBOARD]: Dashboard đã được mở tại địa chỉ ${process.env.DOMAIN}:${process.env.PORT}`
       )

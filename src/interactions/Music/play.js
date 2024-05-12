@@ -1,6 +1,5 @@
 const { SearchResultType } = require("distube");
 const {
-  PermissionsBitField,
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,

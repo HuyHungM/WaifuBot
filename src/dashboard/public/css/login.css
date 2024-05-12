@@ -6,6 +6,7 @@
   overflow: hidden;
   opacity: 0;
   animation: fade 300ms ease-in forwards;
+  display: none;
 }
 
 #container #background {
