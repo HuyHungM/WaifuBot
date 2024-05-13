@@ -25,6 +25,12 @@ $(document).ready(function () {
   $("body.dashboard-body #close-sidebar-btn").on("click", function () {
     $("#sidebar").removeClass("active");
   });
+
+  $("body.dashboard-body #dashboard").on("click", function () {
+    if ($(window).width() < 768) {
+      $("#sidebar").removeClass("active");
+    }
+  });
 });
 
 function loadPage() {

@@ -410,13 +410,14 @@ body.dashboard-body {
         display: none;
         align-items: center;
         gap: 8px;
-        padding: 0 20px;
+        padding: 16px 20px;
+        box-shadow: 0 -4px 8px var(--color-light);
     }
 
     #sidebar #close-sidebar-btn:hover {
         color: var(--color-primary);
-        transform: translateX(20px);
-        transition: transform 300ms ease-out;
+        padding: 16px 20px 16px 40px;
+        transition: padding 300ms ease-out;
     }
     
     /* ========== DASHBOARD - MAIN ========== */
@@ -551,6 +552,11 @@ body.dashboard-body {
 
         #sidebar.active {
             left: 0;
+        }
+
+        #sidebar .top {
+            box-shadow: 0 4px 8px var(--color-light);
+
         }
 
         #sidebar #close-sidebar-btn {
