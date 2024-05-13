@@ -11,20 +11,6 @@ const autoplayModeMessage = {
   [true]: "Bật",
 };
 
-const dash = "▬";
-const button = "🔘";
-
-function nowPlaying(queue) {
-  const curSong = queue.currentTime;
-  const durSong = queue.songs[0].duration;
-  const percent = (curSong / durSong) * 21;
-
-  const str = ` | ${dash.repeat(percent - 1)}${button.repeat(1)}${dash.repeat(
-    21 - percent
-  )} | `;
-  return str;
-}
-
 $(document).ready(function () {
   const getDistubeData = setInterval(function () {
     socket.emit("getMusicData", { guildId });
@@ -50,9 +36,32 @@ $(document).ready(function () {
           .addClass("background-cover")
           .appendTo($(".now-playing"));
       }
+
+      const translateX = parseFloat(
+        ((queue.currentTime / queue.songs[0].duration) * 100).toFixed(3)
+      );
+      console.log(translateX);
+      if ($(".now-playing .duration .time-line .btn").length > 0) {
+        $(".now-playing .duration .time-line .btn").css(
+          "--translateX",
+          `${translateX}%`
+        );
+      } else {
+        $(document.createElement("i"))
+          .addClass("btn fa-solid fa-record-vinyl")
+          .css("--translateX", `${translateX}%`)
+          .appendTo($(".now-playing .duration .time-line"));
+      }
+
+      $(".now-playing .duration .time-line").addClass("active");
     } else {
       if ($(".now-playing .background-cover"))
         $(".now-playing .background-cover").remove();
+
+      $(".now-playing .duration .time-line .btn").remove();
+      $(".now-playing .duration .time-line").text(
+        "Hiện tại không có gì đang phát, thêm trên discord chứ?"
+      );
     }
 
     $(".now-playing .current-song a")
@@ -61,11 +70,6 @@ $(document).ready(function () {
       .text(
         queue.songs.length > 0 ? queue.songs[0].name : "Hiện đang trống..."
       );
-    $(".now-playing .duration .hover-text").text(
-      queue.songs.length > 0
-        ? nowPlaying(queue)
-        : "Hiện tại không có gì đang phát, thêm trên discord chứ?"
-    );
     $(".now-playing .duration .current-time").text(
       queue.formattedCurrentTime ? queue.formattedCurrentTime : ""
     );

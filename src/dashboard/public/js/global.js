@@ -1,12 +1,3 @@
-function loadPage() {
-  myVar = setTimeout(showPage, 1400);
-}
-
-function showPage() {
-  $("#loader").remove();
-  $("#container").css("display", "flex");
-}
-
 $(document).ready(function () {
   splitTextIntoSpans(".bubble-text");
   splitTextIntoSpans(".shining-text");
@@ -26,7 +17,24 @@ $(document).ready(function () {
       }
     });
   });
+
+  $("body.dashboard-body #menu-btn").on("click", function () {
+    $("#sidebar").addClass("active");
+  });
+
+  $("body.dashboard-body #close-sidebar-btn").on("click", function () {
+    $("#sidebar").removeClass("active");
+  });
 });
+
+function loadPage() {
+  myVar = setTimeout(showPage, 1400);
+}
+
+function showPage() {
+  $("#loader").remove();
+  $("#container").css("display", "flex");
+}
 
 function splitTextIntoSpans(target) {
   $(target).each(function () {

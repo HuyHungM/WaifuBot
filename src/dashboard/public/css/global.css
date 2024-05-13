@@ -175,6 +175,16 @@ img {
     animation: flyIn 400ms ease-in-out forwards;
 }
 
+.btn {
+    display: block;
+    background: transparent;
+    cursor: pointer;
+    
+    & i {
+        font-size: 20px;
+    }
+}
+
 #loader {
     width: 100vw;
     height: 100vh;
@@ -395,8 +405,21 @@ body.dashboard-body {
             border: 1px var(--color-dark) solid;
         }
     }
+
+    #sidebar #close-sidebar-btn {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 0 20px;
+    }
+
+    #sidebar #close-sidebar-btn:hover {
+        color: var(--color-primary);
+        transform: translateX(20px);
+        transition: transform 300ms ease-out;
+    }
     
-    /* ========== DASHBOARD - SIDEBAR ========== */
+    /* ========== DASHBOARD - MAIN ========== */
     #main {
         display: flex;
         flex-direction: column;
@@ -409,6 +432,15 @@ body.dashboard-body {
         height: 80px;
         justify-content: flex-end;
         padding: 20px 40px;
+        position: relative;
+    }
+
+    #header #menu-btn {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: none;
     }
     
     #header .profile {
@@ -449,6 +481,7 @@ body.dashboard-body {
         height: auto;
         background-color: var(--color-white);
         box-shadow: var(--box-shadow);
+        z-index: 15;
         animation: flyIn 200ms ease-out forwards;
     }
     
@@ -501,5 +534,35 @@ body.dashboard-body {
         width: 100%;
         flex-direction: column;
         margin-top: 20px;
+    }
+
+    /* ========== DASHBOARD - MEDIA QUERIES ========== */
+    @media screen and (max-width: 768px) {
+        #sidebar {
+            left: -100%;
+            display: grid;
+            position: fixed;
+            top: 0;
+            z-index: 9999;
+            transition: left 400ms ease-in-out;
+            background-color: var(--color-white);
+            box-shadow: 12px 0 12px var(--color-light);
+        }
+
+        #sidebar.active {
+            left: 0;
+        }
+
+        #sidebar #close-sidebar-btn {
+            display: flex;
+        }
+
+        #header #menu-btn {
+            display: block;
+        }
+
+        #dashboard {
+            border-radius: 0;
+        }
     }
 }
