@@ -75,13 +75,17 @@ app.get("/server/:guildId", Auth, validGuild, (req, res) => {
   );
 });
 
-app.get("/server/:guildId/chatbot", Auth, validGuild, (req, res) => {
+app.get("/server/:guildId/waifu", Auth, validGuild, async (req, res) => {
   const user = req.user;
   const guild = client.guilds.cache.get(req.params.guildId);
+  let waifu = await client.waifuai.find({ ownerID: user.id });
+  waifu.messages = waifu.messages
+    .slice(54)
+    .filter((message) => message.role !== "system");
 
   ejs.renderFile(
-    "./src/dashboard/views/music.html",
-    { client, guild, user, moment },
+    "./src/dashboard/views/waifu.html",
+    { client, guild, user, moment, waifu },
     (err, html) => {
       if (err) {
         console.error(err);

@@ -97,6 +97,7 @@ img {
 
     &.split-text {
         display: inline-flex;
+        flex-wrap: wrap;
     }
 
     & .split-char {
@@ -130,6 +131,7 @@ img {
 
     &.split-text {
         display: inline-flex;
+        flex-wrap: wrap;
     }
 
     & .split-word {
@@ -410,7 +412,7 @@ body.dashboard-body {
         display: none;
         align-items: center;
         gap: 8px;
-        padding: 16px 20px;
+        padding: 16px;
         box-shadow: 0 -4px 8px var(--color-light);
     }
 
@@ -521,17 +523,21 @@ body.dashboard-body {
         padding: 20px;
         overflow-x: hidden;
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
     }
     
     #dashboard .title {
         font-size: 26px;
         border-bottom: 2px gray solid;
         padding: 16px 0 28px;
+        text-overflow: ellipsis;
+        display: flex;
+        flex-wrap: wrap;
     }
     
     #dashboard .center {
         display: flex;
-        height: auto;
         width: 100%;
         flex-direction: column;
         margin-top: 20px;

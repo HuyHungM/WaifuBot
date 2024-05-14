@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Âm nhạc - <%= guild.name %></title>
+    <title>Waifu - <%= user.username %></title>
     <link
       rel="shortcut icon"
       href="<%= client.user.displayAvatarURL({ extension: 'png' }) %>"
@@ -22,7 +22,7 @@
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="/css/animation.css" />
     <link rel="stylesheet" href="/css/global.css" />
-    <link rel="stylesheet" href="/css/music.css" />
+    <link rel="stylesheet" href="/css/waifu.css" />
   </head>
   <body onload="loadPage()" class="dashboard-body">
     <div id="loader">
@@ -60,14 +60,14 @@
                   <i class="fa-solid fa-chevron-right expand-icon"></i>
                 </a>
               </li>
-              <li class="sidebar-item">
+              <li class="sidebar-item active">
                 <a href="/server/<%= guild.id %>/waifu">
                   <i class="fa-solid fa-robot"></i>
                   <span>Waifu</span>
                   <i class="fa-solid fa-chevron-right expand-icon"></i>
                 </a>
               </li>
-              <li class="sidebar-item active">
+              <li class="sidebar-item">
                 <a href="/server/<%= guild.id %>/music">
                   <i class="fa-solid fa-music"></i>
                   <span>Âm nhạc</span>
@@ -82,7 +82,7 @@
             </div>
             <ul class="sidebar-items">
               <li class="sidebar-item active">
-                <a href="/server/<%= guild.id %>/music">
+                <a href="/server/<%= guild.id %>/waifu">
                   <img
                     src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : '/assets/images/default_guild_icon.png' %>"
                     alt="<%= guild.name %>"
@@ -95,7 +95,7 @@
               <% user.guilds.filter((x) => (x.id !== guild.id)).map((guild) => {
               %>
               <li class="sidebar-item">
-                <a href="/server/<%= guild.id %>/music">
+                <a href="/server/<%= guild.id %>/waifu">
                   <img
                     src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : '/assets/images/default_guild_icon.png' %>"
                     alt="<%= guild.name %>"
@@ -147,74 +147,28 @@
         </header>
 
         <section id="dashboard">
-          <div class="title">Âm nhạc - <%= guild.name %></div>
+          <div class="title">
+            Waifu:
+            <span
+              class="shining-text"
+              style="--color-text-shadow: var(--color-danger)"
+              ><%= waifu.name %></span
+            >
+          </div>
           <div class="center">
-            <div class="queue-info">
-              <div
-                class="songs"
-                style="--background-icon: var(--color-primary)"
-              >
-                <i class="fa-solid fa-list-ol"></i>
-                <div class="middle">
-                  <h3>Hàng đợi</h3>
-                  <h1>Đang tải...</h1>
-                </div>
-                <small class="text-muted">Trực tiếp</small>
+            <div class="message-list">
+              <% waifu.messages.map((message) => { %> <% if (message.role ===
+              "assistant") { %>
+              <div class="message-container waifu">
+                <div class="message"><%= message.content %></div>
               </div>
-              <div
-                class="autoplay"
-                style="--background-icon: var(--color-success)"
-              >
-                <i class="fa-solid fa-folder-plus"></i>
-                <div class="middle">
-                  <h3>Tự động phát</h3>
-                  <h1>Đang tải...</h1>
-                </div>
-                <small class="text-muted">Trực tiếp</small>
+              <% } else { %>
+              <div class="message-container user">
+                <div class="message"><%= message.content %></div>
               </div>
-              <div class="loop" style="--background-icon: var(--color-danger)">
-                <i class="fa-solid fa-repeat"></i>
-                <div class="middle">
-                  <h3>Chế độ lặp</h3>
-                  <h1>Đang tải...</h1>
-                </div>
-                <small class="text-muted">Trực tiếp</small>
-              </div>
-              <div
-                class="volume"
-                style="--background-icon: var(--color-warning)"
-              >
-                <i class="fa-solid fa-volume-high"></i>
-                <div class="middle">
-                  <h3>Âm thanh</h3>
-                  <h1>Đang tải...</h1>
-                </div>
-                <small class="text-muted">Trực tiếp</small>
-              </div>
+              <% } %> <% }) %>
             </div>
-
-            <div class="now-playing">
-              <h1>Thông tin bài hát</h1>
-
-              <div class="current-song">
-                <h3>Hiện đang phát</h3>
-                <a href="#">Đang tải...</a>
-              </div>
-              <div class="next-song">
-                <h3>
-                  Kế tiếp:
-                  <a href="#" target="_blank"></a>
-                </h3>
-              </div>
-              <div class="duration">
-                <h3>Thời lượng</h3>
-                <div class="navigation">
-                  <h3 class="current-time"></h3>
-                  <div class="time-line"></div>
-                  <h3 class="song-time"></h3>
-                </div>
-              </div>
-            </div>
+            <div class="message-type"></div>
           </div>
         </section>
       </main>
@@ -224,11 +178,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/socket.io@4.7.5/client-dist/socket.io.min.js"></script>
     <script>
-      const guildId = "<%- guild.id %>";
-      const userId = "<%= user.id %>"
-      const RepeatMode = Object.create(<%- JSON.stringify(RepeatMode) %>);
+      const userId = "<%= user.id %>";
     </script>
     <script src="/js/global.js"></script>
-    <script src="/js/music.js"></script>
+    <script src="/js/waifu.js"></script>
   </body>
 </html>

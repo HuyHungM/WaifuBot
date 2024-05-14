@@ -13,10 +13,10 @@ const autoplayModeMessage = {
 
 $(document).ready(function () {
   const getDistubeData = setInterval(function () {
-    socket.emit("getMusicData", { guildId });
+    socket.emit("getMusicData", { guildId, userId });
   }, 1000);
 
-  socket.on("getMusicData", function (queue) {
+  socket.on(`getMusicData-${userId}`, function (queue) {
     $(".queue-info .songs .middle h1").text(queue.songs.length);
     $(".queue-info .autoplay .middle h1").text(
       autoplayModeMessage[queue.autoplay]
