@@ -35,10 +35,6 @@ module.exports = {
         ),
       });
 
-      await client.waifuai.createMessageState({
-        isReplied: true,
-        ownerID: interaction.user.id,
-      });
       interaction.reply({
         content: `Đã khởi tạo thành công waifu của bạn với tên \`${
           interaction.options.get("name").value

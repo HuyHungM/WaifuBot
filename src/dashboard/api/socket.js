@@ -1,4 +1,5 @@
 const { RepeatMode } = require("distube");
+const { model } = require("../../config/AIConfig");
 
 module.exports = (client, io) => {
   io.on("connection", (socket) => {
@@ -18,6 +19,22 @@ module.exports = (client, io) => {
     socket.on("getWaifuData", async function ({ userId }) {
       const waifu = await client.waifuai.find({ ownerID: userId });
       socket.emit(`getWaifuData-${userId}`, waifu);
+    });
+
+    socket.on("sendWaifuMessage", async function ({ userId, message }) {
+      const waifuData = await client.waifuai.find({ ownerID: userId });
+      if (!waifuData) return;
+      if (!waifuData.isReplied) return;
+
+      waifuData.messages.push({ role: "user", content: message });
+      const res = await client.waifuai.createMessage({
+        messages: waifuData.messages,
+        waifuName: waifuData.name,
+        model: model,
+        ownerID: userId,
+      });
+
+      socket.emit(`sendWaifuMessage-${userId}`, res);
     });
   });
 };

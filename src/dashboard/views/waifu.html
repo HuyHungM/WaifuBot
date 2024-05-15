@@ -147,28 +147,29 @@
         </header>
 
         <section id="dashboard">
-          <div class="title">
-            Waifu:
-            <span
-              class="shining-text"
-              style="--color-text-shadow: var(--color-danger)"
-              ><%= waifu.name %></span
-            >
-          </div>
           <div class="center">
             <div class="message-list">
               <% waifu.messages.map((message) => { %> <% if (message.role ===
               "assistant") { %>
               <div class="message-container waifu">
-                <div class="message"><%= message.content %></div>
+                <div class="message">
+                  <%= message.content.replace(/:heart:/g, '♥') %>
+                </div>
               </div>
               <% } else { %>
               <div class="message-container user">
-                <div class="message"><%= message.content %></div>
+                <div class="message">
+                  <%= message.content.replace(/:heart:/g, '♥') %>
+                </div>
               </div>
               <% } %> <% }) %>
             </div>
-            <div class="message-type"></div>
+            <form id="message-form">
+              <input type="text" id="message-input" autocomplete="off" />
+              <button id="send-message-btn" type="submit">
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </form>
           </div>
         </section>
       </main>

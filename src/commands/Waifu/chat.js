@@ -19,64 +19,24 @@ module.exports = {
     if (args.join(" ").length > 256)
       return message.reply("Giới hạn kí tự 256.");
 
-    const messageState = await client.waifuai.findMessageState({
-      ownerID: message.author.id,
-    });
+    if (!waifuData?.isReplied) return;
 
-    if (!messageState.isReplied) return;
+    try {
+      message.channel.sendTyping();
 
-    await client.waifuai.updateMessageState({
-      state: false,
-      ownerID: message.author.id,
-    });
-
-    message.channel.sendTyping();
-
-    waifuData.messages.push({ role: "user", content: args.join(" ") });
-    await client.waifuai
-      .createMessage({
+      waifuData.messages.push({ role: "user", content: args.join(" ") });
+      const res = await client.waifuai.createMessage({
         messages: waifuData.messages,
+        waifuName: waifuData.name,
         model: model,
-      })
-      .then(async (res) => {
-        message.reply(res.choices[0].message.content);
-
-        if (
-          res?.choices[0]?.message?.content?.toLowerCase().includes("error")
-        ) {
-          return await client.waifuai.updateMessageState({
-            state: true,
-            ownerID: message.author.id,
-          });
-        }
-
-        waifuData.messages.push({
-          role: "assistant",
-          content: res.choices[0].message.content,
-        });
-
-        waifuData.messages.push({
-          role: "system",
-          content: `Bạn tên là ${waifuData.name}`,
-        });
-
-        await client.waifuai.updateMessage({
-          ownerID: message.author.id,
-          messages: waifuData.messages,
-        });
-
-        await client.waifuai.updateMessageState({
-          state: true,
-          ownerID: message.author.id,
-        });
-      })
-      .catch(async (error) => {
-        console.error(error);
-        message.channel.send("Đã xảy ra lỗi!");
-        await client.waifuai.updateMessageState({
-          state: true,
-          ownerID: message.author.id,
-        });
+        ownerID: message.author.id,
       });
+      if (!res) return;
+
+      message.reply(res.choices[0].message.content);
+    } catch (error) {
+      console.error(error);
+      message.channel.send("Đã xảy ra lỗi!");
+    }
   },
 };

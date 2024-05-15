@@ -37,60 +37,24 @@ module.exports = {
         ephemeral: true,
       });
 
-    const messageState = await client.waifuai.findMessageState({
-      ownerID: interaction.user.id,
-    });
-
-    if (!messageState?.isReplied) return;
-
-    await client.waifuai.updateMessageState({
-      state: false,
-      ownerID: interaction.user.id,
-    });
-
-    waifuData.messages.push({ role: "user", content: message.value });
+    if (!waifuData?.isReplied) return;
 
     try {
       interaction.reply({ content: "`Đang soạn...`", ephemeral: true });
+      waifuData.messages.push({ role: "user", content: message.value });
       const res = await client.waifuai.createMessage({
         messages: waifuData.messages,
+        waifuName: waifuData.name,
         model: model,
+        ownerID: interaction.user.id,
       });
+
+      if (!res) return;
 
       interaction.editReply(res.choices[0].message.content);
-
-      if (res?.choices[0]?.message?.content?.toLowerCase().includes("error")) {
-        return await client.waifuai.updateMessageState({
-          state: true,
-          ownerID: message.author.id,
-        });
-      }
-
-      waifuData.messages.push({
-        role: "assistant",
-        content: res.choices[0].message.content,
-      });
-
-      waifuData.messages.push({
-        role: "system",
-        content: `Bạn tên là ${waifuData.name}`,
-      });
-
-      await client.waifuai.updateMessage({
-        ownerID: interaction.user.id,
-        messages: waifuData.messages,
-      });
-
-      await client.waifuai.updateMessageState({
-        state: true,
-        ownerID: interaction.user.id,
-      });
     } catch (error) {
       interaction.reply({ content: "Đã xảy ra lỗi", ephemeral: true });
-      await client.waifuai.updateMessageState({
-        state: true,
-        ownerID: interaction.user.id,
-      });
+      console.error(error);
     }
   },
 };

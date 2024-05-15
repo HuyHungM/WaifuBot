@@ -24,12 +24,7 @@ module.exports = {
       ownerID: message.author.id,
     });
 
-    const deleteDelayStateData = await client.waifuai.deleteMessageState({
-      ownerID: message.author.id,
-    });
-
-    if (deleteWaifuData == 1 && deleteDelayStateData == 1)
-      message.reply(`Đã xoá thành công waifu của bạn.`);
+    if (deleteWaifuData == 1) message.reply(`Đã xoá thành công waifu của bạn.`);
     else message.reply("Đã xảy ra lỗi khi xoá waifu cho bạn.");
   },
 };

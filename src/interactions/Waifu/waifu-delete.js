@@ -17,33 +17,37 @@ module.exports = {
         ephemeral: true,
       });
 
-    await interaction.user.createDM();
-    await interaction.user.dmChannel?.messages?.fetch().then((messages) => {
-      messages
-        .filter((message) => message.author.id === client.user.id)
-        .forEach(async (msg) => {
-          await msg.delete();
-        });
-    });
-    await interaction.user.deleteDM();
-
-    const deleteWaifuData = await client.waifuai.delete({
-      ownerID: interaction.user.id,
-    });
-
-    const deleteDelayStateData = await client.waifuai.deleteMessageState({
-      ownerID: interaction.user.id,
-    });
-
-    if (deleteWaifuData == 1 && deleteDelayStateData == 1)
-      interaction.reply({
-        content: `Đã xoá thành công waifu của bạn.`,
-        ephemeral: true,
+    try {
+      await interaction.user.createDM();
+      await interaction.user.dmChannel?.messages?.fetch().then((messages) => {
+        messages
+          .filter((message) => message.author.id === client.user.id)
+          .forEach(async (msg) => {
+            await msg.delete();
+          });
       });
-    else
+      await interaction.user.deleteDM();
+
+      const deleteWaifuData = await client.waifuai.delete({
+        ownerID: interaction.user.id,
+      });
+
+      if (deleteWaifuData == 1)
+        interaction.reply({
+          content: `Đã xoá thành công waifu của bạn.`,
+          ephemeral: true,
+        });
+      else
+        interaction.reply({
+          content: "Đã xảy ra lỗi khi xoá waifu cho bạn.",
+          ephemeral: true,
+        });
+    } catch (error) {
       interaction.reply({
         content: "Đã xảy ra lỗi khi xoá waifu cho bạn.",
         ephemeral: true,
       });
+      console.error(error);
+    }
   },
 };

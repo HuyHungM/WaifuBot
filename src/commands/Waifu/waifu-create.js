@@ -24,10 +24,6 @@ module.exports = {
         messages: AIConfig.getStarterMessage(message, args),
       });
 
-      await client.waifuai.createMessageState({
-        isReplied: true,
-        ownerID: message.author.id,
-      });
       message.reply(
         `Đã khởi tạo thành công waifu của bạn với tên \`${args.join(
           " "

@@ -14,6 +14,10 @@ const waifuSchema = new mongoose.Schema(
       type: Array,
       require: true,
     },
+    isReplied: {
+      type: Boolean,
+      require: true,
+    },
   },
   { timestamps: true }
 );

@@ -12,7 +12,7 @@ const autoplayModeMessage = {
 };
 
 $(document).ready(function () {
-  const getDistubeData = setInterval(function () {
+  setInterval(function () {
     socket.emit("getMusicData", { guildId, userId });
   }, 1000);
 
@@ -40,7 +40,6 @@ $(document).ready(function () {
       const translateX = parseFloat(
         ((queue.currentTime / queue.songs[0].duration) * 100).toFixed(3)
       );
-      console.log(translateX);
       if ($(".now-playing .duration .time-line .btn").length > 0) {
         $(".now-playing .duration .time-line .btn").css(
           "--translateX",

@@ -1,6 +1,4 @@
-const axios = require("axios");
 const waifu = require("./waifu");
-const messageState = require("./messageState");
 const OpenAI = require("openai");
 
 class WaifuAI {
@@ -21,6 +19,7 @@ class WaifuAI {
       name: name,
       ownerID: ownerID,
       messages: messages,
+      isReplied: true,
     });
 
     try {
@@ -53,99 +52,49 @@ class WaifuAI {
     }
   }
 
-  async createMessage({ messages, model }) {
+  async createMessage({ messages, waifuName, model, ownerID }) {
+    const filter = { ownerID: ownerID };
+
+    const options = {
+      upsert: true,
+      new: true,
+    };
+
     try {
+      await waifu.findOneAndUpdate(filter, { isReplied: false }, options);
+
       const res = await this.openai.chat.completions.create({
         messages: messages,
         model: model,
       });
 
+      if (res?.choices[0]?.message?.content?.toLowerCase().includes("error")) {
+        await waifu.findOneAndUpdate(filter, { isReplied: true }, options);
+        return null;
+      }
+
+      messages.push({
+        role: "assistant",
+        content: res.choices[0].message.content,
+      });
+
+      messages.push({
+        role: "system",
+        content: `Bạn tên là ${waifuName}`,
+      });
+
+      const updateWaifu = await waifu.findOneAndUpdate(
+        filter,
+        { messages: messages, isReplied: true },
+        options
+      );
+
       return res;
     } catch (error) {
+      await waifu.findOneAndUpdate(filter, { isReplied: true }, options);
       console.error(error);
       throw error;
     }
-  }
-
-  async updateMessage({ ownerID, messages }) {
-    const filter = { ownerID: ownerID };
-
-    const options = {
-      upsert: true,
-      new: true,
-    };
-
-    try {
-      const waifuData = await waifu.findOneAndUpdate(
-        filter,
-        {
-          messages: messages,
-        },
-        options
-      );
-
-      return waifuData;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  async createMessageState({ ownerID }) {
-    const newMessageState = messageState({
-      isReplied: true,
-      ownerID: ownerID,
-    });
-
-    try {
-      newMessageState.save();
-      return newMessageState;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  async findMessageState({ ownerID }) {
-    const filter = { ownerID: ownerID };
-
-    const messageStateData = await messageState.findOne(filter);
-
-    if (messageStateData) {
-      return messageStateData;
-    } else {
-      return null;
-    }
-  }
-
-  async updateMessageState({ state, ownerID }) {
-    const filter = { ownerID: ownerID };
-
-    const options = {
-      upsert: true,
-      new: true,
-    };
-
-    try {
-      const messageStateData = messageState.findOneAndUpdate(
-        filter,
-        {
-          isReplied: state,
-        },
-        options
-      );
-      return messageStateData;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  async deleteMessageState({ ownerID }) {
-    const filter = { ownerID: ownerID };
-
-    const messageStateData = await messageState.deleteOne(filter);
-
-    if (messageStateData.deletedCount == 1) {
-      return messageStateData.deletedCount;
-    } else return null;
   }
 }
 

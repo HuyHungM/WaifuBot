@@ -525,6 +525,7 @@ body.dashboard-body {
         overflow-y: auto;
         display: flex;
         flex-direction: column;
+        column-gap: 20px
     }
     
     #dashboard .title {
@@ -540,7 +541,6 @@ body.dashboard-body {
         display: flex;
         width: 100%;
         flex-direction: column;
-        margin-top: 20px;
     }
 
     /* ========== DASHBOARD - MEDIA QUERIES ========== */
