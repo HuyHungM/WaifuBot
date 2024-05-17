@@ -83,7 +83,7 @@ class WaifuAI {
         content: `Bạn tên là ${waifuName}`,
       });
 
-      const updateWaifu = await waifu.findOneAndUpdate(
+      await waifu.findOneAndUpdate(
         filter,
         { messages: messages, isReplied: true },
         options
