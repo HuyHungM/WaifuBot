@@ -16,30 +16,37 @@ $(document).ready(function () {
     }
   }, 1000);
 
-  socket.on(`sendWaifuMessage-${userId}`, function (res) {
-    const waifuMessageContainer = $(document.createElement("div")).addClass(
-      "message-container waifu"
-    );
-    $("#dashboard .message-list").append(waifuMessageContainer);
-    const waifuMessageContent = $(document.createElement("div"))
-      .addClass("message")
-      .text(res.choices[0].message.content);
-    $(waifuMessageContainer).append(waifuMessageContent);
-    $(".message-list").animate({
-      scrollTop: $(".message-list")[0].scrollHeight,
-    });
+  $("#message-input").on("input", function () {
+    let $this = $(this);
+
+    $this.css("height", "auto");
+
+    let newHeight = $this[0].scrollHeight;
+
+    $this.css("height", Math.min(newHeight, 140) + "px");
+  });
+
+  $("#message-input").on("keydown", function (event) {
+    if (event.key === "Enter") {
+      if (!event.shiftKey) {
+        event.preventDefault();
+        $("#message-input").submit();
+      }
+    }
   });
 
   $("#message-form").on("submit", function (e) {
     e.preventDefault();
-    const message = $("#message-input").val();
+    const message = $("#message-input")
+      .val()
+      .replace(/:heart:/g, "♥");
     socket.emit(`sendWaifuMessage`, { userId, message });
     $("#message-input").val("");
 
     const userMessageContainer = $(document.createElement("div")).addClass(
       "message-container user"
     );
-    $("#dashboard .message-list").append(userMessageContainer);
+
     const userMessageContent = $(document.createElement("div"))
       .addClass("message")
       .text(message);
@@ -47,5 +54,48 @@ $(document).ready(function () {
     $(".message-list").animate({
       scrollTop: $(".message-list")[0].scrollHeight,
     });
+
+    $("#dashboard .message-list").append(userMessageContainer);
+
+    setTimeout(function () {
+      let dotLoadingContainer = $(document.createElement("div")).addClass(
+        "dot-loading"
+      );
+
+      for (let i = 0; i < 3; i++) {
+        let dotSpan = $(document.createElement("span")).css(
+          "--delay",
+          `${i * 100}ms`
+        );
+        $(dotLoadingContainer).append(dotSpan);
+      }
+
+      $("#dashboard .message-list").append(dotLoadingContainer);
+
+      $(".message-list").animate({
+        scrollTop: $(".message-list")[0].scrollHeight,
+      });
+    }, 500);
+  });
+
+  socket.on(`sendWaifuMessage-${userId}`, function (res) {
+    if ($("#dashboard .message-list .dot-loading").length > 0) {
+      $("#dashboard .message-list .dot-loading").remove();
+    }
+
+    setTimeout(function () {
+      const waifuMessageContainer = $(document.createElement("div")).addClass(
+        "message-container waifu"
+      );
+      const waifuMessageContent = $(document.createElement("div"))
+        .addClass("message")
+        .text(res.choices[0].message.content);
+      $(waifuMessageContainer).append(waifuMessageContent);
+      $("#dashboard .message-list").append(waifuMessageContainer);
+
+      $(".message-list").animate({
+        scrollTop: $(".message-list")[0].scrollHeight,
+      });
+    }, 500);
   });
 });

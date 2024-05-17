@@ -1,4 +1,3 @@
-const { getStarterMessage } = require("../config/AIConfig");
 const { WaifuAI } = require("../models/WaifuAI");
 
 module.exports = async (client) => {

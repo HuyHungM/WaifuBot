@@ -21,7 +21,7 @@
   margin-top: 1rem;
   box-shadow: var(--box-shadow);
   transition: all 300ms ease;
-  animation: showChart 1s ease-out forwards;
+  animation: flyInLeft 1s ease-out forwards;
   animation-delay: var(--animation-delay);
 }
 

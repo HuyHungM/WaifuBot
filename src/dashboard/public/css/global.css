@@ -83,6 +83,13 @@ img {
     height: 100%;
 }
 
+input[type="text"],
+textarea {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    font-weight: 400;
+}
+
 .hover-glow {
     transition: text-shadow 300ms ease;
 }
@@ -174,7 +181,7 @@ img {
 }
 
 .fly-in-animation.active {
-    animation: flyIn 400ms ease-in-out forwards;
+    animation: flyInUp 400ms ease-in-out forwards;
 }
 
 .btn {
@@ -224,60 +231,6 @@ img {
     background-color: var(--color-primary);
     border-radius: inherit;
     animation: loading2 2s ease-in-out both infinite;
-}
-
-@keyframes loading {
-    0% {
-        width: 16px;
-        transform: translateX(0px);
-    }
-
-    40% {
-        width: 100%;
-        transform: translateX(0px);
-    }
-
-    80% {
-        width: 16px;
-        transform: translateX(64px);
-    }
-
-    90% {
-        width: 100%;
-        transform: translateX(0px);
-    }
-
-    100% {
-        width: 16px;
-        transform: translateX(0px);
-    }
-}
-
-@keyframes loading2 {
-    0% {
-        transform: translateX(0px);
-        width: 16px;
-    }
-
-    40% {
-        transform: translateX(0%);
-        width: 80%;
-    }
-
-    80% {
-        width: 100%;
-        transform: translateX(0px);
-    }
-
-    90% {
-        width: 80%;
-        transform: translateX(15px);
-    }
-
-    100% {
-        transform: translateX(0px);
-        width: 16px;
-    }
 }
 
 /* ========== DASHBOARD - CONTAINER ========== */
@@ -485,7 +438,7 @@ body.dashboard-body {
         background-color: var(--color-white);
         box-shadow: var(--box-shadow);
         z-index: 15;
-        animation: flyIn 200ms ease-out forwards;
+        animation: flyInUp 200ms ease-out forwards;
     }
     
     #header .profile:hover .expand{

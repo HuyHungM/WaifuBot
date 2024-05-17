@@ -84,7 +84,7 @@
   font-weight: 500;
   color: var(--color-info-light);
   opacity: 0;
-  animation: flyIn 400ms ease-out forwards;
+  animation: flyInUp 400ms ease-out forwards;
   animation-delay: 200ms;
   justify-content: center;
 }
@@ -95,7 +95,7 @@
   padding: 19.2px;
   color: var(--color-info-light);
   opacity: 0;
-  animation: flyIn 400ms ease-out forwards;
+  animation: flyInUp 400ms ease-out forwards;
   animation-delay: 400ms;
   display: inline-flex;
   justify-content: center;
@@ -112,7 +112,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   opacity: 0;
-  animation: flyIn 400ms ease-out forwards;
+  animation: flyInUp 400ms ease-out forwards;
   animation-delay: 600ms;
 }
 
