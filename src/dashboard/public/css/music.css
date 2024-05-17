@@ -116,10 +116,6 @@
   font-weight: 600;
 }
 
-#dashboard .center .now-playing h3.time-line {
-  text-overflow: clip;
-}
-
 #dashboard .center .now-playing h3.hover-text,
 #dashboard .center .now-playing a {
   color: var(--color-primary);
@@ -147,9 +143,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   width: 100%;
-  gap: 12px
+  gap: 16px
 }
 
 #dashboard .center .now-playing .duration .navigation .time-line:not(.active) {

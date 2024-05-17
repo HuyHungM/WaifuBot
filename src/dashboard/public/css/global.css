@@ -251,7 +251,7 @@ body.dashboard-body {
         overflow: hidden;
         width: 270px;
         display: grid;
-        grid-template-rows: 80px auto;
+        grid-template-rows: 80px auto 48px;
     }
     
     #sidebar .top {
