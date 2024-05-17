@@ -93,7 +93,7 @@ class WaifuAI {
     } catch (error) {
       await waifu.findOneAndUpdate(filter, { isReplied: true }, options);
       console.error(error);
-      throw error;
+      return null;
     }
   }
 }
