@@ -7,8 +7,8 @@ module.exports = (client) => {
     client.user.setPresence({
       activities: [
         {
-          name: "Đang làm người yêu bạn | w!help",
-          type: ActivityType.Custom,
+          name: "nhạc | w!help",
+          type: ActivityType.Listening,
         },
       ],
       status: "online",
