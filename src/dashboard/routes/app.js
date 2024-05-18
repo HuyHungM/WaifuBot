@@ -131,8 +131,9 @@ app.get("/login", UnAuth, (req, res) => {
 });
 
 app.get("/logout", Auth, (req, res) => {
-  req.logout(function () {});
-  return res.redirect("/login");
+  req.logout(function () {
+    res.redirect("/login");
+  });
 });
 
 module.exports = app;
