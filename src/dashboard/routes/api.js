@@ -3,7 +3,7 @@ const client = require("../../app");
 
 app.get("/api/get/manifest.json", (req, res) => {
   const manifest = {
-    name: `${client.user.username} - Bot cho Discord`,
+    name: client.user.username,
     short_name: client.user.username,
     start_url: "/servers",
     display: "standalone",
