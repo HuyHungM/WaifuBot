@@ -4,7 +4,7 @@
   overflow-y: auto;
   height: auto;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: none;
   flex-direction: column;
   opacity: 0;
@@ -63,7 +63,7 @@
 
 /* ========== INTRODUCE ========== */
 #introduce {
-  min-height: 100vh;
+  min-height: 100dvh;
   height: auto;
   padding-top: 77px;
   width: 100%;

@@ -46,8 +46,15 @@ $(document).ready(function () {
       .replace(/:heart:/g, "♥");
 
     if (message === "") return;
+
     socket.emit(`sendWaifuMessage`, { userId, message });
     $("#message-input").val("");
+
+    $("#message-input").css("height", "auto");
+
+    let newHeight = $("#message-input")[0].scrollHeight;
+
+    $("#message-input").css("height", Math.min(newHeight, 140) + "px");
 
     const userMessageContainer = $(document.createElement("div")).addClass(
       "message-container user"

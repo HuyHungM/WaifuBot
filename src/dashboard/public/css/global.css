@@ -57,9 +57,9 @@ html{
 }
 
 body {
-    width: 100vw;
+    width: 100dvw;
     height: auto;
-    min-height: 100vh;
+    min-height: 100dvh;
     font-family: "JetBrains Mono", monospace;
     font-size: 0.88rem;
     background: var(--color-background);
@@ -199,8 +199,8 @@ textarea {
 }
 
 #loader {
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     background-color: #181a1e;
     display: flex;
     justify-content: center;
@@ -210,7 +210,7 @@ textarea {
 }
 
 #loader .loading {
-    width: 10vw;
+    width: 10dvw;
     height: 50px;
     position: relative;
 }
@@ -241,8 +241,8 @@ textarea {
 body.dashboard-body {
     #container {
         display: none;
-        height: 100vh;
-        width: 100vw;
+        height: 100dvh;
+        width: 100dvw;
         background-color: #1b1f22;
         opacity: 0;
         animation: fade 300ms ease-in forwards;
@@ -384,7 +384,7 @@ body.dashboard-body {
         display: flex;
         flex-direction: column;
         flex: 1;
-        height: 100vh;
+        height: 100dvh;
         width: auto;
         overflow: hidden;
     }

@@ -55,6 +55,7 @@
   padding: 8px 12px;
   border-radius: 16px;
   width: fit-content;
+  user-select: text;
 }
 
 #dashboard .message-list .message-container.notification {
