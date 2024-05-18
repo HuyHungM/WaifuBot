@@ -149,6 +149,13 @@
         <section id="dashboard">
           <div class="center">
             <div class="message-list">
+              <% if (waifu) { %>
+              <div class="message-container notification">
+                <small class="text-muted"
+                  >Bạn đã được kết nối với <%= waifu.name %> trên <%= client.user.username
+                  %></small
+                >
+              </div>
               <% waifu.messages.map((message) => { %> <% if (message.role ===
               "assistant") { %>
               <div class="message-container waifu">
@@ -162,18 +169,27 @@
                   <%= message.content.replace(/:heart:/g, '♥') %>
                 </div>
               </div>
-              <% } %> <% }) %>
+              <% } %> <% }) %> <% } else { %>
+              <div class="message-container notification">
+                <small class="text-muted"
+                  >Waifu chưa tồn tại. Vui lòng sử dụng /waifu-create trên
+                  discord để khởi tạo waifu cho riêng mình.</small
+                >
+              </div>
+              <% } %>
             </div>
             <form id="message-form">
               <textarea
                 type="text"
                 id="message-input"
+                class="<%= !waifu ? 'readonly' : '' %>"
                 autocomplete="off"
                 placeholder="Nhập tin nhắn"
                 rows="1"
                 dir="auto"
+                <%= !waifu ? "readonly" : "" %>
               ></textarea>
-              <button id="send-message-btn" type="submit">
+              <button id="send-message-btn" type="submit" class="<%= !waifu ? 'readonly' : '' %>">
                 <i class="fa-solid fa-paper-plane"></i>
               </button>
             </form>
@@ -187,6 +203,12 @@
     <script src="https://cdn.jsdelivr.net/npm/socket.io@4.7.5/client-dist/socket.io.min.js"></script>
     <script>
       const userId = "<%= user.id %>";
+      let isWaifu;
+      if ("<%= waifu?.messages[0]?.content %>" !== "") {
+        isWaifu = true
+      } else {
+        isWaifu = false
+      }
     </script>
     <script src="/js/global.js"></script>
     <script src="/js/waifu.js"></script>

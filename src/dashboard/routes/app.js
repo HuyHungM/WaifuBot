@@ -79,9 +79,12 @@ app.get("/server/:guildId/waifu", Auth, validGuild, async (req, res) => {
   const user = req.user;
   const guild = client.guilds.cache.get(req.params.guildId);
   let waifu = await client.waifuai.find({ ownerID: user.id });
-  waifu.messages = waifu.messages
-    .slice(54)
-    .filter((message) => message.role !== "system");
+
+  if (waifu) {
+    waifu.messages = waifu.messages
+      .slice(53)
+      .filter((message) => message.role !== "system");
+  }
 
   ejs.renderFile(
     "./src/dashboard/views/waifu.html",

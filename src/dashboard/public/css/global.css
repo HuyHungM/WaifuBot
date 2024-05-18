@@ -180,6 +180,10 @@ textarea {
     opacity: 0;
 }
 
+.readonly {
+    cursor: not-allowed;
+}
+
 .fly-in-animation.active {
     animation: flyInUp 400ms ease-in-out forwards;
 }

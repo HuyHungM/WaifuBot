@@ -37,9 +37,15 @@ $(document).ready(function () {
 
   $("#message-form").on("submit", function (e) {
     e.preventDefault();
+
+    if (!isWaifu) return;
+
     const message = $("#message-input")
       .val()
+      .trim()
       .replace(/:heart:/g, "♥");
+
+    if (message === "") return;
     socket.emit(`sendWaifuMessage`, { userId, message });
     $("#message-input").val("");
 

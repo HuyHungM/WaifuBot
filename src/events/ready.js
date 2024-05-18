@@ -8,7 +8,7 @@ module.exports = (client) => {
       activities: [
         {
           name: "nhạc | w!help",
-          type: ActivityType.Listening,
+          type: ActivityType.Playing,
         },
       ],
       status: "online",

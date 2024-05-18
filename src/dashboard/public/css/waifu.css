@@ -57,6 +57,11 @@
   width: fit-content;
 }
 
+#dashboard .message-list .message-container.notification {
+  justify-content: center;
+  margin: 8px 0;
+}
+
 #dashboard .message-list .message-container.waifu {
   justify-content: flex-start;
 
