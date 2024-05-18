@@ -40,6 +40,7 @@ $(document).ready(function () {
       const translateX = parseFloat(
         ((queue.currentTime / queue.songs[0].duration) * 100).toFixed(3)
       );
+      $(".now-playing .duration .time-line").text();
       if ($(".now-playing .duration .time-line .btn").length > 0) {
         $(".now-playing .duration .time-line .btn").css(
           "--translateX",
