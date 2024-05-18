@@ -52,7 +52,7 @@ class WaifuAI {
     }
   }
 
-  async createMessage({ messages, waifuName, model, ownerID }) {
+  async createMessage({ messages, waifuName, model, ownerID, ownerName }) {
     const filter = { ownerID: ownerID };
 
     const options = {
@@ -84,7 +84,12 @@ class WaifuAI {
 
       messages.push({
         role: "system",
-        content: `Bạn tên là ${waifuName}`,
+        content: `Bạn tên là ${waifuName}, là người bạn gái đáng yêu của ${ownerName}`,
+      });
+
+      messages.push({
+        role: "assistant",
+        content: `Em tên là ${waifuName}, là người bạn gái đáng yêu của ${ownerName}`,
       });
 
       await waifu.findOneAndUpdate(

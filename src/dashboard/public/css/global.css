@@ -485,7 +485,8 @@ body.dashboard-body {
         overflow-y: auto;
         display: flex;
         flex-direction: column;
-        column-gap: 20px
+        column-gap: 20px;
+        flex: 1;
     }
     
     #dashboard .title {

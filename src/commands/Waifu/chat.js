@@ -1,4 +1,5 @@
 const { model } = require("../../config/AIConfig");
+const { ownerName } = require("../../config/config");
 const { commandCategory } = require("../../utils/other");
 
 module.exports = {
@@ -30,6 +31,7 @@ module.exports = {
         waifuName: waifuData.name,
         model: model,
         ownerID: message.author.id,
+        ownerName: message.author.username,
       });
       if (!res) return;
 

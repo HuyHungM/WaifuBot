@@ -47,7 +47,7 @@ $(document).ready(function () {
 
     if (message === "") return;
 
-    socket.emit(`sendWaifuMessage`, { userId, message });
+    socket.emit(`sendWaifuMessage`, { userId, userName, message });
     $("#message-input").val("");
 
     $("#message-input").css("height", "auto");

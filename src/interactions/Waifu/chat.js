@@ -47,6 +47,7 @@ module.exports = {
         waifuName: waifuData.name,
         model: model,
         ownerID: interaction.user.id,
+        ownerName: interaction.author.username,
       });
 
       if (!res) return;
