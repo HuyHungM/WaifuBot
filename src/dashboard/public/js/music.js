@@ -40,7 +40,7 @@ $(document).ready(function () {
       const translateX = parseFloat(
         ((queue.currentTime / queue.songs[0].duration) * 100).toFixed(3)
       );
-      $(".now-playing .duration .time-line").text();
+      $(".now-playing .duration .time-line").text("");
       if ($(".now-playing .duration .time-line .btn").length > 0) {
         $(".now-playing .duration .time-line .btn").css(
           "--translateX",
@@ -62,6 +62,7 @@ $(document).ready(function () {
       $(".now-playing .duration .time-line").text(
         "Hiện tại không có gì đang phát, thêm trên discord chứ?"
       );
+      $(".now-playing .duration .time-line").removeClass("active");
     }
 
     $(".now-playing .current-song a")
