@@ -247,6 +247,7 @@ body.dashboard-body {
         background-color: #1b1f22;
         opacity: 0;
         animation: fade 300ms ease-in forwards;
+        overflow: hidden;
     }
     
     /* ========== DASHBOARD - SIDEBAR ========== */
