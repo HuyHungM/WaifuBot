@@ -24,7 +24,7 @@ module.exports = (client) => {
         emitEventsAfterFetching: true,
       }),
       new SoundCloudPlugin(),
-      new YtDlpPlugin(),
+      new YtDlpPlugin({ update: true }),
       new DeezerPlugin(),
     ],
     customFilters: client.config.music.filters,
