@@ -17,6 +17,26 @@ module.exports = (client) => {
 
     app.use(bodyParser.json());
 
+    app.use(
+      session({
+        secret: process.env.SESSION_SECRET || generateRandomString(32),
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: true },
+      })
+    );
+
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    passport.serializeUser(function (user, done) {
+      done(null, user);
+    });
+
+    passport.deserializeUser(function (obj, done) {
+      done(null, obj);
+    });
+
     passport.use(
       new DiscordStrategy(
         {
@@ -33,17 +53,6 @@ module.exports = (client) => {
       )
     );
 
-    app.use(
-      session({
-        secret: generateRandomString(16),
-        resave: false,
-        saveUninitialized: false,
-      })
-    );
-
-    app.use(passport.initialize());
-    app.use(passport.session());
-
     app.get(
       process.env.CALLBACK_URL,
       passport.authenticate("discord", {
@@ -53,14 +62,6 @@ module.exports = (client) => {
         res.redirect("/servers");
       }
     );
-
-    passport.serializeUser(function (user, done) {
-      done(null, user);
-    });
-
-    passport.deserializeUser(function (obj, done) {
-      done(null, obj);
-    });
 
     const routes = readdirSync("./src/dashboard/routes").filter((file) =>
       file.endsWith(".js")
@@ -98,12 +99,12 @@ module.exports = (client) => {
 };
 
 function generateRandomString(length) {
-  var text = "";
-  var possible =
+  const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
-  return text;
+  return result;
 }
