@@ -22,7 +22,6 @@ module.exports = (client) => {
         secret: process.env.SESSION_SECRET || generateRandomString(32),
         resave: false,
         saveUninitialized: false,
-        cookie: { secure: true },
       })
     );
 
