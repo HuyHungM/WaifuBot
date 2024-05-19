@@ -1,7 +1,6 @@
 $(document).ready(function () {
   $(".controller #autoplay-btn").on("click", function () {
     if ($(this).hasClass("disable")) return;
-    console.log("hi");
 
     socket.emit("toggleAutoplayPlayback", { guildId });
   });
