@@ -17,12 +17,12 @@ $(document).ready(function () {
   }, 1000);
 
   socket.on(`getMusicData-${userId}`, function (queue) {
-    $(".queue-info .songs .middle h1").text(queue.songs.length);
-    $(".queue-info .autoplay .middle h1").text(
+    $(".player-info .songs .middle h1").text(queue.songs.length);
+    $(".player-info .autoplay .middle h1").text(
       autoplayModeMessage[queue.autoplay]
     );
-    $(".queue-info .loop .middle h1").text(loopModeMessage[queue.repeatMode]);
-    $(".queue-info .volume .middle h1").text(`${queue.volume}%`);
+    $(".player-info .loop .middle h1").text(loopModeMessage[queue.repeatMode]);
+    $(".player-info .volume .middle h1").text(`${queue.volume}%`);
 
     if (queue.songs.length > 0) {
       if ($(".now-playing .background-cover").length > 0) {
@@ -37,32 +37,61 @@ $(document).ready(function () {
           .appendTo($(".now-playing"));
       }
 
-      const translateX = parseFloat(
+      const passedTimelineWidth = parseFloat(
         ((queue.currentTime / queue.songs[0].duration) * 100).toFixed(3)
       );
-      $(".now-playing .duration .time-line").text("");
-      if ($(".now-playing .duration .time-line .btn").length > 0) {
-        $(".now-playing .duration .time-line .btn").css(
-          "--translateX",
-          `${translateX}%`
-        );
+      const timelineWidth = parseFloat((100 - passedTimelineWidth).toFixed(3));
+
+      $(".now-playing .duration .timeline").text("");
+
+      $(".now-playing .duration .timeline")
+        .css("--width", `${timelineWidth}%`)
+        .addClass("active");
+      $(".now-playing .duration .passed-timeline")
+        .css("--width", `${passedTimelineWidth}%`)
+        .addClass("active");
+
+      $(".controller").addClass("active");
+
+      if (queue.playing) {
+        $(".controller #play-btn i").replaceClass("fa-play", "fa-pause");
       } else {
-        $(document.createElement("i"))
-          .addClass("btn fa-solid fa-record-vinyl")
-          .css("--translateX", `${translateX}%`)
-          .appendTo($(".now-playing .duration .time-line"));
+        $(".controller #play-btn i").replaceClass("fa-paused", "fa-play");
       }
 
-      $(".now-playing .duration .time-line").addClass("active");
+      if (!queue.previousSongs || queue.previousSongs.length === 0) {
+        $(".controller #previous-btn").addClass("disable");
+      } else {
+        $(".controller #previous-btn").removeClass("disable");
+      }
+
+      if (queue.autoplay) {
+        $(".controller #loop-btn").addClass("disable");
+      } else {
+        $(".controller #loop-btn").removeClass("disable");
+      }
+
+      if (queue.repeatMode !== RepeatMode.DISABLED) {
+        $(".controller #autoplay-btn").addClass("disable");
+      } else {
+        $(".controller #autoplay-btn").removeClass("disable");
+      }
+
+      if (queue.songs.length <= 1) {
+        $(".controller #next-btn").addClass("disable");
+      } else {
+        $(".controller #next-btn").removeClass("disable");
+      }
     } else {
       if ($(".now-playing .background-cover"))
         $(".now-playing .background-cover").remove();
 
-      $(".now-playing .duration .time-line .btn").remove();
-      $(".now-playing .duration .time-line").text(
-        "Hiện tại không có gì đang phát, thêm trên discord chứ?"
-      );
-      $(".now-playing .duration .time-line").removeClass("active");
+      $(".now-playing .duration .timeline")
+        .text("Hiện tại không có gì đang phát, thêm trên discord chứ?")
+        .removeClass("active");
+      $(".now-playing .duration .passed-timeline").removeClass("active");
+
+      $(".controller").removeClass("active");
     }
 
     $(".now-playing .current-song a")

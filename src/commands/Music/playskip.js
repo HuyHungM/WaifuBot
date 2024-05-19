@@ -5,6 +5,7 @@ const {
   ButtonStyle,
 } = require("discord.js");
 const { commandCategory } = require("../../utils/other");
+const { SearchResultType } = require("distube");
 
 module.exports = {
   name: "playskip",

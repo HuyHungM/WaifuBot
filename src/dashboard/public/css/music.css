@@ -6,14 +6,14 @@
   height: auto;
 }
 
-#dashboard .center .queue-info {
+#dashboard .center .player-info {
   display: flex;
   gap: 1.6rem;
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
 
-#dashboard .center .queue-info > div {
+#dashboard .center .player-info > div {
   flex: 0 0 calc(25% - 1.6rem);
   max-width: calc(25% - 1.6rem);
   min-width: 260px;
@@ -28,11 +28,11 @@
   animation-delay: var(--animation-delay);
 }
 
-#dashboard .center .queue-info > div:hover {
+#dashboard .center .player-info > div:hover {
   box-shadow: none;
 }
 
-#dashboard .center .queue-info > div i {
+#dashboard .center .player-info > div i {
   background: var(--background-icon); 
   padding: 0.5rem;
   border-radius: 50%;
@@ -45,18 +45,18 @@
   justify-content: center;
 }
 
-#dashboard .center .queue-info > div .middle {
+#dashboard .center .player-info > div .middle {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-#dashboard .center .queue-info h3 {
+#dashboard .center .player-info h3 {
   margin: 1rem 0 0.6rem;
   font-size: 1rem;
 }
 
-#dashboard .center .queue-info small {
+#dashboard .center .player-info small {
   margin-top: 1.3rem;
   display: block;
 }
@@ -72,7 +72,6 @@
   background: var(--color-white);
   padding: var(--card-padding);
   border-radius: var(--card-border-radius);
-  box-shadow: var(--box-shadow);
   transition: all 300ms ease;
   animation: flyInLeft 1.2s ease forwards;
   position: relative;
@@ -85,11 +84,6 @@
   border-radius: var(--card-border-radius);
   filter: brightness(0.3);
   display: flex;
-}
-
-#dashboard .center .now-playing:hover {
-  box-shadow: none;
-  transition: box-shadow 300ms ease;
 }
 
 #dashboard .center .now-playing > div {
@@ -137,6 +131,8 @@
 
 #dashboard .center .now-playing .duration {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #dashboard .center .now-playing .duration .navigation {
@@ -144,76 +140,128 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 16px
+  padding: 4px 0;
+  cursor: pointer;
 }
 
-#dashboard .center .now-playing .duration .navigation .time-line:not(.active) {
+#dashboard .center .now-playing .duration .navigation:hover {
+  & .passed-timeline.active {
+    background-color: var(--color-success);
+  }
+
+  & .passed-timeline.active .btn {
+    display: unset;
+  }
+}
+
+#dashboard .center .now-playing .duration .passed-timeline {
+  display: none;
+}
+
+#dashboard .center .now-playing .duration .passed-timeline.active {
+  display: unset;
+  position: relative;
+  height: 3px;
+  width: var(--width);
+  background-color: var(--color-dark);
+  border-radius: 8px;
+  transition: width 200ms ease-in-out;
+}
+
+#dashboard .center .now-playing .duration .passed-timeline.active .btn {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  z-index: 10;
+  display: none;
+}
+
+#dashboard .center .now-playing .duration .timeline:not(.active) {
   display: flex;
   align-items: center;
   font-size: 16px;
   color: var(--color-primary);
-  cursor: pointer;
 }
 
-#dashboard .center .now-playing .duration .navigation .time-line:not(.active):hover {
+#dashboard .center .now-playing .duration .timeline:not(.active):hover {
   color: var(--color-success);
 }
 
-#dashboard .center .now-playing .duration .navigation .time-line.active {
-  position: relative;
+#dashboard .center .now-playing .duration .timeline.active {
   height: 3px;
-  width: 100%;
-  background-color: var(--color-primary);
+  width: var(--width);
+  background-color: var(--color-dark);
+  filter: brightness(0.5);
   cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  transition: width 200ms ease-in-out;
 }
 
-#dashboard .center .now-playing .duration .navigation .time-line.active .btn {
-  position: absolute;
-  top: 50%;
-  left: var(--translateX);
-  transform: translate(-50%, -50%);
-  font-size: 20px;
-  transition: left 100ms ease-in-out;
-  z-index: 10;
+#dashboard .center .now-playing .duration .time {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -16px;
 }
 
-#dashboard .center .now-playing .duration .navigation .time-line.active::before {
-  content: "|";
-  font-size: 20px;
-  color: var(--color-primary);
-  font-weight: 600;
-  position: absolute;
-  top: 50%;
-  left: -6px;
-  transform: translateY(-50%);
+#dashboard .center .controller {
+  display: none;
+  background-color: transparent;
+  border-radius: 8px;
+  margin-top: 8px;
+  opacity: 0;
+  animation: fade 1200ms ease-in-out forwards;
+  width: 100%;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
-#dashboard .center .now-playing .duration .navigation .time-line.active::after {
-  content: "|";
-  font-size: 20px;
-  color: var(--color-primary);
-  font-weight: 600;
-  position: absolute;
-  top: 50%;
-  right: -6px;
-  transform: translateY(-50%);
+#dashboard .center .controller.active {
+  display: flex;
 }
 
-#dashboard .center .now-playing .duration .navigation .time-line.active:hover {
-  background-color: var(--color-success);
+#dashboard .center .controller > li {
+  cursor: pointer;
+  transition: 200ms filter ease-in-out;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  &::before {
-    color: var(--color-success);
+#dashboard .center .controller > li:not(.disable):hover {
+  filter: brightness(0.7);
+}
+
+#dashboard .center .controller > li#play-btn {
+  border-radius: 50%;
+  background-color: var(--color-dark);
+
+  & i {
+    color: var(--color-white);
+    filter: brightness(1.5);
   }
+}
 
-  &::after {
-    color: var(--color-success);
-  }
+#dashboard .center .controller > li i {
+  font-size: 24px;
+}
+
+#dashboard .center .controller > li.disable {
+  cursor: default;
+}
+
+#dashboard .center .controller > li.disable i {
+  filter: brightness(0.5);
 }
 
 /* ========== MEDIA QUERIES ========== */
 @media screen and (max-width: 911px) {
-  #dashboard .center .queue-info > div {
+  #dashboard .center .player-info > div {
     max-width: 100%;
     flex: 1; 
   }

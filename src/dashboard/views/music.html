@@ -163,7 +163,7 @@
         <section id="dashboard">
           <div class="title">Âm nhạc - <%= guild.name %></div>
           <div class="center">
-            <div class="queue-info">
+            <div class="player-info">
               <div
                 class="songs"
                 style="--background-icon: var(--color-primary)"
@@ -216,18 +216,41 @@
               </div>
               <div class="next-song">
                 <h3>
-                  Kế tiếp:
+                  <span>Kế tiếp:</span>
                   <a href="#" target="_blank"></a>
                 </h3>
               </div>
               <div class="duration">
                 <h3>Thời lượng</h3>
                 <div class="navigation">
-                  <h3 class="current-time"></h3>
-                  <div class="time-line"></div>
-                  <h3 class="song-time"></h3>
+                  <div class="passed-timeline">
+                    <i class="btn fa-solid fa-record-vinyl"></i>
+                  </div>
+                  <div class="timeline"></div>
+                </div>
+                <div class="time">
+                  <span class="current-time"></span>
+                  <span class="song-time"></span>
                 </div>
               </div>
+
+              <ul class="controller">
+                <li id="autoplay-btn">
+                  <i class="fa-solid fa-arrows-rotate"></i>
+                </li>
+                <li id="previous-btn">
+                  <i class="fa-solid fa-backward-step"></i>
+                </li>
+                <li id="play-btn">
+                  <i class="fa-solid fa-play"></i>
+                </li>
+                <li id="next-btn">
+                  <i class="fa-solid fa-forward-step"></i>
+                </li>
+                <li id="loop-btn">
+                  <i class="fa-solid fa-repeat"></i>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
@@ -244,5 +267,6 @@
     </script>
     <script src="/js/global.js"></script>
     <script src="/js/music.js"></script>
+    <script src="/js/music-controller.js"></script>
   </body>
 </html>

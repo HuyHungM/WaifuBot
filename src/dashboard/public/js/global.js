@@ -1,4 +1,9 @@
 $(document).ready(function () {
+  $.fn.replaceClass = function (oldClass, newClass) {
+    this.removeClass(oldClass).addClass(newClass);
+    return this;
+  };
+
   splitTextIntoSpans(".bubble-text");
   splitTextIntoSpans(".shining-text");
 
