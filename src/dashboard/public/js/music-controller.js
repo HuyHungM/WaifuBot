@@ -1,7 +1,3 @@
-if (!socket) {
-  const socket = io();
-}
-
 $(document).ready(function () {
   $(".controller #autoplay-btn").on("click", function () {
     if ($(this).hasClass("disable")) return;
