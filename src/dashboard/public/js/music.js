@@ -77,7 +77,7 @@ $(document).ready(function () {
         $(".controller #autoplay-btn").removeClass("disable");
       }
 
-      if (queue.songs.length <= 1) {
+      if (queue.songs.length <= 1 && !queue.autoplay) {
         $(".controller #next-btn").addClass("disable");
       } else {
         $(".controller #next-btn").removeClass("disable");
