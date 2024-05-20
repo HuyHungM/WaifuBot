@@ -198,7 +198,7 @@
     animation: fade 400ms ease forwards;
   }
 
-  & .add-to-queue-btn i:hover {
+  & .add-to-queue-btn i:not(.temp-disable):hover {
     filter: brightness(0.4);
   }
 
@@ -340,7 +340,7 @@
   align-items: center;
 }
 
-#dashboard .bottom .controller > li:not(.disable):hover {
+#dashboard .bottom .controller > li:not(.disable):not(.temp-disable):hover {
   filter: brightness(0.7);
 }
 

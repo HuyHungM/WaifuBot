@@ -237,7 +237,7 @@
   align-items: center;
 }
 
-#dashboard .center .controller > li:not(.disable):hover {
+#dashboard .center .controller > li:not(.disable):not(.temp-disable):hover {
   filter: brightness(0.7);
 }
 
@@ -255,12 +255,9 @@
   font-size: 24px;
 }
 
-#dashboard .center .controller > li.disable {
+#dashboard .center .controller > li.disable,
+#dashboard .center .controller > li.temp-disable {
   cursor: not-allowed;
-}
-
-#dashboard .center .controller > li.disable i,
-#dashboard .center .controller > li.temp-disable i {
   filter: brightness(0.5);
 }
 
