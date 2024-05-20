@@ -445,7 +445,7 @@
 @media screen and (max-width: 698px) {
 
   #dashboard .bottom .interaction {
-    max-width: 300px;
+    max-width: 350px;
   }
 }
 
@@ -454,14 +454,6 @@
 
   #dashboard .search-container select {
     max-width: 120px;
-  }
-
-}
-
-@media screen and (max-width: 468px) { 
-
-  #dashboard .bottom .interaction {
-    max-width: 250px;
   }
 
 }
