@@ -1,4 +1,8 @@
-/* ========== DASHBOARD - INSIGHT ========== */
+#dashboard {
+  padding: 20px;
+}
+
+/* ========== DASHBOARD - PLAYER INFO ========== */
 #dashboard .center {
   align-items: center;
   justify-content: center;
@@ -252,10 +256,11 @@
 }
 
 #dashboard .center .controller > li.disable {
-  cursor: default;
+  cursor: not-allowed;
 }
 
-#dashboard .center .controller > li.disable i {
+#dashboard .center .controller > li.disable i,
+#dashboard .center .controller > li.temp-disable i {
   filter: brightness(0.5);
 }
 

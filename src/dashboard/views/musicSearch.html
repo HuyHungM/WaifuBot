@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Âm nhạc - <%= guild.name %></title>
+    <title>Tìm kiếm bài hát - <%= guild.name %></title>
     <link rel="manifest" href="/api/get/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
@@ -27,7 +27,7 @@
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="/css/animation.css" />
     <link rel="stylesheet" href="/css/global.css" />
-    <link rel="stylesheet" href="/css/music.css" />
+    <link rel="stylesheet" href="/css/musicSearch.css" />
     <link
       rel="shortcut icon"
       href="<%= client.user.displayAvatarURL({ extension: 'png' }) %>"
@@ -88,10 +88,10 @@
                   <i class="fa-solid fa-chevron-right expand-icon"></i>
                 </div>
                 <ul class="sidebar-expand">
-                  <li class="expand-item active">
+                  <li class="expand-item">
                     <a href="/server/<%= guild.id %>/music">Thông tin</a>
                   </li>
-                  <li class="expand-item">
+                  <li class="expand-item active">
                     <a href="/server/<%= guild.id %>/music/search">Tìm kiếm</a>
                   </li>
                   <li class="expand-item">
@@ -172,79 +172,53 @@
         </header>
 
         <section id="dashboard">
-          <div class="title">Âm nhạc - <%= guild.name %></div>
           <div class="center">
-            <div class="player-info">
-              <div
-                class="songs"
-                style="--background-icon: var(--color-primary)"
-              >
-                <i class="fa-solid fa-list-ol"></i>
-                <div class="middle">
-                  <h3>Hàng đợi</h3>
-                  <h1>Đang tải...</h1>
+            <form class="search-container">
+              <div class="search-bar">
+                <div id="search-btn" class="btn">
+                  <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
-                <small class="text-muted">Trực tiếp</small>
+                <input
+                  type="text"
+                  id="search-input"
+                  autocomplete="off"
+                  placeholder="Bạn muốn phát nội dung gì?"
+                />
+                <div id="erase-btn" class="btn">
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
               </div>
-              <div
-                class="autoplay"
-                style="--background-icon: var(--color-success)"
-              >
-                <i class="fa-solid fa-folder-plus"></i>
-                <div class="middle">
-                  <h3>Tự động phát</h3>
-                  <h1>Đang tải...</h1>
+              <select name="text-channel" id="text-channel" required>
+                <% guild.channels.cache.filter((channel) => channel.type ===
+                ChannelType.GuildText).map((channel) => { %>
+                <option value="<%= channel.id %>">#<%= channel.name %></option>
+                <% }) %>
+              </select>
+              <select name="voice-channel" id="voice-channel" required>
+                <% guild.channels.cache.filter((channel) => channel.type ===
+                ChannelType.GuildVoice).map((channel) => { %>
+                <option value="<%= channel.id %>">#<%= channel.name %></option>
+                <% }) %>
+              </select>
+            </form>
+            <ul class="song-list">
+              <li class="no-song">Không có kết quả!</li>
+            </ul>
+          </div>
+
+          <div class="bottom">
+            <div class="playing-song">
+              <div class="image">
+                <img src="" />
+                <div id="stop-btn" class="music-btn">
+                  <i class="fa-regular fa-circle-stop"></i>
                 </div>
-                <small class="text-muted">Trực tiếp</small>
               </div>
-              <div class="loop" style="--background-icon: var(--color-danger)">
-                <i class="fa-solid fa-repeat"></i>
-                <div class="middle">
-                  <h3>Chế độ lặp</h3>
-                  <h1>Đang tải...</h1>
-                </div>
-                <small class="text-muted">Trực tiếp</small>
-              </div>
-              <div
-                class="volume"
-                style="--background-icon: var(--color-warning)"
-              >
-                <i class="fa-solid fa-volume-high"></i>
-                <div class="middle">
-                  <h3>Âm thanh</h3>
-                  <h1>Đang tải...</h1>
-                </div>
-                <small class="text-muted">Trực tiếp</small>
+              <div class="content">
+                <span class="name"></span><span class="author"></span>
               </div>
             </div>
-
-            <div class="now-playing">
-              <h1>Thông tin bài hát</h1>
-
-              <div class="current-song">
-                <h3>Hiện đang phát</h3>
-                <a href="#">Đang tải...</a>
-              </div>
-              <div class="next-song">
-                <h3>
-                  <span>Kế tiếp:</span>
-                  <a href="#" target="_blank"></a>
-                </h3>
-              </div>
-              <div class="duration">
-                <h3>Thời lượng</h3>
-                <div class="navigation">
-                  <div class="passed-timeline">
-                    <i class="btn fa-solid fa-record-vinyl"></i>
-                  </div>
-                  <div class="timeline"></div>
-                </div>
-                <div class="time">
-                  <span class="current-time"></span>
-                  <span class="song-time"></span>
-                </div>
-              </div>
-
+            <div class="interaction">
               <ul class="controller">
                 <li id="autoplay-btn" class="music-btn">
                   <i class="fa-solid fa-arrows-rotate"></i>
@@ -262,6 +236,16 @@
                   <i class="fa-solid fa-repeat"></i>
                 </li>
               </ul>
+              <div class="duration">
+                <span class="current-time"></span>
+                <div class="navigation">
+                  <div class="passed-timeline" style="--width: 0%">
+                    <i class="btn fa-solid fa-record-vinyl"></i>
+                  </div>
+                  <div class="timeline" style="--width: 100%"></div>
+                </div>
+                <span class="song-time"></span>
+              </div>
             </div>
           </div>
         </section>
@@ -277,7 +261,7 @@
       const RepeatMode = Object.create(<%- JSON.stringify(RepeatMode) %>);
     </script>
     <script src="/js/global.js"></script>
-    <script src="/js/music.js"></script>
+    <script src="/js/musicSearch.js"></script>
     <script src="/js/musicController.js"></script>
   </body>
 </html>

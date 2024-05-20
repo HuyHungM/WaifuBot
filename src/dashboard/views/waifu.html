@@ -81,12 +81,23 @@
                   <i class="fa-solid fa-chevron-right expand-icon"></i>
                 </a>
               </li>
-              <li class="sidebar-item">
-                <a href="/server/<%= guild.id %>/music">
+              <li class="sidebar-item expand" style="--item-count: 3">
+                <div class="sidebar-expand-btn">
                   <i class="fa-solid fa-music"></i>
                   <span>Âm nhạc</span>
                   <i class="fa-solid fa-chevron-right expand-icon"></i>
-                </a>
+                </div>
+                <ul class="sidebar-expand">
+                  <li class="expand-item">
+                    <a href="/server/<%= guild.id %>/music">Thông tin</a>
+                  </li>
+                  <li class="expand-item">
+                    <a href="/server/<%= guild.id %>/music/search">Tìm kiếm</a>
+                  </li>
+                  <li class="expand-item">
+                    <a href="/server/<%= guild.id %>/music/queue">Hàng chờ</a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
@@ -96,7 +107,7 @@
             </div>
             <ul class="sidebar-items">
               <li class="sidebar-item active">
-                <a href="/server/<%= guild.id %>/waifu">
+                <a href="/server/<%= guild.id %>/music">
                   <img
                     src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : '/assets/images/default_guild_icon.png' %>"
                     alt="<%= guild.name %>"
@@ -109,7 +120,7 @@
               <% user.guilds.filter((x) => (x.id !== guild.id)).map((guild) => {
               %>
               <li class="sidebar-item">
-                <a href="/server/<%= guild.id %>/waifu">
+                <a href="/server/<%= guild.id %>/music">
                   <img
                     src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : '/assets/images/default_guild_icon.png' %>"
                     alt="<%= guild.name %>"

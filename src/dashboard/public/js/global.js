@@ -36,6 +36,12 @@ $(document).ready(function () {
       $("#sidebar").removeClass("active");
     }
   });
+
+  $("body.dashboard-body .sidebar-expand-btn").each(function () {
+    $(this).on("click", function () {
+      $(this).parent().toggleClass("active-expand");
+    });
+  });
 });
 
 function loadPage() {

@@ -87,11 +87,6 @@ class WaifuAI {
         content: `Bạn tên là ${waifuName}, là người bạn gái đáng yêu của ${ownerName}`,
       });
 
-      messages.push({
-        role: "assistant",
-        content: `Em tên là ${waifuName}, là người bạn gái đáng yêu của ${ownerName}`,
-      });
-
       await waifu.findOneAndUpdate(
         filter,
         { messages: messages, isReplied: true },

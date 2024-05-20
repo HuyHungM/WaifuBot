@@ -90,6 +90,10 @@ textarea {
     font-weight: 400;
 }
 
+select.disabled {
+    cursor: not-allowed;
+}
+
 .hover-glow {
     transition: text-shadow 300ms ease;
 }
@@ -304,37 +308,52 @@ body.dashboard-body {
         display: flex;
         flex-direction: column;
         padding: 10px 0;
+        height: auto;
     }
     
     #sidebar .sidebar-sections .sidebar-section .sidebar-items .sidebar-item {
         
         & {
-            height: auto;
+            height: 54px;
             width: 100%;
             padding: 0 10px;
-            transition: filter 200ms ease, padding 300ms ease-in;
+            transition: filter 200ms ease, padding 300ms ease-in, height 400ms ease-in;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        &.active-expand {
+            height: calc(54px + var(--item-count)*35px);
+
+            & i.expand-icon {
+                transform: rotate(90deg);
+            }
         }
     
-        &.active span, &.active i {
+        &.active span, &.active i,
+        & .sidebar-expand .expand-item.active a {
             color: var(--color-primary);
             filter: brightness(1.3);
         }
     
         &:hover {
-            padding-left: 0px;
-    
-            & a i.expand-icon {
-                margin: 0;
+            &:not(.expand) {
+                padding-left: 0px;
             }
     
-            & a i, & a span {
+            & i, & span {
                 filter: brightness(5);
                 color: var(--color-primary-variant);
                 transition: color 200ms ease;
             }
+
+            &:not(.expand) a i.expand-icon {
+                margin: 0;
+                transition: margin 400ms ease-out;
+            }
         }
     
-        & a {
+        & > a, & > div {
             display: flex;
             align-items: center;
             font-size: 16px;
@@ -342,26 +361,50 @@ body.dashboard-body {
             width: 100%;
         }
         
-        & a span {
+        & span {
             padding: 5px 20px;
             flex: 1;
             width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            font-size: 16px;
         }
     
-        & a i.expand-icon {
+        & i.expand-icon {
             margin-right: 16px;
             font-size: 12px;
-            transition: margin 400ms ease-out;
+            transition: margin 400ms ease-out, transform 400ms ease-in-out;
         }
     
-        & a img {
+        & img {
             width: 32px;
             height: 32px;
             border-radius: 50%;
             border: 1px var(--color-dark) solid;
+        }
+
+        & .sidebar-expand {
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            transition: height 300ms ease-in;
+            overflow: hidden;
+        }
+
+        & .sidebar-expand .expand-item {
+            margin-left: 32px;
+            font-size: 14px;
+            padding: 8px 0;
+        }
+
+        & .sidebar-expand .expand-item:hover {
+            & a {
+                filter: brightness(5);
+                color: var(--color-primary-variant);
+                transition: color 200ms ease;
+            }
         }
     }
 
@@ -480,13 +523,13 @@ body.dashboard-body {
         height: 100%;
         border-radius: 32px 0 0 0;
         background-color: var(--color-background);
-        padding: 20px;
         overflow-x: hidden;
         overflow-y: auto;
         display: flex;
         flex-direction: column;
         column-gap: 20px;
         flex: 1;
+        position: relative;
     }
     
     #dashboard .title {

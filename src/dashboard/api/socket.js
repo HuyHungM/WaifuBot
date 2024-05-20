@@ -1,4 +1,4 @@
-const { RepeatMode } = require("distube");
+const { RepeatMode, SearchResultType } = require("distube");
 const { model } = require("../../config/AIConfig");
 
 module.exports = (client, io) => {
@@ -16,8 +16,60 @@ module.exports = (client, io) => {
         previousSongs: queue?.previousSongs,
         playing: queue?.playing,
         paused: queue?.paused,
+        textChannel: queue?.textChannel,
+        voiceChannel: queue?.voiceChannel,
       };
+
       socket.emit(`getMusicData-${userId}`, queueData);
+    });
+
+    socket.on("searchSong", async ({ songQuery, userId }) => {
+      const searchOptions = {
+        limit: 25,
+        type: SearchResultType.VIDEO,
+        safeSearch: false,
+      };
+
+      const searchResult = (
+        await client.distube.search(songQuery, searchOptions)
+      )?.sort((a, b) => (a.views < b.views ? 1 : -1));
+
+      socket.emit(`searchSong-${userId}`, searchResult);
+    });
+
+    socket.on(
+      "playSong",
+      async ({ guildId, userId, voiceChannelId, textChannelId, songUrl }) => {
+        const voiceChannel = await client.channels.resolve(voiceChannelId);
+        const textChannel = await client.channels.resolve(textChannelId);
+        const guild = await client.guilds.resolve(guildId);
+        const member = await guild.members.resolve(userId);
+
+        await client.distube.play(voiceChannel, songUrl, {
+          member: member,
+          textChannel: textChannel,
+        });
+      }
+    );
+
+    socket.on(
+      "playSkipSong",
+      async ({ userId, voiceChannelId, textChannelId, songUrl }) => {
+        const voiceChannel = client.channels.fetch(voiceChannelId);
+        const textChannel = client.channels.fetch(textChannelId);
+        const member = client.users.fetch(userId);
+
+        await client.distube.play(voiceChannel, songUrl, {
+          member: member,
+          textChannel: textChannel,
+          skip: true,
+        });
+      }
+    );
+
+    socket.on("stopQueue", async ({ guildId }) => {
+      const queue = client.distube.getQueue(guildId);
+      await queue.stop();
     });
 
     socket.on("pausePlayback", async ({ guildId }) => {

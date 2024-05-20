@@ -116,6 +116,23 @@ app.get("/server/:guildId/music", Auth, validGuild, (req, res) => {
   );
 });
 
+app.get("/server/:guildId/music/search", Auth, validGuild, (req, res) => {
+  const user = req.user;
+  const guild = client.guilds.cache.get(req.params.guildId);
+
+  ejs.renderFile(
+    "./src/dashboard/views/musicSearch.html",
+    { client, guild, user, moment, RepeatMode, ChannelType },
+    (err, html) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.status(200).send(html);
+      }
+    }
+  );
+});
+
 app.get("/login", UnAuth, (req, res) => {
   ejs.renderFile(
     "./src/dashboard/views/login.html",
