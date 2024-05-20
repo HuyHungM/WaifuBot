@@ -448,3 +448,20 @@
     max-width: 300px;
   }
 }
+
+
+@media screen and (max-width: 500px) { 
+
+  #dashboard .search-container select {
+    max-width: 120px;
+  }
+
+}
+
+@media screen and (max-width: 468px) { 
+
+  #dashboard .bottom .interaction {
+    max-width: 250px;
+  }
+
+}
