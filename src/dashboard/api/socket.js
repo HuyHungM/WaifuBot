@@ -30,9 +30,10 @@ module.exports = (client, io) => {
         safeSearch: false,
       };
 
-      const searchResult = (
-        await client.distube.search(songQuery, searchOptions)
-      )?.sort((a, b) => (a.views < b.views ? 1 : -1));
+      const searchResult = await client.distube.search(
+        songQuery,
+        searchOptions
+      );
 
       socket.emit(`searchSong-${userId}`, searchResult);
     });
@@ -45,25 +46,46 @@ module.exports = (client, io) => {
         const guild = await client.guilds.resolve(guildId);
         const member = await guild.members.resolve(userId);
 
-        await client.distube.play(voiceChannel, songUrl, {
-          member: member,
-          textChannel: textChannel,
-        });
+        await client.distube
+          .play(voiceChannel, songUrl, {
+            member: member,
+            textChannel: textChannel,
+          })
+          .then(() => {
+            socket.emit(`notification-${userId}`, {
+              status: 200,
+              message: "Đã thêm bài hát thành công!",
+            });
+          });
       }
     );
 
     socket.on(
       "playSkipSong",
-      async ({ userId, voiceChannelId, textChannelId, songUrl }) => {
-        const voiceChannel = client.channels.fetch(voiceChannelId);
-        const textChannel = client.channels.fetch(textChannelId);
-        const member = client.users.fetch(userId);
+      async ({ guildId, userId, voiceChannelId, textChannelId, songUrl }) => {
+        const voiceChannel = client.channels.resolve(voiceChannelId);
+        const textChannel = client.channels.resolve(textChannelId);
+        const guild = await client.guilds.resolve(guildId);
+        const member = await guild.members.resolve(userId);
 
-        await client.distube.play(voiceChannel, songUrl, {
-          member: member,
-          textChannel: textChannel,
-          skip: true,
-        });
+        await client.distube
+          .play(voiceChannel, songUrl, {
+            member: member,
+            textChannel: textChannel,
+            skip: true,
+          })
+          .then(() => {
+            socket.emit(`notification-${userId}`, {
+              status: 200,
+              message: "Đã thêm bài hát thành công!",
+            });
+          })
+          .catch(() => {
+            socket.emit(`notification-${userId}`, {
+              status: 404,
+              message: "Đã xảy ra lỗi!",
+            });
+          });
       }
     );
 

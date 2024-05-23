@@ -159,11 +159,38 @@
     width: 64px;
     height: 64px;
     border-radius: 8px;
+    position: relative;
+  }
+
+  & .image:hover i {
+    display: flex;
   }
 
   & .image img {
     object-fit: cover;
     border-radius: 8px;
+  }
+
+  & .image i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 8px;
+    font-size: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    backdrop-filter: brightness(0.3);
+    animation: fade 100ms ease-in-out forwards;
+    cursor: pointer;
+  }
+
+  & .image i.temp-disable {
+    cursor: not-allowed;
+    filter: brightness(0.4);
   }
 
   & .content {

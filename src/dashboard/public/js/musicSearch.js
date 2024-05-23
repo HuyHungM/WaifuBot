@@ -5,6 +5,41 @@ $(document).ready(function () {
     socket.emit("getMusicData", { guildId, userId });
   }, 1000);
 
+  socket.on(`notification-${userId}`, function (res) {
+    const notification = $(document.createElement("div")).addClass(
+      "notification"
+    );
+
+    const iconContainer = $(document.createElement("div"))
+      .addClass("icon")
+      .css(
+        "--icon-color",
+        `${res.status === 200 ? "var(--color-success)" : "var(--color-danger)"}`
+      )
+      .appendTo(notification);
+
+    $(document.createElement("i"))
+      .addClass(
+        `${
+          res.status === 200
+            ? "fa-regular fa-face-smile"
+            : "fa-regular fa-face-frown"
+        }`
+      )
+      .appendTo(iconContainer);
+
+    $(document.createElement("div"))
+      .addClass("message")
+      .text(res.message)
+      .appendTo(notification);
+
+    $("#notification-list").prepend(notification);
+
+    setTimeout(function () {
+      $(notification).remove();
+    }, 4000);
+  });
+
   socket.on(`getMusicData-${userId}`, function (queue) {
     if (queue.songs.length > 0) {
       $("#text-channel")
@@ -126,7 +161,7 @@ $(document).ready(function () {
       $this.find("select").each(function () {
         $(this).attr("disabled", false);
       });
-    }, 5000);
+    }, 3000);
   });
 
   socket.on(`searchSong-${userId}`, function (songs) {
@@ -134,6 +169,7 @@ $(document).ready(function () {
     songs.map((song) => {
       const songCard = $(document.createElement("li"))
         .addClass("song-card")
+        .attr("data-source", song.url)
         .appendTo(".song-list");
 
       const imageDiv = $(document.createElement("div"))
@@ -142,6 +178,10 @@ $(document).ready(function () {
 
       $(document.createElement("img"))
         .attr("src", song.thumbnail)
+        .appendTo(imageDiv);
+
+      const playSkipBtn = $(document.createElement("i"))
+        .addClass("fa-solid fa-play music-btn")
         .appendTo(imageDiv);
 
       const songContent = $(document.createElement("div"))
@@ -160,7 +200,6 @@ $(document).ready(function () {
 
       const addToQueueBtn = $(document.createElement("div"))
         .addClass("add-to-queue-btn")
-        .attr("data-source", song.url)
         .appendTo(songCard);
 
       const addToQueueIcon = $(document.createElement("i"))
@@ -172,10 +211,10 @@ $(document).ready(function () {
         .text(song.formattedDuration)
         .appendTo(songCard);
 
-      $(addToQueueIcon).on("click", function () {
+      $(playSkipBtn).on("click", function () {
         if ($(this).hasClass("temp-disable")) return;
 
-        const songUrl = $(this).parent().attr("data-source");
+        const songUrl = $(this).parent().parent().attr("data-source");
         const voiceChannelId = $("#voice-channel").val();
         const textChannelId = $("#text-channel").val();
 
@@ -187,7 +226,34 @@ $(document).ready(function () {
           $(".music-btn").each(function () {
             $(this).removeClass("temp-disable");
           });
-        }, 5000);
+        }, 3000);
+
+        socket.emit("playSkipSong", {
+          guildId,
+          userId,
+          voiceChannelId,
+          textChannelId,
+          songUrl,
+        });
+        $(this).parent().parent().remove();
+      });
+
+      $(addToQueueIcon).on("click", function () {
+        if ($(this).hasClass("temp-disable")) return;
+
+        const songUrl = $(this).parent().parent().attr("data-source");
+        const voiceChannelId = $("#voice-channel").val();
+        const textChannelId = $("#text-channel").val();
+
+        $(".music-btn").each(function () {
+          $(this).addClass("temp-disable");
+        });
+
+        setTimeout(function () {
+          $(".music-btn").each(function () {
+            $(this).removeClass("temp-disable");
+          });
+        }, 3000);
 
         socket.emit("playSong", {
           guildId,

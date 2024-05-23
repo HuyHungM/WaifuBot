@@ -251,6 +251,60 @@ body.dashboard-body {
         opacity: 0;
         animation: fade 300ms ease-in forwards;
         overflow: hidden;
+        position: relative;
+    }
+
+    #notification-list {
+
+        & {
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 80%;
+        }
+
+        & .notification {
+            display: flex;
+            align-items: center;
+            background-color: var(--color-white);
+            box-shadow: 0 4px 8px var(--color-light);
+            border-radius: 4px;
+            z-index: 9999;
+            height: 48px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            opacity: 1;
+            animation: flyInLeft 800ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            transition: opacity 400ms ease-in-out;
+        }
+
+        & .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            background-color: var(--icon-color);
+            width: 48px;
+            height: 48px;
+            filter: brightness(0.9);
+        }
+
+        & .icon i {
+            font-size: 20px;
+        }
+
+        & .message {
+            padding: 0 16px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 16px;
+        }
     }
     
     /* ========== DASHBOARD - SIDEBAR ========== */

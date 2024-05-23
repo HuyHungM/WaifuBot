@@ -51,7 +51,7 @@ $(document).ready(function () {
         $(".music-btn").each(function () {
           $(this).removeClass("temp-disable");
         });
-      }, 5000);
+      }, 3000);
     });
   });
 });
