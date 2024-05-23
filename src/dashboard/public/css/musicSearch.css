@@ -186,6 +186,11 @@
     backdrop-filter: brightness(0.3);
     animation: fade 100ms ease-in-out forwards;
     cursor: pointer;
+    transition: filter 200ms ease-in-out;
+  }
+
+  & .image i:not(.temp-disable):hover {
+    filter: brightness(0.3);
   }
 
   & .image i.temp-disable {
