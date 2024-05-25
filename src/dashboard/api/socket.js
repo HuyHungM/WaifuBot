@@ -30,12 +30,23 @@ module.exports = (client, io) => {
         safeSearch: false,
       };
 
-      const searchResult = await client.distube.search(
-        songQuery,
-        searchOptions
-      );
+      try {
+        const searchResult = await client.distube.search(
+          songQuery,
+          searchOptions
+        );
 
-      socket.emit(`searchSong-${userId}`, searchResult);
+        socket.emit(`searchSong-${userId}`, searchResult);
+        socket.emit(`notification-${userId}`, {
+          status: 200,
+          message: "Đã tìm thấy kết quả!",
+        });
+      } catch (error) {
+        socket.emit(`notification-${userId}`, {
+          status: 404,
+          message: "Không tìm thấy kết quả!",
+        });
+      }
     });
 
     socket.on(
@@ -55,6 +66,12 @@ module.exports = (client, io) => {
             socket.emit(`notification-${userId}`, {
               status: 200,
               message: "Đã thêm bài hát thành công!",
+            });
+          })
+          .catch(() => {
+            socket.emit(`notification-${userId}`, {
+              status: 404,
+              message: "Đã xảy ra lỗi!",
             });
           });
       }

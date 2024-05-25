@@ -95,7 +95,7 @@ module.exports = (client) => {
 
     server.listen(process.env.PORT, () =>
       console.log(
-        `🟢 [DASHBOARD]: Dashboard đã được mở tại địa chỉ ${process.env.DOMAIN}:${process.env.PORT}`
+        `🟢 [DASHBOARD]: Dashboard đã được mở tại địa chỉ ${process.env.DOMAIN}`
       )
     );
     app.set("view engine", "ejs");
