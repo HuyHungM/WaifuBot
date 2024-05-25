@@ -78,13 +78,13 @@ $(document).ready(function () {
             ).toFixed(0)}`
           : null;
 
-      const queueFormattedDuration = `khoảng ${
-        queueFormattedHours ? `${queueFormattedHours} giờ ` : ""
-      }${queueFormattedMinutes ? `${queueFormattedMinutes} phút` : ""}`;
-
       $(document.createElement("span"))
         .addClass("duration circle-style")
-        .text(queueFormattedDuration)
+        .text(
+          `khoảng ${queueFormattedHours ? `${queueFormattedHours} giờ ` : ""}${
+            queueFormattedMinutes ? `${queueFormattedMinutes} phút` : ""
+          }`
+        )
         .appendTo(playingSongRightInfo);
 
       queue.songs.slice(1).map((song, i) => {
