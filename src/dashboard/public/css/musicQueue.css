@@ -117,6 +117,10 @@
     align-items: center;
     justify-content: center;
   }
+
+  & .content .song .info span.duration {
+    color: rgba(237, 239, 253, 0.6);
+  }
 }
 
 #dashboard .song-list .song-card {

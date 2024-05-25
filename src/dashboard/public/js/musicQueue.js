@@ -61,7 +61,12 @@ $(document).ready(function () {
         .appendTo(playingSongRightInfo);
 
       $(document.createElement("span"))
-        .addClass("duration circle-style text-muted")
+        .addClass("queue-length circle-style")
+        .text(`${queue.songs.length.toLocaleString("vi-VN")} bài hát`)
+        .appendTo(playingSongRightInfo);
+
+      $(document.createElement("span"))
+        .addClass("duration circle-style")
         .text(
           `khoảng ${parseFloat(queue.songs[0].duration / 60).toFixed(0)} phút`
         )
