@@ -90,7 +90,7 @@ $(document).ready(function () {
       queue.songs.slice(1).map((song, i) => {
         const songCard = $(document.createElement("li"))
           .addClass("song-card")
-          .attr("data-source", song.url)
+          .attr("data-index", i + 1)
           .appendTo(".song-list");
 
         $(document.createElement("div"))
@@ -132,9 +132,9 @@ $(document).ready(function () {
         $(playSkipBtn).on("click", function () {
           if ($(this).hasClass("temp-disable")) return;
 
-          const songUrl = $(this).parent().parent().attr("data-source");
-          const voiceChannelId = $("#voice-channel").val();
-          const textChannelId = $("#text-channel").val();
+          const indexSong = parseInt(
+            $(this).parent().parent().attr("data-index")
+          );
 
           $(".music-btn").each(function () {
             $(this).addClass("temp-disable");
@@ -146,12 +146,9 @@ $(document).ready(function () {
             });
           }, 3000);
 
-          socket.emit("playSkipSong", {
+          socket.emit("skipSongTo", {
             guildId,
-            userId,
-            voiceChannelId,
-            textChannelId,
-            songUrl,
+            index: indexSong,
           });
           $(this).parent().parent().remove();
         });

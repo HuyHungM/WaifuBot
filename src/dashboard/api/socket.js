@@ -132,6 +132,11 @@ module.exports = (client, io) => {
       await queue.previous();
     });
 
+    socket.on("skipSongTo", async ({ guildId, index }) => {
+      const queue = client.distube.getQueue(guildId);
+      await queue.jump(index);
+    });
+
     socket.on("toggleAutoplayPlayback", async ({ guildId }) => {
       const queue = client.distube.getQueue(guildId);
       await queue.toggleAutoplay();
