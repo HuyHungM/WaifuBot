@@ -189,7 +189,7 @@ $(document).ready(function () {
         $(".controller #next-btn").removeClass("disable");
       }
     } else {
-      $(".song-list").html("<li class='no-song'>Trống</li>");
+      $(".song-list").html("<li class='no-song'>Hàng chờ trống!</li>");
       $(".bottom").removeClass("active");
     }
     $(".bottom .duration .current-time").text(

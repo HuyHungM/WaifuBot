@@ -115,8 +115,12 @@ $(document).ready(function () {
     );
   });
 
-  $("#search-input").on("keyup", function () {
+  $("#search-input").on("keyup", function (event) {
     const songQuery = $(this).val().trim();
+
+    if (event.key === "Enter") {
+      $(".search-container").submit();
+    }
 
     if (songQuery !== "") {
       $(this).parent().find("#erase-btn").addClass("active");
