@@ -27,7 +27,7 @@
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="/css/animation.css" />
     <link rel="stylesheet" href="/css/global.css" />
-    <link rel="stylesheet" href="/css/musicSearch.css" />
+    <link rel="stylesheet" href="/css/musicQueue.css" />
     <link
       rel="shortcut icon"
       href="<%= client.user.displayAvatarURL({ extension: 'png' }) %>"
@@ -91,10 +91,10 @@
                   <li class="expand-item">
                     <a href="/server/<%= guild.id %>/music">Thông tin</a>
                   </li>
-                  <li class="expand-item active">
+                  <li class="expand-item">
                     <a href="/server/<%= guild.id %>/music/search">Tìm kiếm</a>
                   </li>
-                  <li class="expand-item">
+                  <li class="expand-item active">
                     <a href="/server/<%= guild.id %>/music/queue">Hàng chờ</a>
                   </li>
                 </ul>
@@ -173,37 +173,38 @@
 
         <section id="dashboard">
           <div class="center">
-            <form class="search-container">
-              <div class="search-bar">
-                <div id="search-btn" class="btn">
-                  <i class="fa-solid fa-magnifying-glass"></i>
+            <ul class="song-list"></ul>
+            <!-- <ul class="song-list">
+              <li class="playing-song">
+                <div class="banner">
+                  <img
+                    src="https://i.ytimg.com/vi_webp/GGrGephvrcU/maxresdefault.webp?v=66206c63"
+                  />
                 </div>
-                <input
-                  type="text"
-                  id="search-input"
-                  autocomplete="off"
-                  placeholder="Bạn muốn phát nội dung gì?"
-                />
-                <div id="erase-btn" class="btn">
-                  <i class="fa-solid fa-xmark"></i>
+                <div class="content">
+                  <div class="image">
+                    <img
+                      src="https://i.ytimg.com/vi_webp/GGrGephvrcU/maxresdefault.webp?v=66206c63"
+                    />
+                  </div>
+                  <div class="song">
+                    <span>Hiện đang phát</span>
+                    <span class="name"
+                      >【SAKURA - いきものがかり (Ikimonogakari) Lời Việt
+                      Vietnamese Ver.】HOA.ANH.ĐÀO - Ktwo.P</span
+                    >
+                    <div class="info">
+                      <span class="author">𝕄𝕠𝕠𝕟'𝕤 𝕍𝕠𝕚𝕔𝕖</span>
+                      <span class="view circle-style">0 lượt xem</span>
+                      <span class="duration circle-style text-muted"
+                        >khoảng 1 giờ</span
+                      >
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <select name="text-channel" id="text-channel" required>
-                <% guild.channels.cache.filter((channel) => channel.type ===
-                ChannelType.GuildText).map((channel) => { %>
-                <option value="<%= channel.id %>">#<%= channel.name %></option>
-                <% }) %>
-              </select>
-              <select name="voice-channel" id="voice-channel" required>
-                <% guild.channels.cache.filter((channel) => channel.type ===
-                ChannelType.GuildVoice).map((channel) => { %>
-                <option value="<%= channel.id %>">#<%= channel.name %></option>
-                <% }) %>
-              </select>
-            </form>
-            <ul class="song-list">
-              <li class="no-song">Không có kết quả!</li>
-            </ul>
+              </li>
+              <li class="no-song">Hàng chờ trống!</li>
+            </ul> -->
           </div>
 
           <div class="bottom">
@@ -261,7 +262,7 @@
       const RepeatMode = Object.create(<%- JSON.stringify(RepeatMode) %>);
     </script>
     <script src="/js/global.js"></script>
-    <script src="/js/musicSearch.js"></script>
+    <script src="/js/musicQueue.js"></script>
     <script src="/js/musicController.js"></script>
   </body>
 </html>
