@@ -65,11 +65,26 @@ $(document).ready(function () {
         .text(`${queue.songs.length.toLocaleString("vi-VN")} bài hát`)
         .appendTo(playingSongRightInfo);
 
+      const queueFormattedHours =
+        parseFloat(queue.duration / 3600).toFixed(0) > 0
+          ? `${parseFloat(queue.duration / 3600).toFixed(0)}`
+          : null;
+
+      const queueFormattedMinutes =
+        parseFloat(queue.duration / 60 - queueFormattedHours * 60).toFixed(0) >
+        0
+          ? `${parseFloat(
+              queue.duration / 60 - queueFormattedHours * 60
+            ).toFixed(0)}`
+          : null;
+
+      const queueFormattedDuration = `khoảng ${
+        queueFormattedHours ? `${queueFormattedHours} giờ ` : ""
+      }${queueFormattedMinutes ? `${queueFormattedMinutes} phút` : ""}`;
+
       $(document.createElement("span"))
         .addClass("duration circle-style")
-        .text(
-          `khoảng ${parseFloat(queue.songs[0].duration / 60).toFixed(0)} phút`
-        )
+        .text(queueFormattedDuration)
         .appendTo(playingSongRightInfo);
 
       queue.songs.slice(1).map((song, i) => {

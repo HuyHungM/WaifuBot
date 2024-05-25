@@ -13,6 +13,7 @@ module.exports = (client, io) => {
         volume: queue?.volume || 50,
         currentTime: queue?.currentTime,
         formattedCurrentTime: queue?.formattedCurrentTime,
+        duration: queue?.duration,
         previousSongs: queue?.previousSongs,
         playing: queue?.playing,
         paused: queue?.paused,

@@ -107,6 +107,8 @@
     align-items: center;
     font-weight: 600;
     font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   & .content .song .info span.circle-style::before {
@@ -116,6 +118,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  & .content .song .info span.author:hover {
+    color: var(--color-success);
+    cursor: pointer;
   }
 
   & .content .song .info span.duration {
@@ -132,7 +139,6 @@
     background-color: var(--color-background);
     border-radius: 8px;
     padding: 8px;
-    transition: filter 200ms ease-in-out;
     gap: 8px
   }
 
@@ -434,8 +440,12 @@
     }
 
     & .content .image {
-      width: 132px;
-      height: 132px;
+      width: 136px;
+      height: 136px;
+    }
+
+    & .content .song {
+      max-width: calc(100% - 148px);
     }
 
     & .content .song .name {
