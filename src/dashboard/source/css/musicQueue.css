@@ -186,7 +186,7 @@
   }
 
   & .image i:not(.temp-disable):hover {
-    filter: brightness(0.3);
+    filter: brightness(0.5);
   }
 
   & .image i.temp-disable {
