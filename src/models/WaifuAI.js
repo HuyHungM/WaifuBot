@@ -70,7 +70,7 @@ class WaifuAI {
 
       if (res?.choices[0]?.message?.content?.toLowerCase().includes("error")) {
         console.error(
-          "🔴 [AntiCrash]: AI Error",
+          "🔴 [AntiCrash]: AI Error: ",
           res?.choices[0]?.message?.content
         );
         await waifu.findOneAndUpdate(filter, { isReplied: true }, options);

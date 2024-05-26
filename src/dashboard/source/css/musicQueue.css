@@ -84,11 +84,12 @@
     justify-content: space-evenly;
     gap: 8px;
     max-width: calc(100% - 204px);
+    min-width: 280px;
     flex: 1
   }
 
   & .content .song .name {
-    font-size: 50px;
+    font-size: 44px;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -449,7 +450,7 @@
     }
 
     & .content .song .name {
-      font-size: 24px;
+      font-size: 22px;
     }
   } 
 
@@ -468,4 +469,31 @@
   #dashboard .bottom .interaction {
     max-width: 350px;
   }
+}
+
+@media screen and (max-width: 468px) {
+
+  #dashboard .center .song-list .playing-song {
+
+    & {
+      min-height: 280px;
+    }
+
+    & .content {
+      align-items: flex-end;
+      padding: 16px 16px 4px;
+    }
+
+    & .content .song {
+      max-width: 100%;
+    }
+
+    & .content .song span {
+      font-size: 14px;
+    }
+
+    & .content .song .song-status {
+      display: none;
+    }
+  } 
 }

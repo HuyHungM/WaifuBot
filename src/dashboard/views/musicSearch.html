@@ -25,9 +25,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
     <!-- STYLESHEET -->
-    <link rel="stylesheet" href="/css/animation.css" />
-    <link rel="stylesheet" href="/css/global.css" />
-    <link rel="stylesheet" href="/css/musicSearch.css" />
+    <link rel="stylesheet" href="/css/animation.min.css" />
+    <link rel="stylesheet" href="/css/global.min.css" />
+    <link rel="stylesheet" href="/css/musicSearch.min.css" />
     <link
       rel="shortcut icon"
       href="<%= client.user.displayAvatarURL({ extension: 'png' }) %>"
@@ -261,8 +261,8 @@
       const userId = "<%= user.id %>"
       const RepeatMode = Object.create(<%- JSON.stringify(RepeatMode) %>);
     </script>
-    <script src="/js/global.js"></script>
-    <script src="/js/musicSearch.js"></script>
-    <script src="/js/musicController.js"></script>
+    <script src="/js/global.min.js"></script>
+    <script src="/js/musicSearch.min.js"></script>
+    <script src="/js/musicController.min.js"></script>
   </body>
 </html>

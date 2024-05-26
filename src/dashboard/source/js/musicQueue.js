@@ -38,6 +38,7 @@ $(document).ready(function () {
         .appendTo(playingSongContent);
 
       $(document.createElement("span"))
+        .addClass("song-status")
         .text("Hiện đang phát")
         .appendTo(playingSongRight);
 

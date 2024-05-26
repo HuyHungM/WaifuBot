@@ -25,9 +25,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
     <!-- STYLESHEET -->
-    <link rel="stylesheet" href="/css/animation.css" />
-    <link rel="stylesheet" href="/css/global.css" />
-    <link rel="stylesheet" href="/css/musicQueue.css" />
+    <link rel="stylesheet" href="/css/animation.min.css" />
+    <link rel="stylesheet" href="/css/global.min.css" />
+    <link rel="stylesheet" href="/css/musicQueue.min.css" />
     <link
       rel="shortcut icon"
       href="<%= client.user.displayAvatarURL({ extension: 'png' }) %>"
@@ -225,13 +225,16 @@
     <!-- SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/socket.io@4.7.5/client-dist/socket.io.min.js"></script>
+    <script src="/css/animation.css.js"></script>
+    <script src="/css/global.css.js"></script>
+    <script src="/css/index.css.js"></script>
     <script>
       const guildId = "<%- guild.id %>";
       const userId = "<%= user.id %>"
       const RepeatMode = Object.create(<%- JSON.stringify(RepeatMode) %>);
     </script>
-    <script src="/js/global.js"></script>
-    <script src="/js/musicQueue.js"></script>
-    <script src="/js/musicController.js"></script>
+    <script src="/js/global.min.js"></script>
+    <script src="/js/musicQueue.min.js"></script>
+    <script src="/js/musicController.min.js"></script>
   </body>
 </html>
