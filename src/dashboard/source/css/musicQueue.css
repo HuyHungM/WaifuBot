@@ -28,6 +28,7 @@
 #dashboard .song-list .playing-song {
   & {
     min-height: 320px;
+    height: auto;
     width: calc(100% + 32px);
     margin: -16px -16px 0;
     border-radius: 32px 0 0 0;
