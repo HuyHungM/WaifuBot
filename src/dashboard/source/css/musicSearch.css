@@ -458,3 +458,20 @@
   }
 
 }
+
+@media screen and (max-width: 476px) {
+
+  #dashboard .bottom {
+    padding: 12px;
+  }
+
+  #dashboard .bottom .playing-song {
+    grid-template-columns: 48px auto;
+    gap: 0;
+  }
+
+  #dashboard .bottom .playing-song .image {
+    width: 48px;
+    height: 48px;
+  }
+}
