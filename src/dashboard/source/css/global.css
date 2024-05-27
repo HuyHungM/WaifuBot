@@ -40,6 +40,7 @@
   text-decoration: none;
   list-style: none;
   box-sizing: border-box;
+  transition: 400ms ease-in-out;
 }
 
 *::-webkit-scrollbar {
