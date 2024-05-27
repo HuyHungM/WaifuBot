@@ -476,7 +476,7 @@
 
   #dashboard .center .song-list .playing-song {
     & .content {
-      padding: 20px ;
+      padding: 32px 20px;
     }
   }
 
