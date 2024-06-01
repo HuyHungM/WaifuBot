@@ -6,7 +6,7 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const { readdirSync, access } = require("fs");
+const { readdirSync } = require("fs");
 const DiscordStrategy = require("passport-discord").Strategy;
 const passport = require("passport");
 const { OAuth2Scopes, Events } = require("discord.js");
@@ -21,8 +21,8 @@ module.exports = (client) => {
     app.use(
       session({
         secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
+        resave: true,
+        saveUninitialized: true,
         cookie: {
           maxAge: 1000 * 60 * 60 * 24 * 30,
           httpOnly: true,
