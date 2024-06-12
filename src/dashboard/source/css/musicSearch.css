@@ -179,6 +179,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    width: fit-content;
   }
 
   & .content span:hover {
